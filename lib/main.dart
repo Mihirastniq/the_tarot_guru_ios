@@ -1,77 +1,107 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:the_tarot_guru/splash_screen.dart';
-import 'package:the_tarot_guru/MainScreens/theme/theme_settings.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_tarot_guru/MainScreens/controller/audio/audio_controller.dart';
-import 'package:the_tarot_guru/home.dart';
-
+import 'package:the_tarot_guru/main_screens/register/lanbackup.dart';
+import 'package:the_tarot_guru/main_screens/theme/theme_settings.dart';
+import 'package:the_tarot_guru/splash_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'main_screens/controller/language_controller/language_change_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final audioController = await initServices();
-  await initServices();
-  requestStoragePermission(); // Request storage permission
-  runApp(MyApp());
+  SharedPreferences sp = await SharedPreferences.getInstance();
+  final String language = sp.getString('lang') ?? 'en';
+  print('local is : $language');
+  runApp(MyApp(local: language));
 }
 
-void requestStoragePermission() async {
-  // Request storage permission
-  await Permission.storage.request();
-
-  // Check permission status
-  PermissionStatus status = await Permission.manageExternalStorage.status;
-  print('Storage permission status: $status');
-
-  // Handle permission status
-  if (status.isGranted) {
-    print('Storage permission granted.');
-  } else if (status.isDenied) {
-    print('Storage permission denied.');
-    // Optionally, display a message to the user explaining why the permission is needed
-  } else if (status.isPermanentlyDenied) {
-    print('Storage permission permanently denied.');
-    // Optionally, prompt the user to open app settings to grant the permission manually
-  }
-}
-
-
-
-Future<void> initServices() async {
-  await Get.putAsync(() async {
-    SharedPreferences sharedPreferences;
-    try {
-      sharedPreferences = await SharedPreferences.getInstance();
-    } catch (e) {
-      print('Error initializing SharedPreferences: $e');
-    }
-    return AudioController();
-  });
-}
-
-class MyApp extends StatelessWidget {
-  final ThemeManager themeManager = Get.put(ThemeManager());
+class MyApp extends StatefulWidget {
+  final String? local;
+  MyApp({Key? key, required this.local});
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder<int>(
-      future: themeManager.loadTheme(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(); // Show loading indicator
-        } else {
-          return Obx(() {
-            return GetMaterialApp(
-              title: 'The Tarot Guru',
-              theme: themeManager.getTheme(),
-              home: SplashScreen(),
-            );
-          });
-        }
-      },
+    Locale defaultLocale = Locale('en'); // Set your default language here
+
+    // Check if local is empty, if so, use the default locale
+    Locale locale = widget.local != null && widget.local!.isNotEmpty ? Locale(widget.local!) : defaultLocale;
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeManager()), // Provide ThemeManager instance
+        ChangeNotifierProvider(create: (_) => LanguageChangeController()),
+      ],
+      child: Consumer2<LanguageChangeController, ThemeManager>(
+        builder: (context, languageProvider, themeManager, child) {
+          return MaterialApp(
+            title: 'The Tarot Guru',
+            theme: themeManager.getTheme(),
+            locale: locale,
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: SplashScreen(),
+          );
+        },
+      ),
     );
   }
+
+  @override
+  void didUpdateWidget(MyApp oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.local != widget.local) {
+      // Language has changed, rebuild the app
+      setState(() {});
+    }
+  }
 }
+
+
+// class MyApp extends StatelessWidget {
+//   final String? local;
+//   MyApp({Key? key, required this.local});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     Locale defaultLocale = Locale('en'); // Set your default language here
+//
+//     // Check if local is empty, if so, use the default locale
+//     Locale locale = local != null && local!.isNotEmpty ? Locale(local!) : defaultLocale;
+//
+//     return MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider(create: (_) => ThemeManager()), // Provide ThemeManager instance
+//         ChangeNotifierProvider(create: (_) => LanguageChangeController()),
+//       ],
+//       child: Consumer2<LanguageChangeController, ThemeManager>(
+//         builder: (context, languageProvider, themeManager, child) {
+//           return MaterialApp(
+//             title: 'The Tarot Guru',
+//             theme: themeManager.getTheme(),
+//             locale: locale,
+//             localizationsDelegates: [
+//               AppLocalizations.delegate,
+//               GlobalMaterialLocalizations.delegate,
+//               GlobalWidgetsLocalizations.delegate,
+//               GlobalCupertinoLocalizations.delegate
+//             ],
+//             supportedLocales: AppLocalizations.supportedLocales,
+//             home: SplashScreen(),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+

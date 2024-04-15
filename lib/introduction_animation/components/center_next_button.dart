@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:the_tarot_guru/MainScreens/Login/login_form.dart';
+import 'package:the_tarot_guru/main_screens/Login/login_form.dart';
+import 'package:the_tarot_guru/main_screens/Login/loginnew.dart';
 
 class CenterNextButton extends StatelessWidget {
   final AnimationController animationController;
@@ -170,7 +171,7 @@ class CenterNextButton extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                SignInTwo(),
+                                SignIn(),
                           ),
                         );
                       },

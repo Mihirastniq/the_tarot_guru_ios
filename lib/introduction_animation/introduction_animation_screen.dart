@@ -7,7 +7,8 @@ import 'package:the_tarot_guru/introduction_animation/components/top_back_skip_v
 import 'package:the_tarot_guru/introduction_animation/components/welcome_view.dart';
 import 'package:flutter/material.dart';
 
-import '../MainScreens/Register/register_form.dart';
+import '../main_screens/Register/register_form.dart';
+import '../main_screens/Register/registernew.dart';
 class IntroductionAnimationScreen extends StatefulWidget {
   const IntroductionAnimationScreen({Key? key}) : super(key: key);
 
@@ -125,7 +126,7 @@ class _IntroductionAnimationScreenState
       context,
       MaterialPageRoute(
         builder: (context) =>
-            RegisterPage(),
+            RegisterNew(),
       ),
     );
   }

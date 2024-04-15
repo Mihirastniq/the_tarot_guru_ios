@@ -1,0 +1,466 @@
+{
+  "apptitle": "The Tarot Guru",
+  "@apptitle": {
+    "discription": "Use evrywhere inside app for title"
+  },
+  "hello": "Hello",
+  "@hello": {
+    "description": "Welcome text message"
+  },
+  "welcome": "Welcome To,",
+  "@welcome": {
+    "description": "Welcome text message"
+  },
+  "oshotitle": "Osho Zen",
+  "@oshotitle": {
+    "description": "Title use every where in app for Osho Zen Tarot"
+  },
+  "ridertitle": "Rider Waite",
+  "@ridertitle": {
+    "description": "Title use every where in app for Rider Waite"
+  },
+  "producttitle": "Our Products",
+  "@producttitle": {
+    "description": "Title use every where in app for Products"
+  },
+  "oshofulltitle": "Rider Waite Tarot",
+  "@oshofulltitle": {
+    "discription": "Use as full title in whole app"
+  },
+  "riderfulltitle": "Rider Waite Tarot",
+  "@riderfulltitle": {
+    "discription": "Use as full title in whole app"
+  },
+  "newspreadd": "New Spread",
+  "@newspread": {
+    "discription": "use as button title"
+  },
+  "decktitle": "Deck",
+  "@decktitle": {
+    "@discription": "Use as button title"
+  },
+  "savespread": "Save Spread",
+  "@savespread": {
+    "@discription": "Use as button title"
+  },
+  "aboutoshozen": "About Osho Zen Tarot",
+  "@aboutoshozen": {
+    "@discription": "Use as button title"
+  },
+  "aboutriderwaite": "About Rider Waite Tarot",
+  "@aboutriderwaite": {
+    "@discription": "Use as button title"
+  },
+  "thankyou": "Thank You!",
+  "@thankyou": {
+    "@discription": "Use as button title"
+  },
+  "sorry": "Sorry!",
+  "@sorry": {
+    "@discription": "Use as button title"
+  },
+  "paymentsuccesstitle": "Payment done Successfully",
+  "@paymentsuccesstitle": {
+    "@discription": "Use as button title"
+  },
+  "paymentfailtitle": "Payment Failed",
+  "@paymentfailtitle": {
+    "@discription": "Use as button title"
+  },
+  "paymentsuccesssubmessage": "You can now enjoy full app access for lifetime. T&C apply. Happy Tarot",
+  "@paymentsuccesssubmessage": {
+    "@discription": "Use as button title"
+  },
+  "backtoapp": "Back To App",
+  "@backtoapp": {
+    "@discription": "Use as button title"
+  },
+  "backtohome": "Back To Home",
+  "@backtohome": {
+    "@discription": "Use as button title"
+  },
+  "subscriptionmaintitle": "Get Unlimited \\nExclusive Access",
+  "@subscriptionmaintitle": {
+    "@discription": "Use as button title"
+  },
+  "sucscriptionsubtitle": "And get lifetime access",
+  "@sucscriptionsubtitle": {
+    "@discription": "Use as button title"
+  },
+  "subsctiptionpointone": "All spread_controller access",
+  "@subsctiptionpointone": {
+    "@discription": "Use as button title"
+  },
+  "subsctiptionpointtwo": "Lifetime access",
+  "@subsctiptionpointtwo": {
+    "@discription": "Use as button title"
+  },
+  "subsctiptionpointthree": "Ads free app",
+  "@subsctiptionpointthree": {
+    "@discription": "Use as button title"
+  },
+  "subscribenow": "Subscribe Now",
+  "@subscribenow": {
+    "@discription": "Use as button title"
+  },
+  "presubscribemaintitle": "You have our \\nExclusive Access",
+  "@presubscribemaintitle": {
+    "@discription": "Use as button title"
+  },
+  "spreaddetails": "Spread Details",
+  "@spreaddetails": {
+    "@discription": "Use as button title"
+  },
+  "cardcategory": "Card Category",
+  "@cardcategory": {
+    "@discription": "Use as button title"
+  },
+  "discriptioninspread": "Discription",
+  "@discriptioninspread": {
+    "@discription": "Use as button title"
+  },
+  "newspreadtitle": "New Spread",
+  "@newspreadtitle": {
+    "@discription": "Use as button title"
+  },
+  "tarotsubtitle": "Tarot",
+  "@tarotsubtitle": {
+    "@discription": "Use as button title"
+  },
+  "reversedinspread": "Reversed",
+  "@reversedinspread": {
+    "@discription": "Use as button title"
+  },
+  "niscurseinspread": "Niscurse",
+  "@niscurseinspread": {
+    "@discription": "Use as button title"
+  },
+  "singlecard": "Single Card",
+  "@singlecard": {
+    "description": "This is button label"
+  },
+  "threecard": "Three Card",
+  "@threecard": {
+    "description": "This is button label"
+  },
+  "thediamond": "The Diamond",
+  "@thediamond": {
+    "description": "This is button label"
+  },
+  "theflyingbird": "The Flying Bird",
+  "@theflyingbird": {
+    "description": "This is button label"
+  },
+  "thekey": "The Key",
+  "@thekey": {
+    "description": "This is button label"
+  },
+  "theparadox": "The Paradox",
+  "@theparadox": {
+    "description": "This is button label"
+  },
+  "themirror": "The Mirror",
+  "@themirror": {
+    "description": "This is button label"
+  },
+  "celticcross": "Celtic Cross",
+  "@celticcross": {
+    "description": "This is button label"
+  },
+  "relationship": "Relationship",
+  "@relationship": {
+    "description": "This is button label"
+  },
+  "unification": "Unification",
+  "@unification": {
+    "description": "This is button label"
+  },
+  "twocard": "Two Card",
+  "@twocard": {
+    "description": "This is button label"
+  },
+  "fourcardspread": "Four Card Spread",
+  "@fourcardspread": {
+    "description": "This is button label"
+  },
+  "fivecardspread": "Five Card Spread",
+  "@fivecardspread": {
+    "description": "This is button label"
+  },
+  "moneyspread": "Money Spread",
+  "@moneyspread": {
+    "description": "This is button label"
+  },
+  "sixcardspread": "Six Card Spread",
+  "@sixcardspread": {
+    "description": "This is button label"
+  },
+  "sevencardspread": "Seven Card Spread",
+  "@sevencardspread": {
+    "description": "This is button label"
+  },
+  "thehorseshoespread": "The Horseshoe Spread",
+  "@thehorseshoespread": {
+    "description": "This is button label"
+  },
+  "eightcardspread": "Eight Card Spread",
+  "@eightcardspread": {
+    "description": "This is button label"
+  },
+  "ninecardspread": "Nine Card Spread",
+  "@ninecardspread": {
+    "description": "This is button label"
+  },
+  "twelvecardspread": "Twelve card",
+  "@twelvecardspread": {
+    "description": "This is button label"
+  },
+  "circularspread": "Circular Spread",
+  "@circularspread": {
+    "description": "This is button label"
+  },
+  "theelcemist": "The Elcemist",
+  "@theelcemist": {
+    "description": "This is button label"
+  },
+  "spreadsave": "Save Spread",
+  "@spreadsave": {
+    "@discription": "Use as button title"
+  },
+  "spreadtextinputname": "Enter a name for the spread",
+  "@spreadtextinputname": {
+    "@discription": "Use as button title"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "@discription": "Use as button title"
+  },
+  "save": "Save",
+  "@save": {
+    "@discription": "Use as button title"
+  },
+  "riderSingleCardText": "Single Card",
+  "@riderSingleCardText": {
+    "@discription": "Display for selecting single card spread"
+  },
+  "riderTwoCardText": "Two Card",
+  "@riderTwoCardText": {
+    "@discription": "Display for selecting two card spread"
+  },
+  "riderThreeCardText": "Three Card",
+  "@riderThreeCardText": {
+    "@discription": "Display for selecting three card spread"
+  },
+  "riderFourCardSpreadText": "Four Card Spread",
+  "@riderFourCardSpreadText": {
+    "@discription": "Display for selecting four card spread"
+  },
+  "riderFiveCardSpreadText": "Five Card Spread",
+  "@riderFiveCardSpreadText": {
+    "@discription": "Display for selecting five card spread"
+  },
+  "riderMoneySpreadText": "Money Spread",
+  "@riderMoneySpreadText": {
+    "@discription": "Display for selecting money spread"
+  },
+  "riderSixCardSpreadText": "Six Card Spread",
+  "@riderSixCardSpreadText": {
+    "@discription": "Display for selecting six card spread"
+  },
+  "riderSevenCardSpreadText": "Seven Card Spread",
+  "@riderSevenCardSpreadText": {
+    "@discription": "Display for selecting seven card spread"
+  },
+  "riderTheHorseshoeSpreadText": "The Horseshoe Spread",
+  "@riderTheHorseshoeSpreadText": {
+    "@discription": "Display for selecting the horseshoe spread"
+  },
+  "riderEightCardSpreadText": "Eight Card Spread",
+  "@riderEightCardSpreadText": {
+    "@discription": "Display for selecting eight card spread"
+  },
+  "riderNineCardSpreadText": "Nine Card Spread",
+  "@riderNineCardSpreadText": {
+    "@discription": "Display for selecting nine card spread"
+  },
+  "riderCelticCrossSpreadText": "Celtic Cross",
+  "@riderCelticCrossSpreadText": {
+    "@discription": "Display for selecting celtic cross spread"
+  },
+  "riderTwelveCardSpreadText": "Twelve card spread_controller",
+  "@riderTwelveCardSpreadText": {
+    "@discription": "Display for selecting twelve card spread"
+  },
+  "riderCircularSpreadText": "Circular Spread",
+  "@riderCircularSpreadText": {
+    "@discription": "Display for selecting circular spread"
+  },
+  "riderTheElcemistText": "The Elcemist",
+  "@riderTheElcemistText": {
+    "@discription": "Display for selecting the elcemist spread"
+  },
+  "oshoSingleCardText": "Osho Single Card",
+  "@oshoSingleCardText": {
+    "@discription": "Use as button title"
+  },
+  "oshoThreeCardText": "Osho Three Card",
+  "@oshoThreeCardText": {
+    "@discription": "Use as button title"
+  },
+  "oshoTheDiamondText": "Osho The Diamond",
+  "@oshoTheDiamondText": {
+    "@discription": "Use as button title"
+  },
+  "oshoTheFlyingBirdText": "Osho The Flying Bird",
+  "@oshoTheFlyingBirdText": {
+    "@discription": "Use as button title"
+  },
+  "oshoTheKeyText": "Osho The Key",
+  "@oshoTheKeyText": {
+    "@discription": "Use as button title"
+  },
+  "oshoTheParadoxText": "Osho The Paradox",
+  "@oshoTheParadoxText": {
+    "@discription": "Use as button title"
+  },
+  "oshoTheMirrorText": "Osho The Mirror",
+  "@oshoTheMirrorText": {
+    "@discription": "Use as button title"
+  },
+  "oshoCelticCrossText": "Osho Celtic Cross",
+  "@oshoCelticCrossText": {
+    "@discription": "Use as button title"
+  },
+  "oshoRelationshipText": "Osho Relationship",
+  "@oshoRelationshipText": {
+    "@discription": "Use as button title"
+  },
+  "oshoUnificationText": "Osho Unification",
+  "@oshoUnificationText": {
+    "@discription": "Use as button title"
+  },
+  "viewdetails": "View Details",
+  "@viewdetails": {
+    "@discription": "Use as button title"
+  },
+  "revealcard": "Reveal card",
+  "@revealcard": {
+    "@discription": "Use as button title"
+  },
+  "buynow": "Buy now",
+  "@buynow": {
+    "@discription": "button use in check out"
+  },
+  "registermessage": "Fill your details and enjoy the new world of Tarot.",
+  "@registermessage": {
+    "@discription": "Message prompting users to fill their details for registration"
+  },
+  "registernowlabel": "Register Now",
+  "@registernowlabel": {
+    "@discription": "Button label for registering an account"
+  },
+  "firstnamelabel": "First Name",
+  "@firstnamelabel": {
+    "@discription": "Label for input field asking for the user's first name"
+  },
+  "lastnamelabel": "Last Name",
+  "@lastnamelabel": {
+    "@discription": "Label for input field asking for the user's last name"
+  },
+  "emaillabel": "E-mail",
+  "@emaillabel": {
+    "@discription": "Label for input field asking for the user's email address"
+  },
+  "phonenumberlabel": "Phone Number",
+  "@phonenumberlabel": {
+    "@discription": "Label for input field asking for the user's phone number"
+  },
+  "malelabel": "Male",
+  "@malelabel": {
+    "@discription": "Label for selecting gender as male"
+  },
+  "femallabel": "Female",
+  "@femallabel": {
+    "@discription": "Label for selecting gender as female"
+  },
+  "otherlabel": "Other",
+  "@otherlabel": {
+    "@discription": "Label for selecting gender as other"
+  },
+  "passwordlabel": "Password",
+  "@passwordlabel": {
+    "@discription": "Label for input field asking for the user's password"
+  },
+  "confirmpassword": "Confirm Password",
+  "@confirmpassword": {
+    "@discription": "Label for input field asking the user to confirm their password"
+  },
+  "singin": "Sign in",
+  "@singin": {
+    "@discription": "Button label for signing in to the app"
+  },
+  "orcontinuewith": "Or Continue with",
+  "@orcontinuewith": {
+    "@discription": "Text indicating the option to continue with a different action"
+  },
+  "donthaveaccountlabel": "Don’t have account?",
+  "@donthaveaccountlabel": {
+    "@discription": "Question asking if the user doesn't have an account"
+  },
+  "singinlabel": "Sign In",
+  "@singinlabel": {
+    "@discription": "Label for the sign-in action"
+  },
+  "pinentrylabel": "Enter Your Pin",
+  "@pinentrylabel": {
+    "@discription": "Label for input field asking the user to enter their PIN"
+  },
+  "pinscreensubtitle": "Set Pin For Open App",
+  "@pinscreensubtitle": {
+    "@discription": "Subtitle indicating the purpose of setting a PIN for the app"
+  },
+  "otpscreenlabel": "Enter OTP",
+  "@otpscreenlabel": {
+    "@discription": "Label for input field asking the user to enter the OTP"
+  },
+  "otpscreensubtitle": "Verify your otp",
+  "@otpscreensubtitle": {
+    "@discription": "Subtitle indicating the purpose of verifying the OTP"
+  },
+  "verifylabel": "Verify",
+  "@verifylabel": {
+    "@discription": "Button label for verifying an action"
+  },
+  "profilelabel": "Profile",
+  "@profilelabel": {
+    "@discription": "Label for the user's profile section"
+  },
+  "userdetails": "User Details",
+  "@userdetails": {
+    "@discription": "Label for the section displaying user details"
+  },
+  "addresslabel": "Address",
+  "@addresslabel": {
+    "@discription": "Label for the user's address"
+  },
+  "orderslabel": "Orders",
+  "@orderslabel": {
+    "@discription": "Label for the section displaying user orders"
+  },
+  "settinglabel": "Settings",
+  "@settinglabel": {
+    "@discription": "Label for the app's settings section"
+  },
+  "subscriptionlabel": "Subscription Details",
+  "@subscriptionlabel": {
+    "@discription": "Label for the section displaying subscription details"
+  },
+  "bookslabel": "Books",
+  "@bookslabel": {
+    "@discription": "Label for the section displaying books"
+  },
+  "pricelabel": "Price",
+  "@pricelabel": {
+    "@discription": "Label for displaying the price of items"
+  }
+}
