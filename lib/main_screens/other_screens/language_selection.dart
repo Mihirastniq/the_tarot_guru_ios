@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
 import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
@@ -17,18 +18,12 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   String? _selectedLanguageCode;
   late LanguageChangeController _languageChangeController;
 
-  final List<Map<String, String>> languageOptions = [
-    {'en': 'English'},
-    {'hi': 'Hindi'},
-    {'gu': 'Gujarati'},
-    {'mr': 'Marathi'},
-  ];
-
   @override
   void initState() {
     super.initState();
     _initLanguage();
-    _languageChangeController = LanguageChangeController();
+    // Retrieve the existing instance of LanguageChangeController
+    _languageChangeController = Provider.of<LanguageChangeController>(context, listen: false);
   }
 
   Future<void> _initLanguage() async {
@@ -37,6 +32,14 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
       _selectedLanguageCode = _prefs.getString('lang') ?? 'en';
     });
   }
+
+
+  final List<Map<String, String>> languageOptions = [
+    {'en': 'English'},
+    {'hi': 'Hindi'},
+    {'gu': 'Gujarati'},
+    {'mr': 'Marathi'},
+  ];
 
   @override
   Widget build(BuildContext context) {

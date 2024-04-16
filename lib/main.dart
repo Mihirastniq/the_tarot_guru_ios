@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             title: 'The Tarot Guru',
             theme: themeManager.getTheme(),
-            locale: context.watch<LanguageChangeController>().NewAppLocal,
+            locale: languageProvider.appLocal ?? locale,
             localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -55,13 +55,5 @@ class _MyAppState extends State<MyApp> {
         },
       ),
     );
-  }
-
-  @override
-  void didUpdateWidget(MyApp oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.local != widget.local) {
-      setState(() {});
-    }
   }
 }
