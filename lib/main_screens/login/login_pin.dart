@@ -270,6 +270,7 @@ import 'package:the_tarot_guru/home.dart';
 
 //
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PinEntryScreen extends StatefulWidget {
   @override
@@ -387,7 +388,7 @@ class _OtpState extends State<PinEntryScreen> {
                   height: 24,
                 ),
                 Text(
-                  'Enter Your Pin',
+                  '${AppLocalizations.of(context)!.pinentrylabel}',
                   style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
@@ -398,7 +399,7 @@ class _OtpState extends State<PinEntryScreen> {
                   height: 10,
                 ),
                 Text(
-                  "Verify your secret pin",
+                  "${AppLocalizations.of(context)!.loginpinsubtitle}",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -449,7 +450,7 @@ class _OtpState extends State<PinEntryScreen> {
                           child: Padding(
                             padding: EdgeInsets.all(14.0),
                             child: Text(
-                              'Verify',
+                              '${AppLocalizations.of(context)!.verifylabel}',
                               style: TextStyle(fontSize: 16),
                             ),
                           ),

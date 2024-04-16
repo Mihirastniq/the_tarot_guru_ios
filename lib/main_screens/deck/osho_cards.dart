@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For loading JSON file
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/Deck/osho_card_details.dart';
 import 'package:the_tarot_guru/main_screens/Deck/rider_card_details.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
@@ -31,12 +32,14 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
 
   Future<void> _loadCardData() async {
     try {
-      // Load JSON file from assets
+      SharedPreferences sp = await SharedPreferences.getInstance();
+      final String language = sp.getString('lang') ?? 'en';
+
       String jsonString = await rootBundle.loadString('assets/json/oshoo_zen_data.json');
       // Parse JSON data
       Map<String, dynamic> data = jsonDecode(jsonString);
       // Extract card data based on language code and deck option
-      List<dynamic> cards = data['en']['cards'];
+      List<dynamic> cards = data[language]['cards'];
       _cardData = cards
           .where((card) =>
       card['card_category'] == widget.deckOption)
@@ -61,8 +64,10 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color(0xFF171625),
-                  Color(0xFF171625),
+                  // Color(0xFF171625),
+                  // Color(0xFF171625),
+                  Color.fromRGBO(19, 14, 42, 1),
+                  Colors.deepPurple.shade900.withOpacity(0.9),
                 ],
               ),
             ),
@@ -107,16 +112,6 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
               ),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
-                IconButton(
                   icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
@@ -137,9 +132,9 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
     } else {
       return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
+          crossAxisCount: 3,
+          crossAxisSpacing: 20.0,
+          mainAxisSpacing: 20.0,
         ),
         itemCount: _cardData.length,
         itemBuilder: (BuildContext context, int index) {
@@ -157,6 +152,7 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
               );
             },
             child: Container(
+
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/other/button.png'),
@@ -174,8 +170,8 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
                 children: [
                   Image.asset(
                     'assets/images/tarot_cards/${widget.tarotType}/${widget.deckOption}/${_cardData[index].cardImage}',
-                    width: 80.0,
-                    height: 80.0,
+                    width: 50.0,
+                    height: 50.0,
                   ),
                   SizedBox(height: 10.0),
                   Text(

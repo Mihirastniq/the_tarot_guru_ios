@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
@@ -178,12 +179,14 @@ class OshoCardDetailsScreen extends StatelessWidget {
 
 Future<Map<String, dynamic>> fetchCardDetails(String tarotType, String cardId) async {
   try {
-    // Load JSON file from assets
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    final String language = sp.getString('lang') ?? 'en';
+
     String jsonString = await rootBundle.loadString('assets/json/oshoo_zen_data.json');
     // Parse JSON data
     Map<String, dynamic> data = jsonDecode(jsonString);
     // Extract card details based on the card ID
-    List<dynamic> cards = data['en']['cards'];
+    List<dynamic> cards = data[language]['cards'];
     Map<String, dynamic>? cardDetails;
     for (var card in cards) {
       if (card['id'].toString() == cardId) {

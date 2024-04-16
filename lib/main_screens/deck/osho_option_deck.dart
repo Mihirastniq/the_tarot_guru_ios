@@ -1,33 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/main_screens/Deck/osho_cards.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class DeckScreen extends StatelessWidget {
+class DeckScreen extends StatefulWidget {
   final String tarotType;
+  const DeckScreen({Key? key, required this.tarotType});
 
-  const DeckScreen({Key? key, required this.tarotType}) : super(key: key);
+  @override
+  State<DeckScreen> createState() => _DeckScreenState();
+}
+
+class _DeckScreenState extends State<DeckScreen> {
+
 
   @override
   Widget build(BuildContext context) {
-    List<String> deckOptions = []; // Initialize an empty list to store deck options
+    late Map<String, String> deckOptions;
 
-
-    if (tarotType == 'Osho Zen') {
-      deckOptions = [
-        "Major Arcana",
-        "Fire",
-        "Water",
-        "Earth",
-        "Clouds",
-      ];
-    } else if (tarotType == 'Rider Waite') {
-      deckOptions = [
-        "Major Arcana",
-        "Pentacles",
-        "Cups",
-        "Swords",
-        "Wands",
-      ];
+    if (widget.tarotType == 'Osho Zen') {
+      deckOptions = {
+        "Major Arcana": "${AppLocalizations.of(context)!.oshomajorarcana}",
+        "Fire": "${AppLocalizations.of(context)!.oshofire}",
+        "Water": "${AppLocalizations.of(context)!.oshowater}",
+        "Earth": "${AppLocalizations.of(context)!.oshoearth}",
+        "Clouds": "${AppLocalizations.of(context)!.oshoclouds}",
+      };
+    } else if (widget.tarotType == 'Rider Waite') {
+      deckOptions = {
+        "Major Arcana": "${AppLocalizations.of(context)!.ridermajorarcana}",
+        "Pentacles": "${AppLocalizations.of(context)!.riderpentacles}",
+        "Cups": "${AppLocalizations.of(context)!.ridercups}",
+        "Swords": "${AppLocalizations.of(context)!.riderswords}",
+        "Wands": "${AppLocalizations.of(context)!.riderwands}",
+      };
     }
 
     return Scaffold(
@@ -71,9 +77,9 @@ class DeckScreen extends StatelessWidget {
                         child: Container(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: List.generate(deckOptions.length, (index) {
-                              return _buildButton(context, deckOptions[index]);
-                            }),
+                            children: deckOptions.entries.map((entry) {
+                              return _buildButton(context, entry.key, entry.value);
+                            }).toList(),
                           ),
                         ),
                       ),
@@ -92,7 +98,7 @@ class DeckScreen extends StatelessWidget {
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
-                '$tarotType Tarot',
+                '${AppLocalizations.of(context)!.profile} Tarot',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
@@ -119,7 +125,7 @@ class DeckScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildButton(BuildContext context, String text) {
+  Widget _buildButton(BuildContext context, String key, String deckOption) {
     return Container(
       child: Column(
         children: [
@@ -131,7 +137,6 @@ class DeckScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-
                     Colors.indigo,
                     Colors.indigo
                   ],
@@ -144,8 +149,8 @@ class DeckScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => OshoCardSelectionScreen(
-                          tarotType: tarotType,
-                          deckOption: text,
+                          tarotType: widget.tarotType,
+                          deckOption: key,
                         )),
                   );
                 },
@@ -157,7 +162,7 @@ class DeckScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  text,
+                  deckOption,
                   style: TextStyle(
                     color: Colors.white, // Text color
                     fontSize: 22.0,

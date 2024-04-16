@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/Profile/profile.dart';
 import 'package:the_tarot_guru/home.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Sidebar extends StatelessWidget {
 
@@ -53,7 +54,7 @@ class Sidebar extends StatelessWidget {
                 ),
 
                 child: ListTile(
-                  title: Text('Home', style: TextStyle(color: selectedIndex == 0 ? Colors.black : Colors.white)),
+                  title: Text('${AppLocalizations.of(context)!.home}', style: TextStyle(color: selectedIndex == 0 ? Colors.black : Colors.white)),
                   selected: selectedIndex == 0,
                   tileColor: selectedIndex == 0 ? Colors.black : Colors.white,
                   onTap: () {
@@ -71,7 +72,7 @@ class Sidebar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(
-                  title: Text('profile', style: TextStyle(color: selectedIndex == 1 ? Colors.black : Colors.white)),
+                  title: Text('${AppLocalizations.of(context)!.profile}', style: TextStyle(color: selectedIndex == 1 ? Colors.black : Colors.white)),
                   selected: selectedIndex == 1,
                   tileColor: selectedIndex == 1 ? Colors.black : Colors.white,
                   onTap: () {

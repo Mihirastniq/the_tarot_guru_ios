@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_tarot_guru/main_screens/register/lanbackup.dart';
+import 'package:the_tarot_guru/home.dart';
+import 'package:the_tarot_guru/main_screens/controller/counter_provider.dart';
 import 'package:the_tarot_guru/main_screens/theme/theme_settings.dart';
 import 'package:the_tarot_guru/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -27,14 +28,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    Locale defaultLocale = Locale('en'); // Set your default language here
+    Locale defaultLocale = Locale('en');
 
-    // Check if local is empty, if so, use the default locale
     Locale locale = widget.local != null && widget.local!.isNotEmpty ? Locale(widget.local!) : defaultLocale;
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeManager()), // Provide ThemeManager instance
+        ChangeNotifierProvider(create: (_) => ThemeManager()),
         ChangeNotifierProvider(create: (_) => LanguageChangeController()),
       ],
       child: Consumer2<LanguageChangeController, ThemeManager>(
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             title: 'The Tarot Guru',
             theme: themeManager.getTheme(),
-            locale: locale,
+            locale: context.watch<LanguageChangeController>().NewAppLocal,
             localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate
             ],
             supportedLocales: AppLocalizations.supportedLocales,
-            home: SplashScreen(),
+            home: AppSelect(),
           );
         },
       ),
@@ -61,7 +61,6 @@ class _MyAppState extends State<MyApp> {
   void didUpdateWidget(MyApp oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.local != widget.local) {
-      // Language has changed, rebuild the app
       setState(() {});
     }
   }

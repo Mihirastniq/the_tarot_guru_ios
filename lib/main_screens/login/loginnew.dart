@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:the_tarot_guru/main_screens/Register/registernew.dart';
 import 'package:the_tarot_guru/main_screens/controller/session_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -78,7 +79,7 @@ class _SignInFiveState extends State<SignIn> {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            'Continue with email for sign in App',
+                            '${AppLocalizations.of(context)!.loginsubtitle}',
                             style: GoogleFonts.inter(
                               fontSize: 14.0,
                               color: Colors.white,
@@ -162,7 +163,7 @@ class _SignInFiveState extends State<SignIn> {
 
   Widget richText(double fontSize) {
     return Text(
-      'LOGIN',
+      '${AppLocalizations.of(context)!.logintitle}',
       style: TextStyle(
         color: Colors.white,
         fontSize: fontSize,
@@ -216,7 +217,7 @@ class _SignInFiveState extends State<SignIn> {
                   fontWeight: FontWeight.w500,
                 ),
                 decoration: InputDecoration(
-                    hintText: 'Enter your gmail address',
+                    hintText: '${AppLocalizations.of(context)!.loginemaillabel}',
                     hintStyle: GoogleFonts.inter(
                       fontSize: 14.0,
                       color: Colors.white70,
@@ -277,7 +278,7 @@ class _SignInFiveState extends State<SignIn> {
                   fontWeight: FontWeight.w500,
                 ),
                 decoration: InputDecoration(
-                    hintText: 'Enter your password',
+                    hintText: '${AppLocalizations.of(context)!.loginpasswordlabel}',
                     hintStyle: GoogleFonts.inter(
                       fontSize: 14.0,
                       color: Colors.white70,
@@ -309,7 +310,7 @@ class _SignInFiveState extends State<SignIn> {
           color: const Color(0xFFC32EC3),
         ),
         child: Text(
-          'Sign in',
+          '${AppLocalizations.of(context)!.signintextlabel}',
           style: GoogleFonts.inter(
             fontSize: 22.0,
             color: Colors.white,
@@ -331,7 +332,7 @@ class _SignInFiveState extends State<SignIn> {
             )),
         Expanded(
           child: Text(
-            'Or Continue with',
+            '${AppLocalizations.of(context)!.orcontinuewith}',
             style: GoogleFonts.inter(
               fontSize: 12.0,
               color: Colors.white,
@@ -358,13 +359,13 @@ class _SignInFiveState extends State<SignIn> {
           ),
           children: [
             TextSpan(
-              text: 'Don’t have account? ',
+              text: '${AppLocalizations.of(context)!.donthaveaccountlabel}',
               style: GoogleFonts.nunito(
                 fontWeight: FontWeight.w600,
               ),
             ),
             TextSpan(
-              text: 'Sign up',
+              text: '${AppLocalizations.of(context)!.signup}',
               style: GoogleFonts.nunito(
                 color: const Color(0xFFF9CA58),
                 fontWeight: FontWeight.w600,

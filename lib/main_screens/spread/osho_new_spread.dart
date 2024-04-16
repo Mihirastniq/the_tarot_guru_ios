@@ -37,6 +37,7 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/1.png',
             "iconBoxColor": Color(0xFF84663A),
+            'spreadEnglishName':'Osho Single Card',
           },
           "${AppLocalizations.of(context)!.threecard}": {
             "count": 3,
@@ -45,6 +46,7 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/2.png',
             "iconBoxColor": Color(0xFF74234B),
+            'spreadEnglishName':'Osho Three Card',
           },
           "${AppLocalizations.of(context)!.thediamond}": {
             "count": 5,
@@ -53,6 +55,7 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/3.png',
             "iconBoxColor": Color(0xFF521E1F),
+            'spreadEnglishName':'Osho The Diamond',
           },
           "${AppLocalizations.of(context)!.theflyingbird}": {
             "count": 7,
@@ -61,6 +64,7 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/4.png',
             "iconBoxColor": Color(0xFF5F3A80),
+            'spreadEnglishName':'Osho The Flying Bird',
           },
           "${AppLocalizations.of(context)!.thekey}": {
             "count": 8,
@@ -69,6 +73,7 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/5.png',
             "iconBoxColor": Color(0xFF487A8B),
+            'spreadEnglishName':'Osho The Key',
           },
           "${AppLocalizations.of(context)!.theparadox}": {
             "count": 3,
@@ -77,6 +82,7 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/6.png',
             "iconBoxColor": Color(0xFF40253F),
+            'spreadEnglishName':'Osho The Paradox',
           },
           "${AppLocalizations.of(context)!.themirror}": {
             "count": 12,
@@ -85,6 +91,7 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/7.png',
             "iconBoxColor": Color(0xFF796B3B),
+            'spreadEnglishName':'Osho The Mirror',
           },
           "${AppLocalizations.of(context)!.celticcross}": {
             "count": 10,
@@ -93,6 +100,7 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/8.png',
             "iconBoxColor": Color(0xFF3D622C),
+            'spreadEnglishName':'Osho Celtic Cross',
           },
           "${AppLocalizations.of(context)!.relationship}": {
             "count": 4,
@@ -101,6 +109,7 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/9.png',
             "iconBoxColor": Color(0xFF524C2F),
+            'spreadEnglishName':'Osho Relationship',
           },
           "${AppLocalizations.of(context)!.unification}": {
             "count": 10,
@@ -109,13 +118,14 @@ class _NewSpreadState extends State<NewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/osho/10.png',
             "iconBoxColor": Color(0xFF3B2A42),
+            'spreadEnglishName':'Osho Unification',
           },
         };
       }
     });
   }
 
-  void navigateToActiveSpread(String spreadName, int numberOfCards, Color color1, Color color2, String imagePath) async {
+  void navigateToActiveSpread(String spreadName, int numberOfCards, Color color1, Color color2, String imagePath,String spreadEnglishName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? subscriptionStatus = prefs.getInt('subscription_status');
 
@@ -126,6 +136,7 @@ class _NewSpreadState extends State<NewSpread> {
           builder: (context) => ActiveSpread(
             tarotType: widget.tarotType,
             spreadName: spreadName,
+            spreadEnglishName:spreadEnglishName,
             numberOfCards: numberOfCards,
           ),
         ),
@@ -183,7 +194,7 @@ class _NewSpreadState extends State<NewSpread> {
                           fontSize: 25,
                           fontWeight: FontWeight.w800
                       ),),
-                      Text('${AppLocalizations.of(context)!.tarotsubtitle} : ${widget.tarotType}',style: TextStyle(
+                      Text('${AppLocalizations.of(context)!.tarotsubtitle} : ${AppLocalizations.of(context)!.oshofulltitle}',style: TextStyle(
                           color: Colors.white,
                           fontSize: 17
                       ),),
@@ -201,6 +212,7 @@ class _NewSpreadState extends State<NewSpread> {
                     Color color2 = optionCardCounts[option]!['color2'];
                     double opacity = optionCardCounts[option]!['opacity'];
                     String imagePath = optionCardCounts[option]!['imagePath'];
+                    String spreadEnglishName = optionCardCounts[option]!['spreadEnglishName'];
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       height: 150, // Fixed height for each button
@@ -213,6 +225,7 @@ class _NewSpreadState extends State<NewSpread> {
                         opacity,
                         imagePath,
                         optionCardCounts[option]!['iconBoxColor'],
+                        spreadEnglishName,
                       ),
                     );
                   },
@@ -263,10 +276,11 @@ class _NewSpreadState extends State<NewSpread> {
       double opacity,
       String imagePath,
       Color iconBoxColor,
+      String spreadEnglishName,
       ) {
     return GestureDetector(
       onTap: () {
-        navigateToActiveSpread(option, cardCount, color1, color2, imagePath);
+        navigateToActiveSpread(option, cardCount, color1, color2, imagePath,spreadEnglishName);
       },
       child: Container(
           width: double.infinity, // Full width

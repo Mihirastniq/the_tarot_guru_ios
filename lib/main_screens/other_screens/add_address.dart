@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddAddressScreen extends StatefulWidget {
   @override
@@ -77,7 +78,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Address'),
+        title: Text('${AppLocalizations.of(context)!.addaddress}'),
       ),
       backgroundColor: Colors.white,
       body: Padding(
@@ -89,7 +90,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               TextFormField(
                 controller: _billingNameController,
                 decoration: InputDecoration(
-                  labelText: 'Billing Name',
+                  labelText: '${AppLocalizations.of(context)!.billingname}',
                   labelStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -104,7 +105,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter billing name';
+                    return '${AppLocalizations.of(context)!.bilingnameplaceholder}';
                   }
                   return null;
                 },
@@ -113,7 +114,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               TextFormField(
                 controller: _addressLine1Controller,
                 decoration: InputDecoration(
-                  labelText: 'Address Line 1',
+                  labelText: '${AppLocalizations.of(context)!.addressline1}',
                   labelStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -128,7 +129,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter address line 1';
+                    return '${AppLocalizations.of(context)!.addressline1placeholder}';
                   }
                   return null;
                 },
@@ -137,7 +138,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               TextFormField(
                 controller: _addressLine2Controller,
                 decoration: InputDecoration(
-                  labelText: 'Address Line 2',
+                  labelText: '${AppLocalizations.of(context)!.addressline2}',
                   labelStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -155,7 +156,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               TextFormField(
                 controller: _postalCodeController,
                 decoration: InputDecoration(
-                  labelText: 'Postal Code',
+                  labelText: '${AppLocalizations.of(context)!.postalcode}',
                   labelStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -170,7 +171,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter postal code';
+                    return '${AppLocalizations.of(context)!.postalcodelaceholder}';
                   }
                   return null;
                 },
@@ -179,7 +180,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               TextFormField(
                 controller: _cityController,
                 decoration: InputDecoration(
-                  labelText: 'City',
+                  labelText: '${AppLocalizations.of(context)!.citylabel}',
                   labelStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -194,7 +195,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter city';
+                    return '${AppLocalizations.of(context)!.citylabellaceholder}';
                   }
                   return null;
                 },
@@ -203,7 +204,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               TextFormField(
                 controller: _stateController,
                 decoration: InputDecoration(
-                  labelText: 'State',
+                  labelText: '${AppLocalizations.of(context)!.statelabel}',
                   labelStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -218,7 +219,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter state';
+                    return '${AppLocalizations.of(context)!.stateplaceholder}';
                   }
                   return null;
                 },
@@ -227,7 +228,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               TextFormField(
                 controller: _countryController,
                 decoration: InputDecoration(
-                  labelText: 'Country',
+                  labelText: '${AppLocalizations.of(context)!.countrylabel}',
                   labelStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -242,7 +243,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter country';
+                    return '${AppLocalizations.of(context)!.cuntryplaceholder}';
                   }
                   return null;
                 },
@@ -251,7 +252,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               ElevatedButton(
                 onPressed: _submitAddress,
                 child: Text(
-                  'Submit',
+                  '${AppLocalizations.of(context)!.submitbuttonlabel}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,

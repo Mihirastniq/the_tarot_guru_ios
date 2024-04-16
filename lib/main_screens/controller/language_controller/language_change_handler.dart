@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageChangeController extends ChangeNotifier {
-    Locale? _appLocal;
-  Locale? get appLocal => _appLocal;
+    Locale? NewAppLocal;
+  Locale? get appLocal => NewAppLocal;
 
   Future<void> changelanguage(Locale type) async {
-    _appLocal = type;
     SharedPreferences sp = await SharedPreferences.getInstance();
+    NewAppLocal = type;
     if (type == Locale('en')) {
       await sp.setString('lang', 'en');
     } else if (type == Locale('hi')) {

@@ -31,80 +31,90 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "color1": Color(0xFFF09819),
             "color2": Color(0xFFEDDE5D),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/1.png',
             "iconBoxColor": Color(0xFF84663A),
+            'spreadEnglishName':'Osho Single Card',
           },
           "${AppLocalizations.of(context)!.threecard}": {
             "count": 3,
             "color1": Color(0xFFEE0979),
             "color2": Color(0xFFFF6A00),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/2.png',
             "iconBoxColor": Color(0xFF74234B),
+            'spreadEnglishName':'Osho Three Card',
           },
           "${AppLocalizations.of(context)!.thediamond}": {
             "count": 5,
             "color1": Color(0xFFE52D27),
             "color2": Color(0xFFB31217),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/3.png',
             "iconBoxColor": Color(0xFF521E1F),
+            'spreadEnglishName':'Osho The Diamond',
           },
           "${AppLocalizations.of(context)!.theflyingbird}": {
             "count": 7,
             "color1": Color(0xFFDA22FF),
             "color2": Color(0xFF9733EE),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/4.png',
             "iconBoxColor": Color(0xFF5F3A80),
+            'spreadEnglishName':'Osho The Flying Bird',
           },
           "${AppLocalizations.of(context)!.thekey}": {
             "count": 8,
             "color1": Color(0xFF348F50),
             "color2": Color(0xFF56B4D3),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/5.png',
             "iconBoxColor": Color(0xFF487A8B),
+            'spreadEnglishName':'Osho The Key',
           },
           "${AppLocalizations.of(context)!.theparadox}": {
             "count": 3,
             "color1": Color(0xFF61045F),
             "color2": Color(0xFFAA076B),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/6.png',
             "iconBoxColor": Color(0xFF40253F),
+            'spreadEnglishName':'Osho The Paradox',
           },
           "${AppLocalizations.of(context)!.themirror}": {
             "count": 12,
             "color1": Color(0xFFC21500),
             "color2": Color(0xFFFFC500),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/7.png',
             "iconBoxColor": Color(0xFF796B3B),
+            'spreadEnglishName':'Osho The Mirror',
           },
           "${AppLocalizations.of(context)!.celticcross}": {
             "count": 10,
             "color1": Color(0xFF56AB2F),
             "color2": Color(0xFFA8E063),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/8.png',
             "iconBoxColor": Color(0xFF3D622C),
+            'spreadEnglishName':'Osho Celtic Cross',
           },
           "${AppLocalizations.of(context)!.relationship}": {
             "count": 4,
             "color1": Color(0xFFFF4E50),
             "color2": Color(0xFFF9D423),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/9.png',
             "iconBoxColor": Color(0xFF524C2F),
+            'spreadEnglishName':'Osho Relationship',
           },
           "${AppLocalizations.of(context)!.unification}": {
             "count": 10,
             "color1": Color(0xFF834D9B),
             "color2": Color(0xFFD04ED6),
             "opacity": 0.9,
-            "imagePath": 'assets/images/patterns/rider//logo.png',
+            "imagePath": 'assets/images/patterns/osho/10.png',
             "iconBoxColor": Color(0xFF3B2A42),
+            'spreadEnglishName':'Osho Unification',
           },
         };
       } else if (widget.tarotType == 'Rider Waite') {
@@ -116,6 +126,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/1.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Single Card',
           },
           "${AppLocalizations.of(context)!.twocard}": {
             "count": 2,
@@ -124,6 +135,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/2.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Two Card',
           },
           "${AppLocalizations.of(context)!.threecard}": {
             "count": 3,
@@ -132,6 +144,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/3.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Three Card',
           },
           "${AppLocalizations.of(context)!.fourcardspread}": {
             "count": 4,
@@ -140,6 +153,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/4.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Four Card Spread',
           },
           "${AppLocalizations.of(context)!.fivecardspread}": {
             "count": 5,
@@ -148,6 +162,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/5.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Five Card Spread',
           },
           "${AppLocalizations.of(context)!.moneyspread}": {
             "count": 5,
@@ -156,6 +171,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/6.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Money Spread',
           },
           "${AppLocalizations.of(context)!.sixcardspread}": {
             "count": 6,
@@ -164,6 +180,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/7.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Six Card Spread',
           },
           "${AppLocalizations.of(context)!.sevencardspread}": {
             "count": 7,
@@ -172,6 +189,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/8.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Seven Card Spread',
           },
           "${AppLocalizations.of(context)!.thehorseshoespread}": {
             "count": 7,
@@ -180,6 +198,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/9.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'The Horseshoe Spread',
           },
           "${AppLocalizations.of(context)!.eightcardspread}": {
             "count": 8,
@@ -188,6 +207,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/10.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Eight Card Spread',
           },
           "${AppLocalizations.of(context)!.ninecardspread}": {
             "count": 9,
@@ -196,6 +216,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/11.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Nine Card Spread',
           },
           "${AppLocalizations.of(context)!.celticcross}": {
             "count": 10,
@@ -204,6 +225,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/12.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Celtic Cross',
           },
           "${AppLocalizations.of(context)!.twelvecardspread}": {
             "count": 12,
@@ -212,6 +234,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/13.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Twelve card',
           },
           "${AppLocalizations.of(context)!.circularspread}": {
             "count": 13,
@@ -220,6 +243,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/14.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'Circular Spread',
           },
           "${AppLocalizations.of(context)!.theelcemist}": {
             "count": 6,
@@ -228,6 +252,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
             "opacity": 0.9,
             "imagePath": 'assets/images/patterns/rider/15.png',
             "iconBoxColor": Color(0xFF00796B),
+            'spreadEnglishName':'The Elcemist',
           },
         };
       }
@@ -235,7 +260,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
     });
   }
 
-  void navigateToActiveSpread(String spreadName, int numberOfCards, Color color1, Color color2, String imagePath) {
+  void navigateToActiveSpread(String spreadName, int numberOfCards, Color color1, Color color2, String imagePath,String spreadEnglishName) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -243,6 +268,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
           tarotType: widget.tarotType,
           spreadName: spreadName,
           numberOfCards: numberOfCards,
+          spreadEnglishName: spreadEnglishName,
         ),
       ),
     );
@@ -311,6 +337,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
                     Color color2 = optionCardCounts[option]!['color2'];
                     double opacity = optionCardCounts[option]!['opacity'];
                     String imagePath = optionCardCounts[option]!['imagePath'];
+                    String spreadEnglishName = optionCardCounts[option]! ['spreadEnglishName'];
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       height: 150, // Fixed height for each button
@@ -322,7 +349,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
                         color2,
                         opacity,
                         imagePath,
-                        optionCardCounts[option]!['iconBoxColor'],
+                        optionCardCounts[option]!['iconBoxColor'], spreadEnglishName,
                       ),
                     );
                   },
@@ -373,10 +400,11 @@ class _NewSpreadState extends State<RiderNewSpread> {
       double opacity,
       String imagePath,
       Color iconBoxColor,
+      String spreadEnglishName,
       ) {
     return GestureDetector(
       onTap: () {
-        navigateToActiveSpread(option, cardCount, color1, color2, imagePath);
+        navigateToActiveSpread(option, cardCount, color1, color2, imagePath,spreadEnglishName);
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(0, 0, 0, 25),

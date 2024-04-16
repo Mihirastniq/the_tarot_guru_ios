@@ -207,6 +207,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For loading JSON file
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/Deck/rider_card_details.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
@@ -236,12 +237,14 @@ class _RiderDeckScreenState extends State<RiderCardsScreen> {
 
   Future<void> _loadCardData() async {
     try {
-      // Load JSON file from assets
+
+      SharedPreferences sp = await SharedPreferences.getInstance();
+      final String language = sp.getString('lang') ?? 'en';
+
       String jsonString = await rootBundle.loadString('assets/json/rider_waite_data.json');
-      // Parse JSON data
       Map<String, dynamic> data = jsonDecode(jsonString);
-      // Extract card data based on language code and deck option
-      List<dynamic> cards = data['en']['cards'];
+
+      List<dynamic> cards = data[language]['cards'];
       _cardData = cards
           .where((card) =>
       card['card_category'] == widget.deckOption)

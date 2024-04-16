@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/main_screens/controller/session_controller.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/language_selection.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingScreenClass extends StatefulWidget {
   const SettingScreenClass({super.key});
@@ -58,7 +59,7 @@ class _SettingScreenClassState extends State<SettingScreenClass> {
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 title: Text(
-                  'profile',
+                  '${AppLocalizations.of(context)!.settinglabel}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,
@@ -75,7 +76,7 @@ class _SettingScreenClassState extends State<SettingScreenClass> {
                   Column(
                     children: [
                       ProfileButton(
-                          text: 'Languages',
+                          text: '${AppLocalizations.of(context)!.languageslabel}',
                           onPressed: (){
                             Navigator.push(
                               context,
@@ -91,7 +92,7 @@ class _SettingScreenClassState extends State<SettingScreenClass> {
                   Column(
                     children: [
                       ProfileButton(
-                          text: 'Logout',
+                          text: '${AppLocalizations.of(context)!.logoutlabel}',
                           onPressed: (){
                             loginController.logout(context);
                           },

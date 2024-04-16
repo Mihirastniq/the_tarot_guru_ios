@@ -39,11 +39,12 @@ class ActiveSpread extends StatefulWidget {
   final String spreadName;
   final int numberOfCards;
   final String tarotType;
+  final String spreadEnglishName;
 
   ActiveSpread({
     required this.spreadName,
     required this.numberOfCards,
-    required this.tarotType,
+    required this.tarotType, required this.spreadEnglishName,
   });
   @override
   _ActiveSpreadState createState() => _ActiveSpreadState();
@@ -452,10 +453,9 @@ class _ActiveSpreadState extends State<ActiveSpread> {
       print('Error fetching cards: $e');
     }
   }
-
   String getOptionText(BuildContext context, String tarotType, String spreadName) {
     if (tarotType == 'Osho Zen') {
-      switch (spreadName) {
+      switch (widget.spreadEnglishName) {
         case 'Osho Single Card':
           return AppLocalizations.of(context)!.oshoSingleCardText;
         case 'Osho Three Card':
@@ -481,55 +481,46 @@ class _ActiveSpreadState extends State<ActiveSpread> {
       }
 
     } else if (tarotType == 'Rider Waite') {
-      String getOptionText(BuildContext context, String tarotType, String spreadName) {
-        if (tarotType == 'Osho Zen') {
-          // Handle Osho Zen options here
-        } else if (tarotType == 'Rider Waite') {
-          switch (spreadName) {
-            case 'Single Card':
-              return AppLocalizations.of(context)!.riderSingleCardText;
-            case 'Two Card':
-              return AppLocalizations.of(context)!.riderTwoCardText;
-            case 'Three Card':
-              return AppLocalizations.of(context)!.riderThreeCardText;
-            case 'Four Card Spread':
-              return AppLocalizations.of(context)!.riderFourCardSpreadText;
-            case 'Five Card Spread':
-              return AppLocalizations.of(context)!.riderFiveCardSpreadText;
-            case 'Money Spread':
-              return AppLocalizations.of(context)!.riderMoneySpreadText;
-            case 'Six Card Spread':
-              return AppLocalizations.of(context)!.riderSixCardSpreadText;
-            case 'Seven Card Spread':
-              return AppLocalizations.of(context)!.riderSevenCardSpreadText;
-            case 'The Horseshoe Spread':
-              return AppLocalizations.of(context)!.riderTheHorseshoeSpreadText;
-            case 'Eight Card Spread':
-              return AppLocalizations.of(context)!.riderEightCardSpreadText;
-            case 'Nine Card Spread':
-              return AppLocalizations.of(context)!.riderNineCardSpreadText;
-            case 'Celtic Cross':
-              return AppLocalizations.of(context)!.riderCelticCrossSpreadText;
-            case 'Twelve card spread_controller':
-              return AppLocalizations.of(context)!.riderTwelveCardSpreadText;
-            case 'Circular Spread':
-              return AppLocalizations.of(context)!.riderCircularSpreadText;
-            case 'The Elcemist':
-              return AppLocalizations.of(context)!.riderTheElcemistText;
-            default:
-              return '';
-          }
-        }
-        return '';
+      switch (widget.spreadEnglishName) {
+        case 'Single Card':
+          return AppLocalizations.of(context)!.riderSingleCardText;
+        case 'Two Card':
+          return AppLocalizations.of(context)!.riderTwoCardText;
+        case 'Three Card':
+          return AppLocalizations.of(context)!.riderThreeCardText;
+        case 'Four Card Spread':
+          return AppLocalizations.of(context)!.riderFourCardSpreadText;
+        case 'Five Card Spread':
+          return AppLocalizations.of(context)!.riderFiveCardSpreadText;
+        case 'Money Spread':
+          return AppLocalizations.of(context)!.riderMoneySpreadText;
+        case 'Six Card Spread':
+          return AppLocalizations.of(context)!.riderSixCardSpreadText;
+        case 'Seven Card Spread':
+          return AppLocalizations.of(context)!.riderSevenCardSpreadText;
+        case 'The Horseshoe Spread':
+          return AppLocalizations.of(context)!.riderTheHorseshoeSpreadText;
+        case 'Eight Card Spread':
+          return AppLocalizations.of(context)!.riderEightCardSpreadText;
+        case 'Nine Card Spread':
+          return AppLocalizations.of(context)!.riderNineCardSpreadText;
+        case 'Celtic Cross':
+          return AppLocalizations.of(context)!.riderCelticCrossSpreadText;
+        case 'Twelve card':
+          return AppLocalizations.of(context)!.riderTwelveCardSpreadText;
+        case 'Circular Spread':
+          return AppLocalizations.of(context)!.riderCircularSpreadText;
+        case 'The Elcemist':
+          return AppLocalizations.of(context)!.riderTheElcemistText;
+        default:
+          return '';
       }
-
     }
     return '';
   }
 
   @override
   Widget build(BuildContext context) {
-    String spread_discription = 'A single card - for insight into any situtation or as your meditation for the day';
     return Scaffold(
       body: Stack(
         children: [
@@ -604,7 +595,7 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${spread_discription}',
+                        '${getOptionText(context, widget.tarotType, widget.spreadName)}',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
@@ -617,8 +608,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                       ElevatedButton(
                         onPressed: _changePosition,
                         child: Text(_isAnimating
-                            ? 'Stop Animation'
-                            : 'Start Animation'),
+                            ? ''
+                            : 'Start Spread'),
                       ),
                     ],
                   ),

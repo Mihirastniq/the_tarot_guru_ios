@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
 import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageSelectionScreen extends StatefulWidget {
   const LanguageSelectionScreen({Key? key}) : super(key: key);
@@ -97,7 +98,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 title: Text(
-                  'profile',
+                  '${AppLocalizations.of(context)!.languageslabel}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,
@@ -110,7 +111,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               children: [
                 SizedBox(height: 20),
                 Text(
-                  'Select Language',
+                  '${AppLocalizations.of(context)!.selectlangauge}',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 SizedBox(height: 20),

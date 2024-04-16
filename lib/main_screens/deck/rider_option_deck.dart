@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'rider_cards.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RiderDeckScreen extends StatefulWidget {
   final String tarotType;
@@ -13,25 +14,24 @@ class RiderDeckScreen extends StatefulWidget {
 class _DeckScreenState extends State<RiderDeckScreen> {
   @override
   Widget build(BuildContext context) {
-    List<String> deckOptions = []; // Initialize an empty list to store deck options
-
+    late Map<String, String> deckOptions;
 
     if (widget.tarotType == 'Osho Zen') {
-      deckOptions = [
-        "Major Arcana",
-        "Fire",
-        "Water",
-        "Earth",
-        "Clouds",
-      ];
+      deckOptions = {
+        "Major Arcana": "${AppLocalizations.of(context)!.oshomajorarcana}",
+        "Fire": "${AppLocalizations.of(context)!.oshofire}",
+        "Water": "${AppLocalizations.of(context)!.oshowater}",
+        "Earth": "${AppLocalizations.of(context)!.oshoearth}",
+        "Clouds": "${AppLocalizations.of(context)!.oshoclouds}",
+      };
     } else if (widget.tarotType == 'Rider Waite') {
-      deckOptions = [
-        "Major Arcana",
-        "Pentacles",
-        "Cups",
-        "Swords",
-        "Wands",
-      ];
+      deckOptions = {
+        "Major Arcana": "${AppLocalizations.of(context)!.ridermajorarcana}",
+        "Pentacles": "${AppLocalizations.of(context)!.riderpentacles}",
+        "Cups": "${AppLocalizations.of(context)!.ridercups}",
+        "Swords": "${AppLocalizations.of(context)!.riderswords}",
+        "Wands": "${AppLocalizations.of(context)!.riderwands}",
+      };
     }
 
     return Scaffold(
@@ -75,9 +75,9 @@ class _DeckScreenState extends State<RiderDeckScreen> {
                         child: Container(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: List.generate(deckOptions.length, (index) {
-                              return _buildButton(context, deckOptions[index]);
-                            }),
+                            children: deckOptions.entries.map((entry) {
+                              return _buildButton(context, entry.key, entry.value);
+                            }).toList(),
                           ),
                         ),
                       ),
@@ -103,18 +103,6 @@ class _DeckScreenState extends State<RiderDeckScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
-              ],
             ),
           ),
         ],
@@ -123,43 +111,48 @@ class _DeckScreenState extends State<RiderDeckScreen> {
     );
   }
 
-  Widget _buildButton(BuildContext context, String deckOption) {
+  Widget _buildButton(BuildContext context, String key, String deckOption) {
     return GestureDetector(
-        onTap:() {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => RiderCardsScreen(
-                  tarotType: widget.tarotType,
-                  deckOption: deckOption,
-                )),
-          );
-        },
-        child: Container(
-          margin: EdgeInsets.fromLTRB(0, 0, 0, 25),
-          color: Color(0xFF171625).withOpacity(0.6),
-          child: Container(
-            width: MediaQuery.of(context).size.width*0.8,
-            height: 100,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/other/button.png'),
-                  fit: BoxFit.cover,
-                  opacity: 0.5,
-                ),
-                border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5),
-                ),
-                borderRadius: BorderRadius.circular(15)
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('${deckOption}',style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.w800),)
-              ],
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RiderCardsScreen(
+              tarotType: widget.tarotType,
+              deckOption: key,
             ),
           ),
-        )
-    );}
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 25),
+        color: Color(0xFF171625).withOpacity(0.6),
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: 100,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/other/button.png'),
+              fit: BoxFit.cover,
+              opacity: 0.5,
+            ),
+            border: Border.all(
+              width: 2,
+              color: Colors.grey.withOpacity(0.5),
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                deckOption,
+                style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
