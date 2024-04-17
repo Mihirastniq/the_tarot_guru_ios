@@ -129,7 +129,7 @@ class _NewSpreadState extends State<NewSpread> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? subscriptionStatus = prefs.getInt('subscription_status');
 
-    if (subscriptionStatus == 1 || spreadName == "Single Card" || spreadName == "Three Card") {
+    if (subscriptionStatus == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -142,10 +142,24 @@ class _NewSpreadState extends State<NewSpread> {
         ),
       );
     } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SubscribeApp()),
-      );
+      if ( spreadEnglishName == "Osho Single Card" || spreadEnglishName == "Osho Three Card") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ActiveSpread(
+              tarotType: widget.tarotType,
+              spreadName: spreadName,
+              spreadEnglishName:spreadEnglishName,
+              numberOfCards: numberOfCards,
+            ),
+          ),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SubscribeApp()),
+        );
+      }
     }
   }
 

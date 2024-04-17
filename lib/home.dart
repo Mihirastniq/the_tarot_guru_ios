@@ -267,6 +267,7 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                         width: double.infinity,
                         height: 150,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text('${AppLocalizations.of(context)!.producttitle}',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w800),)
                           ],

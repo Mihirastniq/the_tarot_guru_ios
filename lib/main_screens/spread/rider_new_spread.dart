@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
 import 'ActiveSpread.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -260,18 +262,42 @@ class _NewSpreadState extends State<RiderNewSpread> {
     });
   }
 
-  void navigateToActiveSpread(String spreadName, int numberOfCards, Color color1, Color color2, String imagePath,String spreadEnglishName) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ActiveSpread(
-          tarotType: widget.tarotType,
-          spreadName: spreadName,
-          numberOfCards: numberOfCards,
-          spreadEnglishName: spreadEnglishName,
+  void navigateToActiveSpread(String spreadName, int numberOfCards, Color color1, Color color2, String imagePath,String spreadEnglishName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? subscriptionStatus = prefs.getInt('subscription_status');
+
+    if (subscriptionStatus == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ActiveSpread(
+            tarotType: widget.tarotType,
+            spreadName: spreadName,
+            spreadEnglishName:spreadEnglishName,
+            numberOfCards: numberOfCards,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      if ( spreadEnglishName == "Single Card" || spreadEnglishName == "Two Card" || spreadEnglishName == "Three Card") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ActiveSpread(
+              tarotType: widget.tarotType,
+              spreadName: spreadName,
+              spreadEnglishName:spreadEnglishName,
+              numberOfCards: numberOfCards,
+            ),
+          ),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SubscribeApp()),
+        );
+      }
+    }
   }
 
   @override

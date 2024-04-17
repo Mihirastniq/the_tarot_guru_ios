@@ -472,13 +472,7 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

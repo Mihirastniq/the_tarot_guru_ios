@@ -1,0 +1,133 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_tarot_guru/main_screens/spread/ActiveSpread.dart';
+
+class OshoSavedSpreadList extends StatefulWidget {
+  const OshoSavedSpreadList({super.key});
+
+  @override
+  State<OshoSavedSpreadList> createState() => _OshoSavedSpreadListState();
+}
+
+class _OshoSavedSpreadListState extends State<OshoSavedSpreadList> {
+
+  List<Map<String, dynamic>> savedSpreads = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch saved spreads when the widget initializes
+    fetchSavedSpreads();
+  }
+
+  Future<void> fetchSavedSpreads() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? savedSpreadStrings = prefs.getStringList('savedSpreads');
+    if (savedSpreadStrings != null) {
+      setState(() {
+        savedSpreads = savedSpreadStrings
+            .map<Map<String, dynamic>>((spreadString) => jsonDecode(spreadString))
+            .where((spread) => spread['tarotType'] == 'Osho Zen')
+            .toList();
+      });
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromRGBO(19, 14, 42, 1),
+                  Color.fromRGBO(19, 14, 42, 1),
+                  Colors.deepPurple.shade900.withOpacity(0.9),
+                ],
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/other/bluebg.jpg', // Replace with your image path
+              fit: BoxFit.cover,
+              opacity: const AlwaysStoppedAnimation(.3),
+            ),
+          ),
+          Positioned(
+            top: 5,
+            left: 0,
+            right: 0,
+            child: AppBar(
+              leading: Builder(
+                builder: (context) => IconButton(
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    icon: Icon(
+                      Icons.segment_rounded,
+                      color: Colors.white,
+                      size: 35,
+                    )),
+              ),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: Text(
+                '${AppLocalizations.of(context)!.apptitle}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                height: AppBar().preferredSize.height,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                height: MediaQuery.of(context).size.height - AppBar().preferredSize.height- AppBar().preferredSize.height,
+                child: ListView.builder(
+                  itemCount: savedSpreads.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      padding: EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          savedSpreads[index]['name'],
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(savedSpreads[index]['spreadName']),
+                        // Add onTap handler to navigate to spread details
+                        onTap: () {
+                          // Navigate to spread details screen
+                        },
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}

@@ -563,13 +563,7 @@ class _RiderFourCardScreenState extends State<RiderFourCardScreen> with TickerPr
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

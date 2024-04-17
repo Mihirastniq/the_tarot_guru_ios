@@ -213,7 +213,7 @@ class _ProfileState extends State<Profile> {
                       SizedBox(
                         height: 15,
                       ),
-                      ProfileButton(text: '${AppLocalizations.of(context)!.subscriptionlabel}', onPressed: (){}, icon: Icons.loyalty),
+                      // ProfileButton(text: '${AppLocalizations.of(context)!.subscriptionlabel}', onPressed: (){}, icon: Icons.loyalty),
                       SizedBox(
                         height: 15,
                       ),

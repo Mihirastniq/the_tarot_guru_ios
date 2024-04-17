@@ -132,13 +132,6 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
               ],
             ),
           ),

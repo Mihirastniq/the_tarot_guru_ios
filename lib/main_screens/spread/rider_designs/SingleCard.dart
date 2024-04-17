@@ -209,13 +209,7 @@ class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with Tick
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

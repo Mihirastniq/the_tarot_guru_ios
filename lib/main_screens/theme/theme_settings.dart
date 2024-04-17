@@ -160,6 +160,7 @@ class ThemeManager extends ChangeNotifier {
   void updateTheme(int index) {
     _themeIndex = (index + 1) % 5;
     saveTheme(_themeIndex);
+    notifyListeners(); // Notify listeners about the theme change
     print('Current theme index: $_themeIndex');
   }
 }

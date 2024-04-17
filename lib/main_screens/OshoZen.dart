@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:the_tarot_guru/demo/demo1.dart';
 import 'package:the_tarot_guru/main_screens/deck/osho_option_deck.dart';
 import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
 import 'package:the_tarot_guru/main_screens/spread/osho_new_spread.dart';
+import 'package:the_tarot_guru/main_screens/spread/saved_spread/osho_saved_spread.dart';
 import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -173,7 +175,13 @@ class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
                               ),
                               _buildButton(
                                   onPressed: () {
-
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            OshoSavedSpreadList(),
+                                      ),
+                                    );
                                   },
                                   text: "${AppLocalizations.of(context)!.savespread}",
                                   color1: Color(0xFF00B493),
@@ -183,7 +191,15 @@ class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
                                   imagePath:'assets/images/demoimg/logo.png'
                               ),
                               _buildButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DemoDesignOne(),
+                                      ),
+                                    );
+                                  },
                                   text: "${AppLocalizations.of(context)!.aboutoshozen}",
                                   color1: Color(0xFF32C0D4),
                                   color2: Color(0xFF00A7BE),

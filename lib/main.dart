@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate
             ],
             supportedLocales: AppLocalizations.supportedLocales,
-            home: AppSelect(),
+            home: SplashScreen(),
           );
         },
       ),

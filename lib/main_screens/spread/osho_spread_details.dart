@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_tarot_guru/home.dart';
+import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import '../other_screens/settings.dart';
 import '../controller/spread_controller/save_spread_controller.dart';
 import 'ActiveSpread.dart';
@@ -173,150 +175,164 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
           Center(
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: Container(
-                padding: EdgeInsets.fromLTRB(10, 50, 10, 50),
-                height: MediaQuery.of(context).size.height * 0.8,
-                width: MediaQuery.of(context).size.width * 0.95,
-                decoration: BoxDecoration(
-                  // color: Colors.white,
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/other/osho_content_bg.png'),
-                        fit: BoxFit.cover
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 50,bottom: 10),
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 50),
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    decoration: BoxDecoration(
+                      // color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/other/osho_content_bg.png'),
+                            fit: BoxFit.cover
+                        ),
+                        borderRadius: BorderRadius.circular(15)
                     ),
-                    borderRadius: BorderRadius.circular(15)
-                ),
-                child: FutureBuilder<List<dynamic>>(
-                  future: fetchData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // or any other loading indicator
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      List<dynamic> cardData = snapshot.data!;
-                      return ListView.builder(
-                        itemCount: cardData.length,
-                        itemBuilder: (context, index) {
-                          var currentCard = cardData[index];
-                          // Build UI for each card here
-                          return Container(
-                            color: Colors.transparent,
-                            padding: EdgeInsets.fromLTRB(20, 40, 20, 40),
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(15),
-                                        margin: EdgeInsets.fromLTRB(
-                                            15, 15, 25, 0),
-                                        width: containerWidth,
-                                        height:
-                                        containerHeightWithAspectRatio,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/images/other/cardbg.png'),
-                                                fit: BoxFit.cover)
-                                          // color: Colors.white
-                                        ),
-                                        // child: Text('image here'),
-                                        child: Image.network(
-                                          'https://thetarotguru.com/tarotapi/cards/${widget.tarotType}/${currentCard['card_category']}/${currentCard['card_image']}',
-                                          width: 100,
-                                          height: 100,
-                                        ),
+                    child: FutureBuilder<List<dynamic>>(
+                      future: fetchData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator(); // or any other loading indicator
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          List<dynamic> cardData = snapshot.data!;
+                          return ListView.builder(
+                            itemCount: cardData.length,
+                            itemBuilder: (context, index) {
+                              var currentCard = cardData[index];
+                              // Build UI for each card here
+                              return Container(
+                                color: Colors.transparent,
+                                padding: EdgeInsets.fromLTRB(20, 40, 20, 40),
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(15),
+                                            margin: EdgeInsets.fromLTRB(
+                                                15, 15, 25, 0),
+                                            width: containerWidth,
+                                            height:
+                                            containerHeightWithAspectRatio,
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/images/other/cardbg.png'),
+                                                    fit: BoxFit.cover)
+                                              // color: Colors.white
+                                            ),
+                                            // child: Text('image here'),
+                                            child: Image.network(
+                                              'https://thetarotguru.com/tarotapi/cards/${widget.tarotType}/${currentCard['card_category']}/${currentCard['card_image']}',
+                                              width: 100,
+                                              height: 100,
+                                            ),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.center,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  currentCard['card_name'],
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 23,
+                                                      fontWeight:
+                                                      FontWeight.w700),
+                                                ),
+                                                Text(
+                                                  '${AppLocalizations.of(context)!.cardcategory} : ${currentCard['card_category']}',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                      FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          )
+                                        ],
                                       ),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              currentCard['card_name'],
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${currentCard['card_english_content']}",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              '${AppLocalizations.of(context)!.discriptioninspread}',
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 23,
-                                                  fontWeight:
-                                                  FontWeight.w700),
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w700),
                                             ),
-                                            Text(
-                                              '${AppLocalizations.of(context)!.cardcategory} : ${currentCard['card_category']}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                  FontWeight.w500),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          Text(
+                                            "${currentCard['card_discription']}",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(
-                                        height: 15,
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${currentCard['card_english_content']}",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          '${AppLocalizations.of(context)!.discriptioninspread}',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Text(
-                                        "${currentCard['card_discription']}",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                              );
+                            },
                           );
-                        },
-                      );
-                    }
-                  },
-                ),
-              ),
+                        }
+                      },
+                    ),
+                  ),
+                  FullWidthButton(text: 'Back to home', onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            AppSelect(),
+                      ),
+                    );
+                  })
+                ],
+              )
             )
-          )
+          ),
         ],
       ),
     );

@@ -572,13 +572,7 @@ class _TheRelationScreenState extends State<TheRelationSpread> with TickerProvid
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

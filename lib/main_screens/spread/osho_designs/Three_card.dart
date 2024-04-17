@@ -468,13 +468,7 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

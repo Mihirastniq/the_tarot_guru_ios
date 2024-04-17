@@ -398,13 +398,7 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

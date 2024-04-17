@@ -161,13 +161,7 @@ class OshoCardDetailsScreen extends StatelessWidget {
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+
               ],
             ),
           ),

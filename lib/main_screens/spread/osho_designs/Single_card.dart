@@ -198,13 +198,7 @@ class _SingleCardScreenState extends State<SingleCardScreen> with TickerProvider
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

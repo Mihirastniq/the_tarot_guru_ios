@@ -20,6 +20,7 @@ Future<void> saveSpread(String name, String tarotType, String spreadName, List<S
     'selectedCardIds': cardIds,
   }));
 
+
   // Save the updated list back to SharedPreferences
   await prefs.setStringList('savedSpreads', savedSpreads);
 }

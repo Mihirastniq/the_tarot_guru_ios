@@ -617,13 +617,7 @@ class _TheDiamondScreenState extends State<TheDiamondScreen> with TickerProvider
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

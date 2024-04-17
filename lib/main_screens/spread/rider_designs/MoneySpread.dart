@@ -645,13 +645,7 @@ class _RiderMoneySpreadScreenState extends State<RiderMoneySpreadScreen> with Ti
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

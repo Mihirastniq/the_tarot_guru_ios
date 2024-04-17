@@ -589,13 +589,7 @@ class _RiderFiveCardScreenState extends State<RiderFiveCardScreen> with TickerPr
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

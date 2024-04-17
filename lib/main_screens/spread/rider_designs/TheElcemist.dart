@@ -341,13 +341,7 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

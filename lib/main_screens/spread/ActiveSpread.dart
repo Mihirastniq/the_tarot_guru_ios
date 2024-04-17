@@ -71,24 +71,22 @@ class _ActiveSpreadState extends State<ActiveSpread> {
   @override
   void initState() {
     super.initState();
-    fetchCards(); // Fetch cards as before
+    fetchCards();
+    _audioController = AudioController();
+    _initAudio();
+  }
 
-    // WidgetsBinding.instance!.addPostFrameCallback((_) {
-    //   // Add a post-frame callback to start playing audio after the build is complete
-    //   final audioController = Provider.of<AudioController>(context, listen: false);
-    //   audioController.playSelectedAudio();
-    // });
+  Future<void> _initAudio() async {
+    await _audioController.initSharedPreferences();
+    await _audioController.playSelectedAudio();
   }
 
   @override
   void dispose() {
-    // Check if the current route is being popped (i.e., user is navigating back from this screen)
-    if (!Navigator.of(context).userGestureInProgress) {
-      final audioController = Provider.of<AudioController>(context, listen: false);
-      audioController.stopAudio();
-    }
+    _audioController.stopAudio();
     super.dispose();
   }
+
 
   Future<void> _changePosition() async {
     setState(() {

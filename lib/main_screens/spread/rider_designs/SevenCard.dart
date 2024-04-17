@@ -382,13 +382,7 @@ class _RiderSevenCardScreenState extends State<RiderSevenCardScreen> with Ticker
                     );
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {
-                    changeTheme(context);
-                  },
-                ),
+                
               ],
             ),
           ),

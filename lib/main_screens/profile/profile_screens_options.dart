@@ -270,8 +270,10 @@ class _UserAddressesState extends State<UserAddresses> {
       _isLoading = true;
     });
 
-    // Fetch user ID from SharedPreferences
-    _userId = 1;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userId = prefs.getInt('userid') ?? 0;
+    });
 
     // API endpoint URL
     String apiUrl = 'https://thetarotguru.com/tarotapi/addresses.php';
@@ -306,12 +308,12 @@ class _UserAddressesState extends State<UserAddresses> {
     }
   }
 
-  Future<void> _removeaddress(int address_id) async {
+  Future<void> _removeaddress(String address_id) async {
       try {
         String uri = "https://thetarotguru.com/tarotapi/addresses.php";
         var requestBody = {
           "type": "removeAddress",
-          "address_id": address_id.toString(),
+          "address_id": address_id,
         };
         print('req body is : $requestBody');
 
@@ -436,7 +438,7 @@ class _UserAddressesState extends State<UserAddresses> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     IconButton(onPressed: (){
-                                      _removeaddress(index + 1);
+                                      _removeaddress(address['address_id']);
                                     }, icon: Icon(Icons.delete))
                                   ],
                                 )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/controller/session_controller.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/language_selection.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
@@ -14,6 +15,26 @@ class SettingScreenClass extends StatefulWidget {
 class _SettingScreenClassState extends State<SettingScreenClass> {
 
   final LoginController loginController = LoginController();
+  bool pinEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch enablePin value from SharedPreferences when the widget initializes
+    fetchEnablePin();
+  }
+  Future<void> fetchEnablePin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      pinEnabled = prefs.getBool('enablePin') ?? false;
+    });
+  }
+
+  // Update enablePin value in SharedPreferences
+  Future<void> updateEnablePin(bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('enablePin', value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +108,40 @@ class _SettingScreenClassState extends State<SettingScreenClass> {
                       SizedBox(
                         height: 15,
                       ),
+                      GestureDetector(
+                        child: Container(
+                          // padding: EdgeInsets.only(10),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                width: 2,
+                                color: Colors.grey,
+                              )
+                          ),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.lock,
+                              color: Colors.white,
+                            ),
+                            title: Text(
+                              'Enable PIN',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            trailing: Switch(
+                              value: pinEnabled,
+                              onChanged: (value) {
+                                setState(() {
+                                  pinEnabled = value;
+                                });
+                                updateEnablePin(value);
+                              },
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   Column(

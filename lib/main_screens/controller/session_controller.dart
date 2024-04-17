@@ -40,6 +40,7 @@ class LoginController {
           prefs.setString('email', response['email']);
           prefs.setInt('phone', int.parse(response['phone']));
           prefs.setInt('appPin', int.parse(response['appPin']));
+          prefs.setBool('enablePin', true);
           prefs.setInt('userid', int.parse(response['userid']));
           prefs.setString('lang', response['lang']);
           prefs.setString('created_at', response['created_at']);
@@ -112,9 +113,11 @@ class LoginController {
       MaterialPageRoute(builder: (context) => IntroductionAnimationScreen()),
     );
   }
+
   void logout(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(LOGINKEY, false);
+    await prefs.clear(); // Clears all data from SharedPreferences
     NavigateToIntro(context);
   }
+
 }

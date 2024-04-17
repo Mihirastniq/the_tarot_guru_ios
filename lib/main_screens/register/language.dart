@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -75,9 +76,10 @@ class _LanguageSelectionState extends State<LanguageSelection> {
           prefs.setInt('all_app_subscription', response['all_app_subscription']);
           prefs.setInt('free_by_admin', response['free_by_admin']);
           prefs.setInt('warning', response['warning']);
+          prefs.setBool('enablePin', true);
 
           Locale locale = Locale(selectedLanguageKey!);
-          await _languageChangeController.changelanguage(locale);
+          _languageChangeController = Provider.of<LanguageChangeController>(context, listen: false);
 
           _navigateToAppSelect();
         } else {

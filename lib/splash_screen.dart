@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/Login/login_pin.dart';
 import 'package:the_tarot_guru/introduction_animation/introduction_animation_screen.dart';
 
@@ -24,9 +25,15 @@ class _SplashScreenState extends State<SplashScreen> {
           () async {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         bool isLoggedIn = prefs.getBool("isLogin") ?? false;
+        bool isPinEnabled = prefs.getBool("enablePin") ?? true;
 
         if (isLoggedIn) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PinEntryScreen()));
+          if (isPinEnabled) {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PinEntryScreen()));
+          } else {
+            // Navigate to home screen if the user is logged in and PIN is not enabled
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppSelect()));
+          }
         } else {
           Navigator.push(context, MaterialPageRoute(builder: (context) => IntroductionAnimationScreen()));
         }
