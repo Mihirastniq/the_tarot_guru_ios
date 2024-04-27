@@ -59,13 +59,14 @@ class _SetLoginPinState extends State<SetLoginPin> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xfff7f6fb),
+      backgroundColor:  Color.fromRGBO(4, 2, 12, 1.0),
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/Screen_Backgrounds/introbgdark.jpg'),
+              image: AssetImage('assets/images/Screen_Backgrounds/bg1.png'),
               fit: BoxFit.cover,
+              opacity: 0.1,
             ),
           ),
           child: Padding(
@@ -94,7 +95,7 @@ class _SetLoginPinState extends State<SetLoginPin> {
                     shape: BoxShape.circle,
                   ),
                   child: Image.asset(
-                    'assets/images/demoimg/logo.png',
+                    'assets/images/intro/logo.png',
                   ),
                 ),
                 SizedBox(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import '../ActiveSpread.dart';
 import '../osho_spread_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
@@ -48,6 +49,7 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
   bool card2Status = false;
   bool card3Status = false;
   String buttonText ='Reveal card';
+  late final AudioController _audioController;
 
   Future<void> fetchData() async {
     try {
@@ -63,7 +65,7 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -109,6 +111,7 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
   void initState() {
     super.initState();
     fetchData();
+    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
@@ -220,7 +223,11 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
 
             children: [
               SizedBox(
-                height: AppBar().preferredSize.height,
+                height: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),).preferredSize.height,
               ),
               Expanded(
                 child: Column(
@@ -447,6 +454,10 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -458,16 +469,15 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
                 ),
               ),
               actions: [
+                 
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
+                    changeTheme(context);
                   },
                 ),
+
                 
               ],
             ),

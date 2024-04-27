@@ -65,7 +65,7 @@ class WelcomeView extends StatelessWidget {
                 child: Container(
                   constraints: BoxConstraints(maxWidth: 350, maxHeight: 350),
                   child: Image.asset(
-                    'assets/images/intro/T2.png',
+                    'assets/images/intro/logo.png',
                     width: 200,
                     fit: BoxFit.contain,
                   ),
@@ -76,7 +76,7 @@ class WelcomeView extends StatelessWidget {
                 child: SlideTransition(
                   position: _welcomeFirstHalfAnimation,
                   child: Text(
-                    "Welcome",
+                    "Welcome to Tarot Guru,",
                     style: TextStyle(
                         fontSize: 25.0,
                         color: Colors.white,
@@ -89,7 +89,7 @@ class WelcomeView extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: 64, right: 64, top: 16, bottom: 16),
                 child: Text(
-                  "Stay organised and live stress-free with you-do app",
+                  "Your gateway to enlightenment and self-discovery through the mystical art of tarot. Explore, learn, and find guidance in every card drawn.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,

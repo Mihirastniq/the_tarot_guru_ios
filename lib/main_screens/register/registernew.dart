@@ -4,19 +4,171 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:the_tarot_guru/main_screens/controller/registration_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:the_tarot_guru/main_screens/login/loginnew.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class RegisterNew extends StatefulWidget {
   const RegisterNew({Key? key}) : super(key: key);
 
   @override
-  State<RegisterNew> createState() => _RegisterNewState();
+  _RegisterNewState createState() => _RegisterNewState();
 }
 
 class _RegisterNewState extends State<RegisterNew> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController controller = TextEditingController();
+  String initialCountry = 'IN';
+  String countryCode = '';
+  String countryFrom = '';
+  String? phoneNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFF02051F),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(150),
+                  child: Image.asset(
+                    'assets/images/intro/logo.png',
+                    width: 150,
+                    height: 150,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                Text(
+                  '${AppLocalizations.of(context)!.registernowlabel}',
+                  style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Text(
+                    "${AppLocalizations.of(context)!.registermessage}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: IntlPhoneField(
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: 'Phone Number',
+                      hintStyle: TextStyle(color: Colors.white),
+                      contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white), // Set focus border to white
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white), // Set border color to white
+                      ),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: Text(
+                          '',
+                          style: TextStyle(color: Colors.white), // Set country code color to white
+                        ),
+                      ),
+                    ),
+                    dropdownTextStyle: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'DMSans',
+                      fontWeight: FontWeight.bold,
+                    ),
+                    initialCountryCode: 'IN',
+                    onChanged: (phone) {
+                      setState(() {
+                        countryFrom = phone.countryISOCode;
+                        countryCode = phone.countryCode;
+                        phoneNumber = phone.number;
+                      });
+                    },
+                  ),
+                ),
+
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: phoneNumber != null ? () {
+                        String countryCode = phoneNumber!.substring(0, phoneNumber!.length - 10);
+                        String phone = phoneNumber!.substring(phoneNumber!.length - 10);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RegisterUserDetails(countryCode: countryCode, phoneNumber: phone, country: countryFrom)),
+                        );
+                      } : null,
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: BorderSide(color: Colors.white)
+                            )
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                      ),
+                      child: Text('Sign up'),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class RegisterUserDetails extends StatefulWidget {
+  final phoneNumber;
+  final String countryCode;
+  final String country;
+  const RegisterUserDetails({Key? key, required this.countryCode, required this.phoneNumber, required this.country}) : super(key: key);
+
+  @override
+  State<RegisterUserDetails> createState() => _RegisterUserState();
+}
+
+class _RegisterUserState extends State<RegisterUserDetails> {
   String _selectedGender = '';
   final GlobalKey fieldKey = GlobalKey();
-  final RegistrationController _registrationController =
-  RegistrationController();
+  Color fieldbbackground = Color(0xFF272B34);
+  final RegistrationController _registrationController = RegistrationController();
+  bool _submitButtonPressed = false;
+
+
+  void Register() {
+    _registrationController.phone_number.text = widget.phoneNumber;
+    _registrationController.country_code.text = widget.countryCode;
+    _registrationController.country.text = widget.country;
+    _registrationController.registerFunction(context);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +181,25 @@ class _RegisterNewState extends State<RegisterNew> {
             height: size.height,
             child: Stack(
               children: <Widget>[
-                //left side background design. I use a svg image here
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromRGBO(4, 2, 12, 1.0),
+                        Color.fromRGBO(4, 2, 12, 1.0),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned.fill(
+                  child: Image.asset(
+                    'assets/images/Screen_Backgrounds/bg1.png', // Replace with your image path
+                    fit: BoxFit.cover,
+                    opacity: const AlwaysStoppedAnimation(0.1),
+                  ),
+                ),
                 Positioned(
                   left: -34,
                   top: 181.0,
@@ -40,8 +210,6 @@ class _RegisterNewState extends State<RegisterNew> {
                     height: 99.0,
                   ),
                 ),
-
-                //right side background design. I use a svg image here
                 Positioned(
                   right: -52,
                   top: 45.0,
@@ -52,8 +220,6 @@ class _RegisterNewState extends State<RegisterNew> {
                     height: 139.0,
                   ),
                 ),
-
-                //content ui
                 Padding(
                   padding: EdgeInsets.only(left: 15,right: 15,bottom: 65,top: 25),
                   child: SingleChildScrollView(
@@ -87,34 +253,37 @@ class _RegisterNewState extends State<RegisterNew> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             FirstName(size),
+                            customTextWidget('${AppLocalizations.of(context)!.regiurefirstname}', flag: _submitButtonPressed),
                             const SizedBox(
                               height: 16,
                             ),
                             LastName(size),
+                            customTextWidget('${AppLocalizations.of(context)!.regiurelastname}', flag: _submitButtonPressed),
                             const SizedBox(
                               height: 16,
                             ),
                             emailTextField(size),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            PhoneNumber(size),
+                            customTextWidget('${AppLocalizations.of(context)!.regiureemail}', flag: _submitButtonPressed),
                             const SizedBox(
                               height: 16,
                             ),
                             Gender(size),
+                            customTextWidget('${AppLocalizations.of(context)!.regiuregender}', flag: _submitButtonPressed),
                             const SizedBox(
                               height: 16,
                             ),
                             DateOfBirth(size),
+                            customTextWidget('${AppLocalizations.of(context)!.regiuredob}', flag: _submitButtonPressed),
                             const SizedBox(
                               height: 16,
                             ),
                             passwordTextField(size),
+                            customTextWidget('${AppLocalizations.of(context)!.regiurepassword}', flag: _submitButtonPressed),
                             const SizedBox(
                               height: 16,
                             ),
                             ConfirmPassword(size),
+                            customTextWidget('${AppLocalizations.of(context)!.regiureconfirmpassword}', flag: _submitButtonPressed),
                             const SizedBox(
                               height: 16,
                             ),
@@ -160,13 +329,12 @@ class _RegisterNewState extends State<RegisterNew> {
   }
 
   Widget logo(double height_, double width_) {
-    return SvgPicture.asset(
-      'assets/logo2.svg',
+    return Image.asset(
+      'assets/images/intro/logo.png',
       height: height_,
       width: width_,
     );
   }
-
   Widget richText(double fontSize) {
     return Text(
       '${AppLocalizations.of(context)!.registernowlabel}',
@@ -177,14 +345,14 @@ class _RegisterNewState extends State<RegisterNew> {
       ),
     );
   }
-
   Widget FirstName(Size size) {
+    var requiredfield;
     return Container(
       alignment: Alignment.center,
       height: size.height / 12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: const Color(0xFF511AAE),
+        color: fieldbbackground,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -223,13 +391,14 @@ class _RegisterNewState extends State<RegisterNew> {
                   fontWeight: FontWeight.w500,
                 ),
                 decoration: InputDecoration(
-                    hintText: '${AppLocalizations.of(context)!.firstnamelabel}',
-                    hintStyle: GoogleFonts.inter(
-                      fontSize: 14.0,
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    border: InputBorder.none),
+                  hintText: '${AppLocalizations.of(context)!.firstnamelabel}',
+                  hintStyle: GoogleFonts.inter(
+                    fontSize: 14.0,
+                    color: Colors.white70,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ],
@@ -237,13 +406,14 @@ class _RegisterNewState extends State<RegisterNew> {
       ),
     );
   }
+
   Widget LastName(Size size) {
     return Container(
       alignment: Alignment.center,
       height: size.height / 12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: const Color(0xFF511AAE),
+        color: fieldbbackground,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -302,7 +472,7 @@ class _RegisterNewState extends State<RegisterNew> {
       height: size.height / 12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: const Color(0xFF511AAE),
+        color: fieldbbackground,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -355,58 +525,47 @@ class _RegisterNewState extends State<RegisterNew> {
       ),
     );
   }
-  Widget PhoneNumber(Size size) {
+  Widget DateOfBirth(Size size) {
     return Container(
       alignment: Alignment.center,
       height: size.height / 12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: const Color(0xFF511AAE),
+        color: fieldbbackground,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            //mail icon
+            // Calendar icon
             const Icon(
-              Icons.phone_android,
+              Icons.calendar_today,
               color: Colors.white70,
             ),
-            const SizedBox(
-              width: 16,
-            ),
-
-            //divider svg
+            const SizedBox(width: 16),
             SvgPicture.string(
               '<svg viewBox="99.0 332.0 1.0 15.5" ><path transform="translate(99.0, 332.0)" d="M 0 0 L 0 15.5" fill="none" fill-opacity="0.6" stroke="#ffffff" stroke-width="1" stroke-opacity="0.6" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
               width: 1.0,
               height: 15.5,
             ),
-            const SizedBox(
-              width: 16,
-            ),
-
-            //email address textField
-            Expanded(
-              child: TextField(
-                maxLines: 1,
-                controller: _registrationController.phone_number,
-                cursorColor: Colors.white70,
-                keyboardType: TextInputType.emailAddress,
+            const SizedBox(width: 8),
+            TextButton(
+              onPressed: () {
+                _selectDate(context);
+              },
+              child: Text(
+                textAlign: TextAlign.start,
+                _registrationController.dobController.text.isEmpty
+                    ? 'Date of Birth'
+                    : _registrationController.dobController.text,
                 style: GoogleFonts.inter(
                   fontSize: 14.0,
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
+                  // textAlign: TextAlign.start, // Here's the change
                 ),
-                decoration: InputDecoration(
-                    hintText: '${AppLocalizations.of(context)!.phonenumberlabel}',
-                    hintStyle: GoogleFonts.inter(
-                      fontSize: 14.0,
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    border: InputBorder.none),
               ),
             ),
           ],
@@ -414,7 +573,20 @@ class _RegisterNewState extends State<RegisterNew> {
       ),
     );
   }
-
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        _registrationController.dobController.text =
+        "${picked.day}/${picked.month}/${picked.year}";
+      });
+    }
+  }
   Widget Gender(Size size) {
     return GestureDetector(
       onTap: () {
@@ -458,7 +630,7 @@ class _RegisterNewState extends State<RegisterNew> {
         height: size.height / 12,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: const Color(0xFF511AAE),
+          color: fieldbbackground,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -492,82 +664,13 @@ class _RegisterNewState extends State<RegisterNew> {
       ),
     );
   }
-
-
-  Widget DateOfBirth(Size size) {
-    return Container(
-      alignment: Alignment.center,
-      height: size.height / 12,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: const Color(0xFF511AAE),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            // Calendar icon
-            const Icon(
-              Icons.calendar_today,
-              color: Colors.white70,
-            ),
-            const SizedBox(width: 16),
-            SvgPicture.string(
-              '<svg viewBox="99.0 332.0 1.0 15.5" ><path transform="translate(99.0, 332.0)" d="M 0 0 L 0 15.5" fill="none" fill-opacity="0.6" stroke="#ffffff" stroke-width="1" stroke-opacity="0.6" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
-              width: 1.0,
-              height: 15.5,
-            ),
-            const SizedBox(width: 8),
-            TextButton(
-              onPressed: () {
-                _selectDate(context);
-              },
-              child: Text(
-                textAlign: TextAlign.start,
-                _registrationController.dobController.text.isEmpty
-                    ? 'Date of Birth'
-                    : _registrationController.dobController.text,
-                style: GoogleFonts.inter(
-                  fontSize: 14.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  // textAlign: TextAlign.start, // Here's the change
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (picked != null) {
-      setState(() {
-        _registrationController.dobController.text =
-        "${picked.day}/${picked.month}/${picked.year}";
-      });
-    }
-  }
-
-
-
   Widget passwordTextField(Size size) {
     return Container(
       alignment: Alignment.center,
       height: size.height / 12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: const Color(0xFF511AAE),
+        color: fieldbbackground,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -631,7 +734,7 @@ class _RegisterNewState extends State<RegisterNew> {
       height: size.height / 12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: const Color(0xFF511AAE),
+        color: fieldbbackground,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -689,23 +792,38 @@ class _RegisterNewState extends State<RegisterNew> {
       ),
     );
   }
+  Widget customTextWidget(String text, {bool flag = true}) {
+    return flag
+        ? Text(
+      text,
+      style: TextStyle(
+        fontSize: 19,
+        color: Colors.white,
+      ),
+      textAlign: TextAlign.left,
+    )
+        : SizedBox.shrink(); // If flag is false, return an empty SizedBox
+  }
   Widget signInButton(Size size) {
     return GestureDetector(
-      onTap: () {
-        _registrationController.registerFunction(context);
+      onTap: (){
+        setState(() {
+          _submitButtonPressed = true;
+        });
+        Register();
       },
       child: Container(
         alignment: Alignment.center,
         height: size.height / 13,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: const Color(0xFFC32EC3),
+          color: const Color(0xFFFFFFFF),
         ),
         child: Text(
           '${AppLocalizations.of(context)!.singin}',
           style: GoogleFonts.inter(
             fontSize: 22.0,
-            color: Colors.white,
+            color: Colors.black,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -738,7 +856,6 @@ class _RegisterNewState extends State<RegisterNew> {
       ],
     );
   }
-
   Widget buildFooter(Size size) {
     return Align(
       alignment: Alignment.center,
@@ -768,3 +885,4 @@ class _RegisterNewState extends State<RegisterNew> {
     );
   }
 }
+

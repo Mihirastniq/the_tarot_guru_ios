@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_tarot_guru/main_screens/other_screens/osho_saved_spred_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/ActiveSpread.dart';
 
 class OshoSavedSpreadList extends StatefulWidget {
@@ -117,7 +118,11 @@ class _OshoSavedSpreadListState extends State<OshoSavedSpreadList> {
                         subtitle: Text(savedSpreads[index]['spreadName']),
                         // Add onTap handler to navigate to spread details
                         onTap: () {
-                          // Navigate to spread details screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => OshoSavedSpreadDetails(selectedCards: savedSpreads[index]['selectedCardIds'], tarotType: savedSpreads[index]['tarotType'], spreadName: savedSpreads[index]['spreadName']),
+                            ),
+                          );
                         },
                       ),
                     );

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
+import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import '../ActiveSpread.dart';
@@ -81,7 +83,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
   bool card10Status = false;
   bool card11Status = false;
   bool card12Status = false;
-
+  late final AudioController _audioController;
   String buttonText = 'Reveal card';
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
 
@@ -99,7 +101,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -163,7 +165,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
   void initState() {
     super.initState();
     fetchData();
-    // Initialize flip card controllers
+    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
@@ -553,6 +555,10 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -564,21 +570,12 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                 ),
               ),
               actions: [
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
+                 
                 IconButton(
                   icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    // Implement your change theme functionality here
+                    changeTheme(context);
                   },
                 ),
               ],

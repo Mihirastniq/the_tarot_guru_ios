@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import '../ActiveSpread.dart';
@@ -66,6 +67,7 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
   bool card6Status = false;
   bool card7Status = false;
   bool card8Status = false;
+  late final AudioController _audioController;
 
 
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
@@ -84,7 +86,7 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -140,7 +142,7 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
   void initState() {
     super.initState();
     fetchData();
-    // Initialize flip card controllers
+    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
@@ -326,6 +328,10 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -337,21 +343,12 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
                 ),
               ),
               actions: [
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
+                 
                 IconButton(
                   icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    // Implement your change theme functionality here
+                    changeTheme(context);
                   },
                 ),
               ],

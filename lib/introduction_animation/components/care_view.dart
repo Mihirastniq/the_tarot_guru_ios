@@ -87,7 +87,7 @@ class CareView extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 25),
                     constraints: BoxConstraints(maxWidth: 350, maxHeight: 250),
                     child: Image.asset(
-                      'assets/images/intro/T3.png',
+                      'assets/images/cards/rider_intro.png',
                       // 'assets/images/introduction_animation/care_image.png',
                       fit: BoxFit.contain,
                     ),
@@ -99,7 +99,7 @@ class CareView extends StatelessWidget {
                 child: SlideTransition(
                   position: _relaxSecondHalfAnimation,
                   child: Text(
-                    "Care",
+                    "Rider Waite Tarot",
                     style:
                         TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold,color: Colors.white),
                   ),
@@ -109,7 +109,7 @@ class CareView extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: 64, right: 64, bottom: 16, top: 16),
                 child: Text(
-                  "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
+                  "Dive into the timeless tradition of Rider Waite Tarot. Unveil the secrets of the classic tarot deck.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'pin_set.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,6 +19,7 @@ class _OtpState extends State<OTPVerifyPageState> {
   TextEditingController _controller2 = TextEditingController();
   TextEditingController _controller3 = TextEditingController();
   TextEditingController _controller4 = TextEditingController();
+  bool otpflag = false;
 
   late FocusNode _focusNode1;
   late FocusNode _focusNode2;
@@ -45,18 +47,17 @@ class _OtpState extends State<OTPVerifyPageState> {
         MaterialPageRoute(builder: (context) => SetLoginPin(response: widget.response)),
       );
     } else {
-      // Incorrect OTP entered, show error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Incorrect OTP. Please try again.',
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Colors.white,
-        ),
+      Fluttertoast.showToast(
+        msg: "Incorrect OTP",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 15,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
-      // Clear the entered OTP
       setState(() {
+        otpflag = true;
         pin = '';
       });
     }
@@ -85,120 +86,126 @@ class _OtpState extends State<OTPVerifyPageState> {
       backgroundColor: Color(0xfff7f6fb),
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/Screen_Backgrounds/introbgdark.jpg'),
-              fit: BoxFit.cover,
+          color: Color.fromRGBO(4, 2, 12, 1.0),
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/Screen_Backgrounds/bg1.png'),
+                fit: BoxFit.cover,
+                opacity: 0.1,
+              ),
             ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 24, horizontal: 32),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Icon(
-                      Icons.arrow_back,
-                      size: 32,
-                      color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 32,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 18,
-                ),
-                Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple.shade50,
-                    shape: BoxShape.circle,
+                  SizedBox(
+                    height: 18,
                   ),
-                  child: Image.asset(
-                    'assets/images/demoimg/logo.png',
+                  Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      // color: Colors.deepPurple.shade50,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.asset(
+                      'assets/images/intro/logo.png',
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 24,
-                ),
-                Text(
-                  '${AppLocalizations.of(context)!.otpscreenlabel}',
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                  SizedBox(
+                    height: 24,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "${AppLocalizations.of(context)!.otpscreensubtitle}",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  Text(
+                    '${AppLocalizations.of(context)!.otpscreenlabel}',
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 28,
-                ),
-                Container(
-                  padding: EdgeInsets.all(28),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
+                  SizedBox(
+                    height: 10,
                   ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(child: _textFieldOTP(first: true, last: false, controller: _controller1, focusNode: _focusNode1)),
-                          SizedBox(width: 10), // Add space between boxes
-                          Expanded(child: _textFieldOTP(first: false, last: false, controller: _controller2, focusNode: _focusNode2)),
-                          SizedBox(width: 10), // Add space between boxes
-                          Expanded(child: _textFieldOTP(first: false, last: false, controller: _controller3, focusNode: _focusNode3)),
-                          SizedBox(width: 10), // Add space between boxes
-                          Expanded(child: _textFieldOTP(first: false, last: true, controller: _controller4, focusNode: _focusNode4)),
-                        ],
-                      ),
+                  Text(
+                    "${AppLocalizations.of(context)!.otpscreensubtitle}",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 28,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(28),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(child: _textFieldOTP(first: true, last: false, controller: _controller1, focusNode: _focusNode1)),
+                            SizedBox(width: 10), // Add space between boxes
+                            Expanded(child: _textFieldOTP(first: false, last: false, controller: _controller2, focusNode: _focusNode2)),
+                            SizedBox(width: 10), // Add space between boxes
+                            Expanded(child: _textFieldOTP(first: false, last: false, controller: _controller3, focusNode: _focusNode3)),
+                            SizedBox(width: 10), // Add space between boxes
+                            Expanded(child: _textFieldOTP(first: false, last: true, controller: _controller4, focusNode: _focusNode4)),
+                          ],
+                        ),
 
-                      SizedBox(
-                        height: 22,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: _onContinuePress,
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.purple),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24.0),
+                        SizedBox(
+                          height: 22,
+                        ),
+                        otpflag == true ? Text('Wrong OTP', style: TextStyle(color: Colors.red,fontSize: 16),) : SizedBox( height: 1,),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _onContinuePress,
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.purple),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(14.0),
+                              child: Text(
+                                '${AppLocalizations.of(context)!.verifylabel}',
+                                style: TextStyle(fontSize: 16),
                               ),
                             ),
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.all(14.0),
-                            child: Text(
-                              '${AppLocalizations.of(context)!.verifylabel}',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
+        )
       ),
     );
   }

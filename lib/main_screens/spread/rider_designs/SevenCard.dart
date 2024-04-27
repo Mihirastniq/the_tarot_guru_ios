@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
@@ -55,6 +56,7 @@ class _RiderSevenCardScreenState extends State<RiderSevenCardScreen> with Ticker
   String image5category = '';
   String image6category = '';
   String image7category = '';
+  late final AudioController _audioController;
 
 
   bool card1Status = false;
@@ -70,7 +72,7 @@ class _RiderSevenCardScreenState extends State<RiderSevenCardScreen> with Ticker
 
   Future<void> fetchData() async {
     try {
-      String data = await rootBundle.loadString('assets/json/rider_waite_data.json');
+      String data = await rootBundle.loadString('assets/json/rider_images.json');
       Map<String, dynamic> jsonData = jsonDecode(data);
 
       List<Map<String, dynamic>> cardDataList = [];
@@ -82,7 +84,7 @@ class _RiderSevenCardScreenState extends State<RiderSevenCardScreen> with Ticker
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -136,7 +138,8 @@ class _RiderSevenCardScreenState extends State<RiderSevenCardScreen> with Ticker
   @override
   void initState() {
     super.initState();
-    fetchData();
+
+    _audioController = AudioController();
     // Initialize flip card controllers
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
@@ -145,6 +148,7 @@ class _RiderSevenCardScreenState extends State<RiderSevenCardScreen> with Ticker
     _card5Controller = FlipCardController();
     _card6Controller = FlipCardController();
     _card7Controller = FlipCardController();
+    fetchData();
 
   }
 
@@ -361,6 +365,10 @@ class _RiderSevenCardScreenState extends State<RiderSevenCardScreen> with Ticker
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -372,18 +380,16 @@ class _RiderSevenCardScreenState extends State<RiderSevenCardScreen> with Ticker
                 ),
               ),
               actions: [
+                
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
+                    changeTheme(context);
                   },
                 ),
-                
               ],
+
             ),
           ),
           Positioned(

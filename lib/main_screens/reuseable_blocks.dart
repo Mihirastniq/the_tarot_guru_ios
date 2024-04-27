@@ -11,6 +11,7 @@ class FullWidthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 25),
       child: Column(
         children: [
           SizedBox(
@@ -21,8 +22,10 @@ class FullWidthButton extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).highlightColor
+                    Colors.white,
+                    Colors.white
+                    // Theme.of(context).primaryColor,
+                    // Theme.of(context).highlightColor
                   ],
                 ),
                 borderRadius: BorderRadius.circular(10.0),
@@ -39,7 +42,7 @@ class FullWidthButton extends StatelessWidget {
                 child: Text(
                   text,
                   style: TextStyle(
-                    color: Colors.white, // Text color
+                    color: Colors.black, // Text color
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),

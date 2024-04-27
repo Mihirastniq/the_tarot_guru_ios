@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/spread/ActiveSpread.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
@@ -43,10 +44,18 @@ class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with Tick
 
   late String extractPath;
   late Directory appDirectory;
+  late final AudioController _audioController;
+
+  @override
+  void initState() {
+    super.initState();
+    _card1Controller = FlipCardController();
+    fetchData();
+  }
 
   Future<void> fetchData() async {
     try {
-      String data = await rootBundle.loadString('assets/json/rider_waite_data.json');
+      String data = await rootBundle.loadString('assets/json/rider_images.json');
       Map<String, dynamic> jsonData = jsonDecode(data);
 
       List<Map<String, dynamic>> cardDataList = [];
@@ -54,15 +63,13 @@ class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with Tick
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
       print('the list of card IDs is: $cardIds');
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -81,13 +88,13 @@ class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with Tick
 
       // Update UI with the fetched data
       setState(() {
-        if (cardDataList.isNotEmpty) {
+        if (cardDataList.length >= 5) {
           image1 = cardDataList[0]['card_image'];
           imagecategory = cardDataList[0]['card_category'];
-          print('image category ${imagecategory}');
+          setState(() {
+          });
         } else {
-          // Handle the case where no cards are fetched
-          // Maybe set default values or show an error message
+
         }
       });
     } catch (e) {
@@ -103,18 +110,7 @@ class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with Tick
     );
   }
 
-  @override
-  void initState() {
-    _card1Controller = FlipCardController();
-    fetchData();
-    super.initState();
-    getApplicationDocumentsDirectory().then((directory) {
-      setState(() {
-        appDirectory = directory;
-        extractPath = '${appDirectory.path}/tarot_assets';
-      });
-    });
-  }
+
 
   void flipCard(FlipCardController controller,bool cardnumber) {
     if(cardnumber == false) {
@@ -188,6 +184,10 @@ class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with Tick
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -199,17 +199,14 @@ class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with Tick
                 ),
               ),
               actions: [
+                
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
+                    changeTheme(context);
                   },
                 ),
-                
               ],
             ),
           ),

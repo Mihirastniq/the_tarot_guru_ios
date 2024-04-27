@@ -98,7 +98,7 @@ class _DeckScreenState extends State<DeckScreen> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
-                '${AppLocalizations.of(context)!.profile} Tarot',
+                '${AppLocalizations.of(context)!.oshofulltitle}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,

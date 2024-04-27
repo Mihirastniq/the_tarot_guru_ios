@@ -262,18 +262,6 @@ class _NewSpreadState extends State<NewSpread> {
                   Navigator.pop(context,true);
                 },
               ),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(Icons.palette),
-                  color: Colors.white,
-                  onPressed: () {},
-                ),
-              ],
             ),
           ),
         ],

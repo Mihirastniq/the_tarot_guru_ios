@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
 import '../ActiveSpread.dart';
 import '../osho_spread_details.dart';
@@ -47,6 +48,7 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
   String image1category = '';
   String image2category = '';
   String image3category = '';
+  late final AudioController _audioController;
 
   bool card1Status = false;
   bool card2Status = false;
@@ -55,7 +57,7 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
 
   Future<void> fetchData() async {
     try {
-      String data = await rootBundle.loadString('assets/json/rider_waite_data.json');
+      String data = await rootBundle.loadString('assets/json/rider_images.json');
       Map<String, dynamic> jsonData = jsonDecode(data);
 
       List<Map<String, dynamic>> cardDataList = [];
@@ -63,15 +65,13 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
       print('the list of card IDs is: $cardIds');
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -113,10 +113,11 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
   @override
   void initState() {
     super.initState();
-    fetchData();
+    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
+    fetchData();
   }
 
   void flipCard(FlipCardController controller,bool cardnumber) {
@@ -214,7 +215,7 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
           ),
           Positioned.fill(
             child: Image.asset(
-              'assets/images/Screen_Backgrounds/bg1.png', // Replace with your image path
+              'assets/images/Screen_Backgrounds/bg1.png',
               fit: BoxFit.cover,
               opacity: const AlwaysStoppedAnimation(.3),
               // opacity: ,
@@ -224,7 +225,11 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
 
             children: [
               SizedBox(
-                height: AppBar().preferredSize.height,
+                height: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),).preferredSize.height,
               ),
               Expanded(
                 child: Column(
@@ -451,6 +456,10 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -462,17 +471,14 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
                 ),
               ),
               actions: [
+                
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
+                    changeTheme(context);
                   },
                 ),
-                
               ],
             ),
           ),

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/spread/ActiveSpread.dart';
 import '../osho_spread_details.dart';
@@ -32,6 +33,7 @@ class SingleCardScreen extends StatefulWidget {
 class _SingleCardScreenState extends State<SingleCardScreen> with TickerProviderStateMixin {
   late FlipCardController _card1Controller;
   List<bool> _cardFlippedState = [false];
+  late final AudioController _audioController;
   bool cardflipchecker = false;
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
   List<dynamic> cardData = [];
@@ -54,7 +56,7 @@ class _SingleCardScreenState extends State<SingleCardScreen> with TickerProvider
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -100,10 +102,12 @@ class _SingleCardScreenState extends State<SingleCardScreen> with TickerProvider
 
   @override
   void initState() {
+    super.initState();
     _card1Controller = FlipCardController();
     fetchData();
-    super.initState();
+    _audioController = AudioController();
   }
+
 
   void flipCard(FlipCardController controller,bool cardnumber) {
     if(cardnumber == false) {
@@ -177,6 +181,10 @@ class _SingleCardScreenState extends State<SingleCardScreen> with TickerProvider
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -188,14 +196,12 @@ class _SingleCardScreenState extends State<SingleCardScreen> with TickerProvider
                 ),
               ),
               actions: [
+                 
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
+                    changeTheme(context);
                   },
                 ),
                 

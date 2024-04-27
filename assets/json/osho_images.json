@@ -1,0 +1,322 @@
+{
+  "en": {
+    "cards": [
+      {
+        "id": "1",
+        "card_name": "THE FOOL"
+      },
+      {
+        "id": "2",
+        "card_name": "EXISTENCE"
+      },
+      {
+        "id": "3",
+        "card_name": "INNER VOICE"
+      },
+      {
+        "id": "4",
+        "card_name": "CREATIVITY"
+      },
+      {
+        "id": "5",
+        "card_name": "THE REBEL"
+      },
+      {
+        "id": "6",
+        "card_name": "NOTHINGNESS"
+      },
+      {
+        "id": "7",
+        "card_name": "THE LOVERS"
+      },
+      {
+        "id": "8",
+        "card_name": "AWARENESS"
+      },
+      {
+        "id": "9",
+        "card_name": "COURAGE"
+      },
+      {
+        "id": "10",
+        "card_name": "ALONENESS"
+      },
+      {
+        "id": "11",
+        "card_name": "CHANGE"
+      },
+      {
+        "id": "12",
+        "card_name": "BREAK THROUGH"
+      },
+      {
+        "id": "13",
+        "card_name": "NEW VISION"
+      },
+      {
+        "id": "14",
+        "card_name": "TRANSFORMATION"
+      },
+      {
+        "id": "15",
+        "card_name": "INTEGRATION"
+      },
+      {
+        "id": "16",
+        "card_name": "CONDITIONING"
+      },
+      {
+        "id": "17",
+        "card_name": "THUNDERBOLT"
+      },
+      {
+        "id": "18",
+        "card_name": "SILENCE"
+      },
+      {
+        "id": "19",
+        "card_name": "PAST LIVES"
+      },
+      {
+        "id": "20",
+        "card_name": "INNOCENCE"
+      },
+      {
+        "id": "21",
+        "card_name": "BEYOND ILLUSSION "
+      },
+      {
+        "id": "22",
+        "card_name": "COMPLETION"
+      },
+      {
+        "id": "23",
+        "card_name": "THE MASTER"
+      },
+      {
+        "id": "24",
+        "card_name": "KING OF RAINBOW - ABUNDANCE"
+      },
+      {
+        "id": "25",
+        "card_name": "QUEEN OF RAINBOW - FLOWERING"
+      },
+      {
+        "id": "26",
+        "card_name": "KNIGHT OF RAINBOW - SLOWING DOWN "
+      },
+      {
+        "id": "27",
+        "card_name": "PAGE OF RAINBOW - ADVENTURE"
+      },
+      {
+        "id": "28",
+        "card_name": "ACE OF RAINBOW - MOMENT TO MOMENT"
+      },
+      {
+        "id": "29",
+        "card_name": "GUIDANCE"
+      },
+      {
+        "id": "30",
+        "card_name": "THE MISER"
+      },
+      {
+        "id": "31",
+        "card_name": "THE OUTSIDER"
+      },
+      {
+        "id": "32",
+        "card_name": "COMPROMISE"
+      },
+      {
+        "id": "33",
+        "card_name": "PATIENCE"
+      },
+      {
+        "id": "34",
+        "card_name": "ORDINARINESS"
+      },
+      {
+        "id": "35",
+        "card_name": "RIPENESS"
+      },
+      {
+        "id": "36",
+        "card_name": "WE ARE THE WORLD"
+      },
+      {
+        "id": "37",
+        "card_name": "MATURITY"
+      },
+      {
+        "id": "38",
+        "card_name": "KING OF WATER - HEALING"
+      },
+      {
+        "id": "39",
+        "card_name": "QUEEN OF WATER - RECEPTIVITY"
+      },
+      {
+        "id": "40",
+        "card_name": "KNIGHT OF WATER - TRUST"
+      },
+      {
+        "id": "41",
+        "card_name": "PAGE OF WATER - UNDERSTANDING"
+      },
+      {
+        "id": "42",
+        "card_name": "ACE OF WATER - FRIENDLINESS"
+      },
+      {
+        "id": "43",
+        "card_name": "CELEBRATION"
+      },
+      {
+        "id": "44",
+        "card_name": "TURNING IN"
+      },
+      {
+        "id": "45",
+        "card_name": "CLINGING TO THE PAST"
+      },
+      {
+        "id": "46",
+        "card_name": "THE DREAM"
+      },
+      {
+        "id": "47",
+        "card_name": "PROJECTIONS"
+      },
+      {
+        "id": "48",
+        "card_name": "LETTING GO"
+      },
+      {
+        "id": "49",
+        "card_name": "LAZINESS"
+      },
+      {
+        "id": "50",
+        "card_name": "HARMONY"
+      },
+      {
+        "id": "51",
+        "card_name": "GOING WITH THE FLOW"
+      },
+      {
+        "id": "52",
+        "card_name": "KING OF CLOUD - CONTROL"
+      },
+      {
+        "id": "53",
+        "card_name": "QUEEN OF CLOUD - MORALITY"
+      },
+      {
+        "id": "54",
+        "card_name": "KNIGHT OF CLOUD - FIGHTING"
+      },
+      {
+        "id": "55",
+        "card_name": "PAGE OF CLOUD - MIND"
+      },
+      {
+        "id": "56",
+        "card_name": "ACE OF CLOUD - SCHIZOPHRENIA"
+      },
+      {
+        "id": "57",
+        "card_name": "ICE-OLATION"
+      },
+      {
+        "id": "58",
+        "card_name": "POSTPONEMENT"
+      },
+      {
+        "id": "59",
+        "card_name": "COMPARISION"
+      },
+      {
+        "id": "60",
+        "card_name": "THE BURDEN"
+      },
+      {
+        "id": "61",
+        "card_name": "POLITICS"
+      },
+      {
+        "id": "62",
+        "card_name": "GUILT"
+      },
+      {
+        "id": "63",
+        "card_name": "SORROW"
+      },
+      {
+        "id": "64",
+        "card_name": "REBIRTH"
+      },
+      {
+        "id": "65",
+        "card_name": "CONSCIOUSNESS"
+      },
+      {
+        "id": "66",
+        "card_name": "KING OF FIRE - THE CREATOR"
+      },
+      {
+        "id": "67",
+        "card_name": "QUEEN OF FIRE - SHARING"
+      },
+      {
+        "id": "68",
+        "card_name": "KNIGHT OF FIRE - INTENSITY"
+      },
+      {
+        "id": "69",
+        "card_name": "PAGE OF FIRE - PLAYFULNESS"
+      },
+      {
+        "id": "70",
+        "card_name": "ACE OF FIRE - POSSIBILITIES"
+      },
+      {
+        "id": "71",
+        "card_name": "EXPERIENCING"
+      },
+      {
+        "id": "72",
+        "card_name": "PARTICIPATION"
+      },
+      {
+        "id": "73",
+        "card_name": "TOTALITY"
+      },
+      {
+        "id": "74",
+        "card_name": "SUCCESS"
+      },
+      {
+        "id": "75",
+        "card_name": "STRESS"
+      },
+      {
+        "id": "76",
+        "card_name": "TRAVELING"
+      },
+      {
+        "id": "77",
+        "card_name": "EXHAUSTION"
+      },
+      {
+        "id": "78",
+        "card_name": "SUPPRESSION"
+      },
+      {
+        "id": "79",
+        "card_name": "THE SOURCE"
+      }
+    ]
+  }
+}

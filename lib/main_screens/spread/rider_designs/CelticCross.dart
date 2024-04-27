@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
+import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
@@ -74,13 +76,14 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
   bool card8Status = false;
   bool card9Status = false;
   bool card10Status = false;
+  late final AudioController _audioController;
 
   String buttonText = 'Reveal card';
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
 
   Future<void> fetchData() async {
     try {
-      String data = await rootBundle.loadString('assets/json/rider_waite_data.json');
+      String data = await rootBundle.loadString('assets/json/rider_images.json');
       Map<String, dynamic> jsonData = jsonDecode(data);
 
       List<Map<String, dynamic>> cardDataList = [];
@@ -91,7 +94,7 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -147,7 +150,8 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
   @override
   void initState() {
     super.initState();
-    fetchData();
+    _audioController = AudioController();
+
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
@@ -158,6 +162,7 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
     _card8Controller = FlipCardController();
     _card9Controller = FlipCardController();
     _card10Controller = FlipCardController();
+    fetchData();
   }
 
   void flipCard(FlipCardController controller, bool cardnumber) {
@@ -465,6 +470,10 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -476,21 +485,12 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
                 ),
               ),
               actions: [
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
+                
                 IconButton(
                   icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    // Implement your change theme functionality here
+                    changeTheme(context);
                   },
                 ),
               ],

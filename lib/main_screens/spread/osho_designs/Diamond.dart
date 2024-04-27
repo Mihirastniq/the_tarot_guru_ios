@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import '../ActiveSpread.dart';
 import '../osho_spread_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
@@ -33,6 +34,7 @@ class _TheDiamondScreenState extends State<TheDiamondScreen> with TickerProvider
   late FlipCardController _card3Controller;
   late FlipCardController _card4Controller;
   late FlipCardController _card5Controller;
+  late final AudioController _audioController;
 
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
   List<dynamic> cardData = [];
@@ -164,7 +166,7 @@ class _TheDiamondScreenState extends State<TheDiamondScreen> with TickerProvider
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -213,6 +215,7 @@ class _TheDiamondScreenState extends State<TheDiamondScreen> with TickerProvider
   void initState() {
     super.initState();
     fetchData();
+    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
@@ -256,7 +259,11 @@ class _TheDiamondScreenState extends State<TheDiamondScreen> with TickerProvider
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: AppBar().preferredSize.height,
+                height: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),).preferredSize.height,
               ),
               Expanded(
                 child: Column(
@@ -596,6 +603,10 @@ class _TheDiamondScreenState extends State<TheDiamondScreen> with TickerProvider
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -607,14 +618,12 @@ class _TheDiamondScreenState extends State<TheDiamondScreen> with TickerProvider
                 ),
               ),
               actions: [
+                 
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
+                    changeTheme(context);
                   },
                 ),
                 

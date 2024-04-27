@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/demo/demo2.dart';
 import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
+import 'package:the_tarot_guru/main_screens/other_screens/about_rider.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_new_spread.dart';
 import 'package:the_tarot_guru/main_screens/spread/saved_spread/rider_saved_spread.dart';
 import 'deck/rider_option_deck.dart';
@@ -27,8 +28,6 @@ class _AppSelectState extends State<RiderWaiteTarot> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer:
-      Sidebar(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
       body: Stack(
         children: [
           Container(
@@ -180,7 +179,7 @@ class _AppSelectState extends State<RiderWaiteTarot> with TickerProviderStateMix
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            DemoDesignTwo(),
+                                            AboutRiderScreen(),
                                       ),
                                     );
                                   },

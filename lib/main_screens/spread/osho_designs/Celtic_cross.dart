@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
+import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import '../ActiveSpread.dart';
@@ -73,6 +75,7 @@ class _TheTheCelticCrossScreenState extends State<TheCelticCrossScreen> {
   bool card8Status = false;
   bool card9Status = false;
   bool card10Status = false;
+  late final AudioController _audioController;
 
   String buttonText = 'Reveal card';
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
@@ -91,7 +94,7 @@ class _TheTheCelticCrossScreenState extends State<TheCelticCrossScreen> {
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -152,7 +155,7 @@ class _TheTheCelticCrossScreenState extends State<TheCelticCrossScreen> {
   void initState() {
     super.initState();
     fetchData();
-    // Initialize flip card controllers
+    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
@@ -470,6 +473,10 @@ class _TheTheCelticCrossScreenState extends State<TheCelticCrossScreen> {
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -481,21 +488,12 @@ class _TheTheCelticCrossScreenState extends State<TheCelticCrossScreen> {
                 ),
               ),
               actions: [
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
+                 
                 IconButton(
                   icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    // Implement your change theme functionality here
+                    changeTheme(context);
                   },
                 ),
               ],

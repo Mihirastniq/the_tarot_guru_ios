@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
@@ -87,10 +88,11 @@ bool card11Status = false;
 bool card12Status = false;
 String buttonText = 'Reveal card';
 String imagesite = "https://thetarotguru.com/tarotapi/cards";
+late final AudioController _audioController;
 
 Future<void> fetchData() async {
   try {
-    String data = await rootBundle.loadString('assets/json/rider_waite_data.json');
+    String data = await rootBundle.loadString('assets/json/rider_images.json');
     Map<String, dynamic> jsonData = jsonDecode(data);
 
     List<Map<String, dynamic>> cardDataList = [];
@@ -102,7 +104,7 @@ Future<void> fetchData() async {
     for (int id in cardIds) {
       // Find the card with the corresponding ID
       Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-            (card) => card['id'] == id.toString(),
+            (card) => card['id'] == id,
         orElse: () => null,
       );
 
@@ -166,7 +168,8 @@ Future<void> fetchData() async {
 @override
 void initState() {
   super.initState();
-  fetchData();
+
+  _audioController = AudioController();
   _card1Controller = FlipCardController();
   _card2Controller = FlipCardController();
   _card3Controller = FlipCardController();
@@ -179,6 +182,7 @@ void initState() {
   _card10Controller = FlipCardController();
   _card11Controller = FlipCardController();
   _card12Controller = FlipCardController();
+  fetchData();
 }
 
 void flipCard(FlipCardController controller, bool cardnumber) {
@@ -553,6 +557,10 @@ Widget build(BuildContext context) {
           left: 0,
           right: 0,
           child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
             backgroundColor: Colors.transparent,
             elevation: 0,
             title: Text(

@@ -48,7 +48,7 @@ class _SplashViewState extends State<SplashView> {
               Padding(
                 padding: EdgeInsets.only(left: 64, right: 64),
                 child: Text(
-                  "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
+                  "Unlock the power of tarot for self-reflection and guidance. Journey through the symbolism of ancient wisdom.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,

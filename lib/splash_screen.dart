@@ -44,27 +44,38 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Image.asset(
-            'assets/images/Screen_Backgrounds/introbgdark.jpg',
-            fit: BoxFit.cover,
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromRGBO(4, 2, 12, 1.0),
+                  Color.fromRGBO(4, 2, 12, 1.0),
+                ],
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/Screen_Backgrounds/bg1.png', // Replace with your image path
+              fit: BoxFit.cover,
+              opacity: const AlwaysStoppedAnimation(0.1),
+            ),
           ),
           Center(
             child: Container(
               width: 200,
               height: 200,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.transparent,
                 shape: BoxShape.circle,
               ),
               child: Center(
-                child: Text(
-                  '',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(200),
+                  child: Image.asset('assets/images/intro/logo.png'),
+                )
               ),
             ),
           ),

@@ -40,7 +40,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Sidebar(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
       body: Stack(
         children: [
           Container(

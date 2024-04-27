@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
+import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import '../other_screens/settings.dart';
 import '../controller/spread_controller/save_spread_controller.dart';
@@ -26,11 +29,15 @@ _TheSpreadDetailsScreenState createState() => _TheSpreadDetailsScreenState();
 }
 
 class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
+
+
+  late final AudioController _audioController;
   List<dynamic> cardData = [];
   final TextEditingController _spreadNameController = TextEditingController();
 
   @override
   void dispose() {
+    _audioController.stopAudio();
     _spreadNameController.dispose();
     super.dispose();
   }
@@ -47,7 +54,7 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
       for (int id in cardIds) {
         Map<String, dynamic>? card = jsonData[language]['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -56,9 +63,10 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
             'card_image': card['card_image'],
             'card_category': card['card_category'],
             'card_name': card['card_name'],
-            'card_english_content':card['card_english_content'],
-            'card_discription':card['card_discription'],
+            'card_content':card['card_content'],
+            'card_description':card['card_description'],
             'card_index':card['card_index'],
+            'card_translated_category':card['card_translated_category']
           });
         }
       }
@@ -69,8 +77,9 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
     return allCardData;
   }
 
-  void init() {
+  void initState() {
     super.initState();
+    _audioController = AudioController();
     fetchData();
   }
 
@@ -80,9 +89,9 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
     double screenWidth = MediaQuery.of(context).size.width * 0.9;
     double screenHeight = MediaQuery.of(context).size.height * 0.7;
     double containerHeight = screenHeight / 7;
-    double imageAspectRatio = 2600 / 1480;
+    double imageAspectRatio = 671 / 457;
 
-    double containerWidth = screenWidth / 2.5 - 5;
+    double containerWidth = screenWidth/1.5 - 5;
     double containerHeightWithAspectRatio = containerWidth * imageAspectRatio;
 
     void _showSaveDialog(BuildContext context) {
@@ -126,76 +135,35 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color(0xFF272727),
-                  Color(0xFF272727),
+                  Color.fromRGBO(19, 14, 42, 1),
+                  Theme.of(context).primaryColor.withOpacity(0.2),
                 ],
               ),
             ),
           ),
           Positioned.fill(
             child: Image.asset(
-              'assets/images/Screen_Backgrounds/product.png', // Replace with your image path
+              'assets/images/Screen_Backgrounds/bg3.png', // Replace with your image path
               fit: BoxFit.cover,
-              opacity: const AlwaysStoppedAnimation(.1),
+              opacity: const AlwaysStoppedAnimation(.3),
             ),
           ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: Text(
-                "${AppLocalizations.of(context)!.spreaddetails}",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
 
-              actions: [
-                PopupMenuButton(
-                  onSelected: (value) {
-                    if (value == 'save') {
-                      _showSaveDialog(context);
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 'save',
-                      child: Text('Save Spread'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Center(
-            child: SingleChildScrollView(
+          SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
                   Container(
                     margin: EdgeInsets.only(top: 50,bottom: 10),
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 50),
-                    height: MediaQuery.of(context).size.height * 0.8,
+                    padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
+                    height: MediaQuery.of(context).size.height * 0.85,
                     width: MediaQuery.of(context).size.width * 0.95,
-                    decoration: BoxDecoration(
-                      // color: Colors.white,
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/other/osho_content_bg.png'),
-                            fit: BoxFit.cover
-                        ),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
                     child: FutureBuilder<List<dynamic>>(
                       future: fetchData(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator(); // or any other loading indicator
+                          return CircularProgressIndicator();
                         } else if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         } else {
@@ -207,106 +175,72 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
                               // Build UI for each card here
                               return Container(
                                 color: Colors.transparent,
-                                padding: EdgeInsets.fromLTRB(20, 40, 20, 40),
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(15),
-                                            margin: EdgeInsets.fromLTRB(
-                                                15, 15, 25, 0),
-                                            width: containerWidth,
-                                            height:
-                                            containerHeightWithAspectRatio,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        'assets/images/other/cardbg.png'),
-                                                    fit: BoxFit.cover)
-                                              // color: Colors.white
-                                            ),
-                                            // child: Text('image here'),
-                                            child: Image.network(
-                                              'https://thetarotguru.com/tarotapi/cards/${widget.tarotType}/${currentCard['card_category']}/${currentCard['card_image']}',
-                                              width: 100,
-                                              height: 100,
-                                            ),
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  currentCard['card_name'],
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 23,
-                                                      fontWeight:
-                                                      FontWeight.w700),
-                                                ),
-                                                Text(
-                                                  '${AppLocalizations.of(context)!.cardcategory} : ${currentCard['card_category']}',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                      FontWeight.w500),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 15,
-                                          )
-                                        ],
+                                      padding: EdgeInsets.all(15),
+                                      margin: EdgeInsets.fromLTRB(
+                                          15, 0, 25, 0),
+                                      width: containerWidth,
+                                      height:
+                                      containerHeightWithAspectRatio,
+                                      decoration: BoxDecoration(
+
+                                      ),
+                                      // child: Text('image here'),
+                                      child: Image.asset(
+                                        'assets/images/tarot_cards/${widget.tarotType}/${currentCard['card_category']}/${currentCard['card_image']}',
+                                        width: containerWidth,
+                                        height: containerHeightWithAspectRatio,
                                       ),
                                     ),
                                     Container(
-                                      alignment: Alignment.topLeft,
+                                      padding: EdgeInsets.all(15),
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context).primaryColor.withOpacity(0.6),
+                                          borderRadius: BorderRadius.circular(15)
+                                      ),
+                                      width: MediaQuery.sizeOf(context).width*0.9,
                                       child: Column(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            "${currentCard['card_english_content']}",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w700),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Icon(Icons.star,color: Colors.white,),
+                                              Text(currentCard['card_name'],style: _getTitleTextStyle(context)),
+                                              Icon(Icons.star,color: Colors.white,)
+                                            ],
                                           ),
                                           SizedBox(
-                                            height: 15,
+                                            height: 10,
+                                          ),
+                                          Text('${AppLocalizations.of(context)!.cardcategory} : ${currentCard['card_translated_category']}',style: _getCustomTextStyle(context),),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+
+                                          Text("${currentCard['card_content']}",
+                                              style: _getCustomTextStyle(context)),
+                                          SizedBox(
+                                            height: 10,
                                           ),
                                           Container(
                                             alignment: Alignment.center,
                                             child: Text(
-                                              '${AppLocalizations.of(context)!.discriptioninspread}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w700),
+                                              '${AppLocalizations.of(context)!.descriptioninspread}',
+                                              style: _getCustomTextStyle(context)
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 15,
+                                            height: 10,
                                           ),
                                           Text(
-                                            "${currentCard['card_discription']}",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                          SizedBox(
-                                            height: 15,
+                                            "${currentCard['card_description']}",
+                                            style: _getCustomTextStyle(context)
                                           ),
                                         ],
                                       ),
@@ -321,20 +255,105 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
                     ),
                   ),
                   FullWidthButton(text: 'Back to home', onPressed: (){
-                    Navigator.push(
+                    _audioController.stopAudio();
+                    Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            AppSelect(),
-                      ),
+                      MaterialPageRoute(builder: (context) => AppSelect()),
+                          (route) => false, // Remove all routes
                     );
                   })
                 ],
               )
-            )
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: Text(
+                "${AppLocalizations.of(context)!.spreaddetails}",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      _showSaveDialog(context);
+                    },
+                    icon: Icon(
+                      Icons.save,
+                      color: Colors.white,
+                    )
+                ),
+                IconButton(
+                  icon: Icon(Icons.palette),
+                  color: Colors.white,
+                  onPressed: () {
+                    changeTheme(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
+
+  }
+  TextStyle _getCustomTextStyle(BuildContext context) {
+    // Define default text style
+    double lineHeight = 1.8;
+    TextStyle defaultStyle = GoogleFonts.anekDevanagari(
+      fontSize: 21,
+      fontWeight: FontWeight.w400,
+      color: Colors.white,
+        height: lineHeight
+    );
+
+    // Check the language and set appropriate font
+    if (Localizations.localeOf(context).languageCode == 'hi') {
+      return GoogleFonts.anekDevanagari(
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+        color: Colors.white,
+          height: lineHeight
+      );
+    } else {
+      return defaultStyle;
+    }
+  }
+  TextStyle _getTitleTextStyle(BuildContext context) {
+    // Define default text style
+    double lineHeight = 1.8;
+    TextStyle defaultStyle = GoogleFonts.anekDevanagari(
+        color: Colors.white,
+        fontSize: 23,
+        fontWeight:
+        FontWeight.w600,
+        height: lineHeight
+    );
+
+    // Check the language and set appropriate font
+    if (Localizations.localeOf(context).languageCode == 'hi') {
+      return GoogleFonts.anekDevanagari(
+          color: Colors.white,
+          fontSize: 23,
+          fontWeight:
+          FontWeight.w600,
+          height: lineHeight
+      );
+    } else {
+      return defaultStyle;
+    }
   }
 }

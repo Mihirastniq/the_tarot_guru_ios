@@ -59,8 +59,8 @@ class ThemeManager extends ChangeNotifier {
         );
       case 2:
         return ThemeData(
-          primaryColor: Color(0xFFff94c1), // #ff94c1
-          scaffoldBackgroundColor: Color(0xFFbe6079), // #be6079
+          primaryColor: Color(0xFF541370), // #ff94c1
+          scaffoldBackgroundColor: Color(0xFF3A0A50), // #be6079
           backgroundColor: Color(0xFF812d36), // #812d36
           cardColor: Color(0xFF752329), // #752329
           buttonTheme: ButtonThemeData(

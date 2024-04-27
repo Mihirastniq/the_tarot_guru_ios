@@ -166,6 +166,10 @@ class CenterNextButton extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -175,10 +179,14 @@ class CenterNextButton extends StatelessWidget {
                           ),
                         );
                       },
+
                       child: Text(
                         'Sign In',
                         style: TextStyle(
-                          color: Color(0xFF9733EE),
+                          backgroundColor: Colors.transparent,
+                          color: Colors.white,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),

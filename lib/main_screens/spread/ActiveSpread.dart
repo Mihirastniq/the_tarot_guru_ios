@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
-import 'package:flutter/rendering.dart';
+
 
 import 'package:the_tarot_guru/main_screens/spread/osho_designs/Flying_bard.dart';
 import 'osho_designs/Paradox.dart';
@@ -96,7 +95,7 @@ class _ActiveSpreadState extends State<ActiveSpread> {
           _cardvisible = !_cardvisible;
           _isAnimating = !_isAnimating;
           if (_isAnimating) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 3; i++) {
               _updateCardPositions();
               print('method call of time $i');
               await Future.delayed(Duration(milliseconds: 2200)); // Delay between updates
@@ -123,7 +122,6 @@ class _ActiveSpreadState extends State<ActiveSpread> {
   }
 
   void _animateCardRemoval(int cardId) {
-    // Find the index of the selected card in the list
     int index = cards.indexWhere((card) => card.id == cardId);
     if (index != -1) {
       // Set the new position outside the screen
@@ -548,6 +546,10 @@ class _ActiveSpreadState extends State<ActiveSpread> {
             child: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               title: Text(
                 '${widget.spreadName}',
                 style: TextStyle(
@@ -586,7 +588,7 @@ class _ActiveSpreadState extends State<ActiveSpread> {
               visible: _textvisible,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.8,
-                height: 200,
+                height: MediaQuery.of(context).size.height * 0.8,
                 color: Colors.transparent,
                 child: Center(
                   child: Column(
@@ -754,8 +756,7 @@ class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateM
         child: GestureDetector(
           behavior: HitTestBehavior.opaque, // Ensure that the GestureDetector receives taps even during dragging
           onPanStart: (details) {
-            print('animation start');
-            print('top and left before update is : $newtop & $newleft');
+
             setState(() {
               isDragging = true; // Set dragging flag to true when dragging starts
             });

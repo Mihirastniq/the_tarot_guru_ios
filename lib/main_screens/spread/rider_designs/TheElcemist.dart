@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
@@ -61,13 +62,14 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
   bool card4Status = false;
   bool card5Status = false;
   bool card6Status = false;
+  late final AudioController _audioController;
 
   String buttonText = 'Reveal card';
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
 
   Future<void> fetchData() async {
     try {
-      String data = await rootBundle.loadString('assets/json/rider_waite_data.json');
+      String data = await rootBundle.loadString('assets/json/rider_images.json');
       Map<String, dynamic> jsonData = jsonDecode(data);
 
       List<Map<String, dynamic>> cardDataList = [];
@@ -79,7 +81,7 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
@@ -130,14 +132,14 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
   @override
   void initState() {
     super.initState();
-    fetchData();
-    // Initialize flip card controllers
+
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
     _card4Controller = FlipCardController();
     _card5Controller = FlipCardController();
     _card6Controller = FlipCardController();
+    fetchData();
 
   }
 
@@ -320,6 +322,10 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -331,17 +337,14 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
                 ),
               ),
               actions: [
+                
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
+                    changeTheme(context);
                   },
                 ),
-                
               ],
             ),
           ),

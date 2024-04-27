@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/demo/demo1.dart';
 import 'package:the_tarot_guru/main_screens/deck/osho_option_deck.dart';
 import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
+import 'package:the_tarot_guru/main_screens/other_screens/about_osho.dart';
 import 'package:the_tarot_guru/main_screens/spread/osho_new_spread.dart';
 import 'package:the_tarot_guru/main_screens/spread/saved_spread/osho_saved_spread.dart';
 import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
@@ -31,7 +32,6 @@ class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Sidebar(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
       body: Stack(
         children: [
           Container(
@@ -59,37 +59,18 @@ class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
             left: 0,
             right: 0,
             child: AppBar(
-              leading: Builder(
-                builder: (context) => IconButton(
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    icon: Icon(
-                      Icons.segment_rounded,
-                      color: Colors.white,
-                      size: 35,
-                    )),
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
               ),
+              leadingWidth: 35,
               backgroundColor: Colors.transparent,
               elevation: 0,
-              actions: [
-                IconButton(onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SubscribeApp(),
-                    ),
-                  );
-                }, icon: Icon(
-                  Icons.money,
-                  size: 30,
-                  color: Colors.white,
-                ))
-              ],
               title: Text(
                 '${AppLocalizations.of(context)!.apptitle}',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -196,7 +177,7 @@ class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            DemoDesignOne(),
+                                            AboutOshoZen(),
                                       ),
                                     );
                                   },

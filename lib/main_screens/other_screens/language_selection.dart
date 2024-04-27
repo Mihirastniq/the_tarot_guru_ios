@@ -22,7 +22,6 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   void initState() {
     super.initState();
     _initLanguage();
-    // Retrieve the existing instance of LanguageChangeController
     _languageChangeController = Provider.of<LanguageChangeController>(context, listen: false);
   }
 
@@ -37,8 +36,24 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   final List<Map<String, String>> languageOptions = [
     {'en': 'English'},
     {'hi': 'Hindi'},
-    {'gu': 'Gujarati'},
+    {'bn': 'Bengali'},
+    {'ta': 'Tamil'},
+    {'te': 'Telugu'},
+    {'kn': 'Kannada'},
+    {'ml': 'Malayalam'},
     {'mr': 'Marathi'},
+    {'gu': 'Gujarati'},
+    {'pa': 'Punjabi'},
+    {'or': 'Odia'},
+    {'es': 'Spanish'},
+    {'fr': 'French'},
+    {'de': 'German'},
+    {'pt': 'Portuguese'},
+    {'ru': 'Russian'},
+    {'ja': 'Japanese'},
+    {'ko': 'Korean'},
+    {'vi': 'Vietnamese'},
+    {'id': 'Indonesian'}
   ];
 
   @override
@@ -58,7 +73,6 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
     }
 
     return Scaffold(
-      drawer: Sidebar(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
       body: SafeArea(
         child: Stack(
           children: [
@@ -110,38 +124,44 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                SizedBox(height: 20),
-                Text(
-                  '${AppLocalizations.of(context)!.selectlangauge}',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                SizedBox(height: 20),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: languageOptions.length,
-                  itemBuilder: (context, index) {
-                    final language = languageOptions[index];
-                    final languageCode = language.keys.first;
-                    final languageName = language.values.first;
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  SizedBox(height: 20),
+                  Text(
+                    '${AppLocalizations.of(context)!.selectlangauge}',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  SizedBox(height: 20),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: languageOptions.length,
+                    itemBuilder: (context, index) {
+                      final language = languageOptions[index];
+                      final languageCode = language.keys.first;
+                      final languageName = language.values.first;
 
-                    return RadioListTile(
-                      title: Text(
-                        languageName!,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      activeColor: Colors.white,
-                      value: languageCode,
-                      groupValue: _selectedLanguageCode,
-                      onChanged: (value) {
-                        _setSelectedLanguage(value as String);
-                      },
-                    );
-                  },
-                ),
-              ],
-            )
+                      return RadioListTile(
+                        title: Text(
+                          languageName!,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        activeColor: Colors.white,
+                        value: languageCode,
+                        groupValue: _selectedLanguageCode,
+                        onChanged: (value) {
+                          _setSelectedLanguage(value as String);
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 50,
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

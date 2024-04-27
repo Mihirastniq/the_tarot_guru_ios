@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
 import '../ActiveSpread.dart';
 import '../osho_spread_details.dart';
@@ -39,6 +40,7 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
   List<bool> _cardFlippedState = [false];
   bool cardflipchecker = false;
   List<dynamic> cardData = [];
+  late final AudioController _audioController;
 
   String image1 = '';
   String image2 = '';
@@ -55,7 +57,7 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
 
   Future<void> fetchData() async {
     try {
-      String data = await rootBundle.loadString('assets/json/rider_waite_data.json');
+      String data = await rootBundle.loadString('assets/json/rider_images.json');
       Map<String, dynamic> jsonData = jsonDecode(data);
 
       List<Map<String, dynamic>> cardDataList = [];
@@ -67,11 +69,11 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
       for (int id in cardIds) {
         // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
-              (card) => card['id'] == id.toString(),
+              (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
+       print(card);
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -87,7 +89,7 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
         print('Card Category: ${cardData['card_category']}');
       });
       print('object is : ${cardDataList}');
-
+      // print(cardDataList);
       // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 2) {
@@ -110,10 +112,10 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
   @override
   void initState() {
     super.initState();
-    fetchData();
+    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
-
+    fetchData();
   }
 
   void flipCard(FlipCardController controller,bool cardnumber) {
@@ -210,7 +212,11 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
           Column(
             children: [
               SizedBox(
-                height: AppBar().preferredSize.height,
+                height: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),).preferredSize.height,
               ),
               Expanded(
                 child: Column(
@@ -377,6 +383,10 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
             left: 0,
             right: 0,
             child: AppBar(
+              leading: IconButton(
+                onPressed: (){Navigator.pop(context);},
+                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: Text(
@@ -388,14 +398,12 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
                 ),
               ),
               actions: [
+                
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
+                    changeTheme(context);
                   },
                 ),
                 

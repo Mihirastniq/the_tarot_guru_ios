@@ -76,7 +76,7 @@ class RelaxView extends StatelessWidget {
               SlideTransition(
                 position: _relaxAnimation,
                 child: Text(
-                  "Relax",
+                  "Osho Zen Tarot",
                   style: TextStyle(fontSize: 45.0, fontWeight: FontWeight.bold,color: Colors.white),
                 ),
               ),
@@ -86,7 +86,7 @@ class RelaxView extends StatelessWidget {
                   padding:
                       EdgeInsets.only(left: 64, right: 64, top: 16, bottom: 16),
                   child: Text(
-                    "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
+                    "Explore the mystical insights of Osho Zen Tarot. Discover profound wisdom in every card drawn.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -98,9 +98,9 @@ class RelaxView extends StatelessWidget {
               SlideTransition(
                 position: _imageAnimation,
                 child: Container(
-                  constraints: BoxConstraints(maxWidth: 350, maxHeight: 250),
                   child: Image.asset(
-                    'assets/images/intro/T2.png',
+                    'assets/images/cards/osho_intro.png',
+                    width: MediaQuery.sizeOf(context).width * 0.8,
                     // 'assets/images/introduction_animation/relax_image.png',
                     fit: BoxFit.contain,
                   ),

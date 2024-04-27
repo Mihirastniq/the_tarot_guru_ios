@@ -4,6 +4,7 @@ import 'package:flutter/services.dart'; // For loading JSON file
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/Deck/osho_card_details.dart';
 import 'package:the_tarot_guru/main_screens/Deck/rider_card_details.dart';
+import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 
@@ -37,6 +38,7 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
 
       String jsonString = await rootBundle.loadString('assets/json/oshoo_zen_data.json');
       // Parse JSON data
+      // print(jsonString);
       Map<String, dynamic> data = jsonDecode(jsonString);
       // Extract card data based on language code and deck option
       List<dynamic> cards = data[language]['cards'];
@@ -132,7 +134,7 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
     } else {
       return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           crossAxisSpacing: 20.0,
           mainAxisSpacing: 20.0,
         ),
@@ -144,7 +146,7 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => OshoCardDetailsScreen(
-                    cardId: _cardData[index].id,
+                    cardId: _cardData[index].id.toString(),
                     tarotType: widget.tarotType,
                     deckOption: widget.deckOption,
                   ),
@@ -194,7 +196,7 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
 }
 
 class CardData {
-  final String id;
+  final int id;
   final String cardName;
   final String cardImage;
   final String cardCategory;
@@ -214,7 +216,7 @@ class CardData {
       cardName: json['card_name'],
       cardImage: json['card_image'],
       cardCategory: json['card_category'],
-      cardEnglishContent: json['card_english_content'],
+      cardEnglishContent: json['card_content'],
     );
   }
 }

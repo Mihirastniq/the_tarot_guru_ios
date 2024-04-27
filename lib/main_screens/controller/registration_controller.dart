@@ -9,6 +9,8 @@ class RegistrationController {
   TextEditingController last_name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone_number = TextEditingController();
+  TextEditingController country_code = TextEditingController();
+  TextEditingController country = TextEditingController();
   TextEditingController gender = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirm_password = TextEditingController();
@@ -38,10 +40,12 @@ class RegistrationController {
           "lname": last_name.text,
           "email": email.text,
           "phone": phone_number.text,
+          "country_code":country_code.text,
           "dob": dobString,
           "gender": gender.text,
           "password": password.text,
           "confirm_password": confirm_password.text,
+          "country":country.text
         };
         print("Request Body: $requestBody"); // Print request body
         final http.Response res = await http.post(Uri.parse(uri), body: requestBody);

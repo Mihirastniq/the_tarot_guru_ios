@@ -14,17 +14,37 @@ class SignIn extends StatefulWidget {
 
 class _SignInFiveState extends State<SignIn> {
   final LoginController loginController = LoginController();
+  Color fieldbbackground = Color(0xFF272B34);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color(0xFF081F42),
+      backgroundColor: const Color(0xFF02051F),
       body: SafeArea(
         child: SizedBox(
           height: size.height,
           child: Stack(
             children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromRGBO(4, 2, 12, 1.0),
+                      Color.fromRGBO(4, 2, 12, 1.0),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: Image.asset(
+                  'assets/images/Screen_Backgrounds/bg1.png', // Replace with your image path
+                  fit: BoxFit.cover,
+                  opacity: const AlwaysStoppedAnimation(0.1),
+                ),
+              ),
               //left side background design. I use a svg image here
               Positioned(
                 left: -34,
@@ -154,8 +174,8 @@ class _SignInFiveState extends State<SignIn> {
   }
 
   Widget logo(double height_, double width_) {
-    return SvgPicture.asset(
-      'assets/logo2.svg',
+    return Image.asset(
+      'assets/images/intro/logo.png',
       height: height_,
       width: width_,
     );
@@ -178,7 +198,7 @@ class _SignInFiveState extends State<SignIn> {
       height: size.height / 12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: const Color(0xFF511AAE),
+        color: fieldbbackground,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -238,7 +258,7 @@ class _SignInFiveState extends State<SignIn> {
       height: size.height / 12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: const Color(0xFF511AAE),
+        color: fieldbbackground,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -307,13 +327,13 @@ class _SignInFiveState extends State<SignIn> {
         height: size.height / 13,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: const Color(0xFFC32EC3),
+          color: Colors.white,
         ),
         child: Text(
           '${AppLocalizations.of(context)!.signintextlabel}',
           style: GoogleFonts.inter(
             fontSize: 22.0,
-            color: Colors.white,
+            color: Colors.black,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -359,7 +379,7 @@ class _SignInFiveState extends State<SignIn> {
           ),
           children: [
             TextSpan(
-              text: '${AppLocalizations.of(context)!.donthaveaccountlabel}',
+              text: '${AppLocalizations.of(context)!.donthaveaccountlabel}  ',
               style: GoogleFonts.nunito(
                 fontWeight: FontWeight.w600,
               ),
