@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,21 +18,25 @@ class NewSpread extends StatefulWidget {
 }
 
 class _NewSpreadState extends State<NewSpread> {
-  late Map<String, Map<String, dynamic>> optionCardCounts;
+  late Map<String, Map<String, dynamic>> optionCardCounts = {};
 
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () { fetchOptions(); });
+    Future.delayed(Duration.zero, () {
+      fetchOptions();
+    });
   }
 
 
   void fetchOptions() {
+    print('fetchOptions');
+    print(widget.tarotType);
     setState(() {
       if (widget.tarotType == 'Osho Zen') {
         optionCardCounts = {
-          "${AppLocalizations.of(context)!.singlecard}": {
+          AppLocalizations.of(context)!.singlecard: {
             "count": 1,
             "color1": Color(0xFFF09819),
             "color2": Color(0xFFEDDE5D),
@@ -39,7 +45,7 @@ class _NewSpreadState extends State<NewSpread> {
             "iconBoxColor": Color(0xFF84663A),
             'spreadEnglishName':'Osho Single Card',
           },
-          "${AppLocalizations.of(context)!.threecard}": {
+          AppLocalizations.of(context)!.threecard: {
             "count": 3,
             "color1": Color(0xFFEE0979),
             "color2": Color(0xFFFF6A00),
@@ -48,7 +54,7 @@ class _NewSpreadState extends State<NewSpread> {
             "iconBoxColor": Color(0xFF74234B),
             'spreadEnglishName':'Osho Three Card',
           },
-          "${AppLocalizations.of(context)!.thediamond}": {
+          AppLocalizations.of(context)!.thediamond: {
             "count": 5,
             "color1": Color(0xFFE52D27),
             "color2": Color(0xFFB31217),
@@ -57,7 +63,7 @@ class _NewSpreadState extends State<NewSpread> {
             "iconBoxColor": Color(0xFF521E1F),
             'spreadEnglishName':'Osho The Diamond',
           },
-          "${AppLocalizations.of(context)!.theflyingbird}": {
+          AppLocalizations.of(context)!.theflyingbird: {
             "count": 7,
             "color1": Color(0xFFDA22FF),
             "color2": Color(0xFF9733EE),
@@ -66,7 +72,7 @@ class _NewSpreadState extends State<NewSpread> {
             "iconBoxColor": Color(0xFF5F3A80),
             'spreadEnglishName':'Osho The Flying Bird',
           },
-          "${AppLocalizations.of(context)!.thekey}": {
+          AppLocalizations.of(context)!.thekey: {
             "count": 8,
             "color1": Color(0xFF348F50),
             "color2": Color(0xFF56B4D3),
@@ -75,7 +81,7 @@ class _NewSpreadState extends State<NewSpread> {
             "iconBoxColor": Color(0xFF487A8B),
             'spreadEnglishName':'Osho The Key',
           },
-          "${AppLocalizations.of(context)!.theparadox}": {
+          AppLocalizations.of(context)!.theparadox: {
             "count": 3,
             "color1": Color(0xFF61045F),
             "color2": Color(0xFFAA076B),
@@ -84,7 +90,7 @@ class _NewSpreadState extends State<NewSpread> {
             "iconBoxColor": Color(0xFF40253F),
             'spreadEnglishName':'Osho The Paradox',
           },
-          "${AppLocalizations.of(context)!.themirror}": {
+          AppLocalizations.of(context)!.themirror: {
             "count": 12,
             "color1": Color(0xFFC21500),
             "color2": Color(0xFFFFC500),
@@ -93,7 +99,7 @@ class _NewSpreadState extends State<NewSpread> {
             "iconBoxColor": Color(0xFF796B3B),
             'spreadEnglishName':'Osho The Mirror',
           },
-          "${AppLocalizations.of(context)!.celticcross}": {
+          AppLocalizations.of(context)!.celticcross: {
             "count": 10,
             "color1": Color(0xFF56AB2F),
             "color2": Color(0xFFA8E063),
@@ -102,7 +108,7 @@ class _NewSpreadState extends State<NewSpread> {
             "iconBoxColor": Color(0xFF3D622C),
             'spreadEnglishName':'Osho Celtic Cross',
           },
-          "${AppLocalizations.of(context)!.relationship}": {
+          AppLocalizations.of(context)!.relationship: {
             "count": 4,
             "color1": Color(0xFFFF4E50),
             "color2": Color(0xFFF9D423),
@@ -111,7 +117,7 @@ class _NewSpreadState extends State<NewSpread> {
             "iconBoxColor": Color(0xFF524C2F),
             'spreadEnglishName':'Osho Relationship',
           },
-          "${AppLocalizations.of(context)!.unification}": {
+          AppLocalizations.of(context)!.unification: {
             "count": 10,
             "color1": Color(0xFF834D9B),
             "color2": Color(0xFFD04ED6),
@@ -203,7 +209,7 @@ class _NewSpreadState extends State<NewSpread> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("${AppLocalizations.of(context)!.newspreadtitle}",style: TextStyle(
+                      Text(AppLocalizations.of(context)!.newspreadtitle,style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,
                           fontWeight: FontWeight.w800

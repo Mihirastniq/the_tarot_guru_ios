@@ -42,7 +42,8 @@ class ActiveSpread extends StatefulWidget {
   ActiveSpread({
     required this.spreadName,
     required this.numberOfCards,
-    required this.tarotType, required this.spreadEnglishName,
+    required this.tarotType,
+    required this.spreadEnglishName,
   });
   @override
   _ActiveSpreadState createState() => _ActiveSpreadState();
@@ -51,8 +52,7 @@ class ActiveSpread extends StatefulWidget {
 class _ActiveSpreadState extends State<ActiveSpread> {
   bool _isAnimating = false;
   late List<CardInfo> cards = [];
-  late final List<bool>
-  fixedPositions;
+  late final List<bool> fixedPositions;
 
   int countdown = 5;
   bool showText = true;
@@ -85,30 +85,31 @@ class _ActiveSpreadState extends State<ActiveSpread> {
     super.dispose();
   }
 
-
   Future<void> _changePosition() async {
     setState(() {
       _textvisible = !_textvisible;
-      Future.delayed(const Duration(milliseconds: 500), () {
-        setState(() async {
-          _cardvisible = !_cardvisible;
-          _isAnimating = !_isAnimating;
-          if (_isAnimating) {
-            for (int i = 0; i < 3; i++) {
-              if(_isAnimating) {
-                print('value is ${_isAnimating}');
-                _updateCardPositions();
-                print('method call of time $i');
-                await Future.delayed(Duration(milliseconds: 2100));
-              }
-            }
-            setState(() {
-              _isAnimating = false;
-            });
-          }
-        });
-      });
     });
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    setState(() {
+      _cardvisible = !_cardvisible;
+      _isAnimating = !_isAnimating;
+    });
+
+    if (_isAnimating) {
+      for (int i = 0; i < 3; i++) {
+        if (_isAnimating) {
+          print('value is ${_isAnimating}');
+          _updateCardPositions();
+          print('method call of time $i');
+          await Future.delayed(Duration(milliseconds: 2100));
+        }
+      }
+      setState(() {
+        _isAnimating = false;
+      });
+    }
   }
 
   void stopAnimation() {
@@ -120,9 +121,12 @@ class _ActiveSpreadState extends State<ActiveSpread> {
   void _updateCardPositions() {
     setState(() {
       for (int i = 0; i < cards.length; i++) {
-        if (!fixedPositions[i]) { // Only update positions if the card is not in a fixed position
-          double newLeft = Random().nextDouble() * (MediaQuery.of(context).size.width * 0.9 - 90);
-          double newTop = Random().nextDouble() * (MediaQuery.of(context).size.height * 0.7 - 120);
+        if (!fixedPositions[i]) {
+          // Only update positions if the card is not in a fixed position
+          double newLeft = Random().nextDouble() *
+              (MediaQuery.of(context).size.width * 0.9 - 90);
+          double newTop = Random().nextDouble() *
+              (MediaQuery.of(context).size.height * 0.7 - 120);
           cards[i].position = '$newLeft,$newTop'; // Store the new position
         }
       }
@@ -134,7 +138,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
     if (index != -1) {
       // Set the new position outside the screen
       setState(() {
-        cards[index].position = '${MediaQuery.of(context).size.width}, ${MediaQuery.of(context).size.height}';
+        cards[index].position =
+            '${MediaQuery.of(context).size.width}, ${MediaQuery.of(context).size.height}';
       });
     }
   }
@@ -155,12 +160,10 @@ class _ActiveSpreadState extends State<ActiveSpread> {
         isAnimating: _isAnimating,
         onStopAnimation: stopAnimation,
         onUpdatePosition: (newLeft, newTop) {
-
           setState(() {
             card.position = '$newLeft,$newTop';
           });
         },
-
       );
     }).toList();
   }
@@ -176,10 +179,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
             totalselectedcards = totalselectedcards + 1;
           });
           if (selectedCards.length == widget.numberOfCards) {
-            List<SelectedCard> selectedCardsList =
-            selectedCards.map((id) {
-              CardInfo card =
-              cards.firstWhere((card) => card.id == id);
+            List<SelectedCard> selectedCardsList = selectedCards.map((id) {
+              CardInfo card = cards.firstWhere((card) => card.id == id);
               return SelectedCard(id: card.id, name: card.name);
             }).toList();
             NavigateToRevealCard(
@@ -188,10 +189,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                 spreadName: widget.spreadName);
           }
         } else {
-          List<SelectedCard> selectedCardsList =
-          selectedCards.map((id) {
-            CardInfo card =
-            cards.firstWhere((card) => card.id == id);
+          List<SelectedCard> selectedCardsList = selectedCards.map((id) {
+            CardInfo card = cards.firstWhere((card) => card.id == id);
             return SelectedCard(id: card.id, name: card.name);
           }).toList();
           NavigateToRevealCard(
@@ -213,7 +212,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
 
     // Generate random numbers and add them to the set until we have enough unique numbers
     while (selectedNumbers.length < totalCards) {
-      int randomNumber = Random().nextInt(79) + 1; // Generate a random number from 1 to 79
+      int randomNumber =
+          Random().nextInt(79) + 1; // Generate a random number from 1 to 79
       selectedNumbers.add(randomNumber); // Add the number to the set
     }
 
@@ -235,9 +235,12 @@ class _ActiveSpreadState extends State<ActiveSpread> {
     );
   }
 
-
-  void NavigateToRevealCard({required List<SelectedCard> selectedCards,required String tarotType, required String spreadName}) {
-    if (widget.tarotType == "Osho Zen" && widget.spreadName == "${AppLocalizations.of(context)!.singlecard}") {
+  void NavigateToRevealCard(
+      {required List<SelectedCard> selectedCards,
+      required String tarotType,
+      required String spreadName}) {
+    if (widget.tarotType == "Osho Zen" &&
+        widget.spreadName == "${AppLocalizations.of(context)!.singlecard}") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -367,18 +370,20 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                 spreadName: widget.spreadName)),
       );
     } else if (widget.tarotType == "Rider Waite" &&
-        widget.spreadName == "${AppLocalizations.of(context)!.fourcardspread}") {
+        widget.spreadName ==
+            "${AppLocalizations.of(context)!.fourcardspread}") {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => RiderFourCardScreen(
-              selectedCards: selectedCards,
-              tarotType: widget.tarotType,
-              spreadName: widget.spreadName,
-            )),
+                  selectedCards: selectedCards,
+                  tarotType: widget.tarotType,
+                  spreadName: widget.spreadName,
+                )),
       );
     } else if (widget.tarotType == "Rider Waite" &&
-        widget.spreadName == "${AppLocalizations.of(context)!.fivecardspread}") {
+        widget.spreadName ==
+            "${AppLocalizations.of(context)!.fivecardspread}") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -408,7 +413,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                 spreadName: widget.spreadName)),
       );
     } else if (widget.tarotType == "Rider Waite" &&
-        widget.spreadName == "${AppLocalizations.of(context)!.sevencardspread}") {
+        widget.spreadName ==
+            "${AppLocalizations.of(context)!.sevencardspread}") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -418,7 +424,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                 spreadName: widget.spreadName)),
       );
     } else if (widget.tarotType == "Rider Waite" &&
-        widget.spreadName == "${AppLocalizations.of(context)!.thehorseshoespread}") {
+        widget.spreadName ==
+            "${AppLocalizations.of(context)!.thehorseshoespread}") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -428,7 +435,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                 spreadName: widget.spreadName)),
       );
     } else if (widget.tarotType == "Rider Waite" &&
-        widget.spreadName == "${AppLocalizations.of(context)!.eightcardspread}") {
+        widget.spreadName ==
+            "${AppLocalizations.of(context)!.eightcardspread}") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -438,7 +446,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                 spreadName: widget.spreadName)),
       );
     } else if (widget.tarotType == "Rider Waite" &&
-        widget.spreadName == "${AppLocalizations.of(context)!.ninecardspread}") {
+        widget.spreadName ==
+            "${AppLocalizations.of(context)!.ninecardspread}") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -458,7 +467,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                 spreadName: widget.spreadName)),
       );
     } else if (widget.tarotType == "Rider Waite" &&
-        widget.spreadName == "${AppLocalizations.of(context)!.twelvecardspread}") {
+        widget.spreadName ==
+            "${AppLocalizations.of(context)!.twelvecardspread}") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -468,7 +478,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                 spreadName: widget.spreadName)),
       );
     } else if (widget.tarotType == "Rider Waite" &&
-        widget.spreadName == "${AppLocalizations.of(context)!.circularspread}") {
+        widget.spreadName ==
+            "${AppLocalizations.of(context)!.circularspread}") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -496,7 +507,7 @@ class _ActiveSpreadState extends State<ActiveSpread> {
       setState(() {
         cards = List<CardInfo>.generate(
           numberOfCards,
-              (index) => CardInfo(
+          (index) => CardInfo(
             id: index + 1,
             position: '0,0',
             name: '',
@@ -509,7 +520,8 @@ class _ActiveSpreadState extends State<ActiveSpread> {
     }
   }
 
-  String getOptionText(BuildContext context, String tarotType, String spreadName) {
+  String getOptionText(
+      BuildContext context, String tarotType, String spreadName) {
     if (tarotType == 'Osho Zen') {
       switch (widget.spreadEnglishName) {
         case 'Osho Single Card':
@@ -535,7 +547,6 @@ class _ActiveSpreadState extends State<ActiveSpread> {
         default:
           return '';
       }
-
     } else if (tarotType == 'Rider Waite') {
       switch (widget.spreadEnglishName) {
         case 'Single Card':
@@ -607,8 +618,14 @@ class _ActiveSpreadState extends State<ActiveSpread> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               leading: IconButton(
-                onPressed: (){Navigator.pop(context);},
-                icon: Icon(Icons.arrow_circle_left,color: Colors.white,size: 30,),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_circle_left,
+                  color: Colors.white,
+                  size: 30,
+                ),
               ),
               title: Text(
                 '${widget.spreadName}',
@@ -667,9 +684,7 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                       ),
                       ElevatedButton(
                         onPressed: _changePosition,
-                        child: Text(_isAnimating
-                            ? ''
-                            : 'Start Spread'),
+                        child: Text(_isAnimating ? '' : 'Start Spread'),
                       ),
                     ],
                   ),
@@ -681,7 +696,13 @@ class _ActiveSpreadState extends State<ActiveSpread> {
             child: Visibility(
               visible: !_textvisible,
               child: Container(
-                margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width *0.1, AppBar().preferredSize.height + (AppBar().preferredSize.height + (AppBar().preferredSize.height/2)), 0, 0),
+                margin: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * 0.1,
+                    AppBar().preferredSize.height +
+                        (AppBar().preferredSize.height +
+                            (AppBar().preferredSize.height / 2)),
+                    0,
+                    0),
                 alignment: Alignment.center,
                 color: Colors.transparent,
                 child: Stack(
@@ -691,7 +712,7 @@ class _ActiveSpreadState extends State<ActiveSpread> {
             ),
           ),
           Positioned(
-            bottom: AppBar().preferredSize.height-20,
+            bottom: AppBar().preferredSize.height - 20,
             child: Container(
               width: MediaQuery.sizeOf(context).width,
               alignment: Alignment.center,
@@ -699,9 +720,13 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Selected $totalselectedcards / ${widget.numberOfCards}',style: TextStyle(color: Colors.white,fontSize: 20),),
+                  Text(
+                    'Selected $totalselectedcards / ${widget.numberOfCards}',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
                   Visibility(
-                    visible: !_isAnimating, // Show the button only when not animating
+                    visible:
+                        !_isAnimating, // Show the button only when not animating
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
@@ -762,14 +787,16 @@ class CardWidget extends StatefulWidget {
     required this.left,
     required this.top,
     required this.isAnimating,
-    required this.onUpdatePosition, required this.onStopAnimation,
+    required this.onUpdatePosition,
+    required this.onStopAnimation,
   });
 
   @override
   _CardWidgetState createState() => _CardWidgetState();
 }
 
-class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateMixin {
+class _CardWidgetState extends State<CardWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
 
@@ -793,6 +820,7 @@ class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateM
       curve: Curves.easeInOut,
     ));
     _controller.forward();
+    print("initstate");
   }
 
   void _animateToNewPosition() {
@@ -834,14 +862,14 @@ class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateM
     return Visibility(
       visible: isVisible,
       child: AnimatedPositioned(
-        duration: Duration(seconds: 2),
+        duration: Duration(seconds: 1),
         curve: Curves.easeInOut,
         top: newtop,
         left: newleft,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onPanStart: (details) {
-            if(widget.isAnimating == false) {
+            if (widget.isAnimating == false) {
               setState(() {
                 isDragging = true;
               });
@@ -850,7 +878,9 @@ class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateM
           onPanUpdate: (details) {
             if (isDragging) {
               setState(() {
-                position = position + details.delta;
+                newleft += details.delta.dx;
+                newtop += details.delta.dy;
+                widget.onUpdatePosition(newleft, newtop);
               });
             }
           },
@@ -860,21 +890,19 @@ class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateM
               isDragging = false;
             });
           },
-          onTap:(){
-            widget.onCardTap(widget.cardInfo);
-          },
           child: SlideTransition(
             position: _offsetAnimation,
             child: Transform.translate(
-                offset: Offset(position.dx,position.dy),
+                offset: Offset(position.dx, position.dy),
                 child: GestureDetector(
-                  onTap:(){
+                  onTap: () {
                     widget.onCardTap(widget.cardInfo);
                   },
                   child: Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(7),
+                      color: Colors.red,
                       border: Border.all(
                         width: 1,
                         color: bordercolor,
@@ -891,8 +919,7 @@ class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateM
                       ),
                     ),
                   ),
-                )
-            ),
+                )),
           ),
         ),
       ),
@@ -905,4 +932,3 @@ class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateM
     super.dispose();
   }
 }
-

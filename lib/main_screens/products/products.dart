@@ -17,6 +17,7 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   List<dynamic> productList = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -38,10 +39,14 @@ class _ProductsState extends State<Products> {
     if (res.statusCode == 200) {
       setState(() {
         productList = json.decode(res.body);
+        isLoading = false; // Set loading state to false when products are loaded
       });
     } else {
       // Handle error response
       print("Error: Unable to fetch products");
+      setState(() {
+        isLoading = false; // Set loading state to false in case of error
+      });
     }
   }
 
@@ -85,15 +90,28 @@ class _ProductsState extends State<Products> {
           Container(
             color: Color(0xFF15145D),
           ),
-          ListView.builder(
-            itemCount: productList.length,
-            itemBuilder: (context, index) {
-              var product = productList[index];
-              return _buildButton(context, product);
-            },
-          ),
+          // Render spinner if loading, otherwise render product list
+          isLoading ? _buildLoadingIndicator() : _buildProductList(),
         ],
       ),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return Center(
+      child: CircularProgressIndicator(
+        color: Colors.white,
+      ),
+    );
+  }
+
+  Widget _buildProductList() {
+    return ListView.builder(
+      itemCount: productList.length,
+      itemBuilder: (context, index) {
+        var product = productList[index];
+        return _buildButton(context, product);
+      },
     );
   }
 
@@ -127,7 +145,11 @@ class _ProductsState extends State<Products> {
                   padding: EdgeInsets.all(10),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.network('${firstImageUrl}',fit: BoxFit.cover,width: 80),
+                    child: Image.network(
+                      '${firstImageUrl}',
+                      fit: BoxFit.cover,
+                      width: 80,
+                    ),
                   ),
                 ),
                 SizedBox(width: 10),
