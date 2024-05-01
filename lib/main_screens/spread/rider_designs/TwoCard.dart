@@ -63,7 +63,7 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
       List<Map<String, dynamic>> cardDataList = [];
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
-      print('the list of card IDs is: $cardIds');
+      
 
       // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
@@ -73,7 +73,6 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
           orElse: () => null,
         );
 
-       print(card);
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -82,14 +81,8 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
         }
       }
 
-      // Print the fetched data
-      print('Fetched Card Data:');
-      cardDataList.forEach((cardData) {
-        print('Card Image: ${cardData['card_image']}');
-        print('Card Category: ${cardData['card_category']}');
-      });
-      print('object is : ${cardDataList}');
-      // print(cardDataList);
+      
+      
       // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 0) {
@@ -105,7 +98,7 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
         }
       });
     } catch (e) {
-      print('the list is : ${widget.selectedCards}');
+      
       print('Error fetching card data: $e');
     }
   }
@@ -140,7 +133,7 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
           }
         }
       });
-      print('card status $cardnumber');
+      
     } else {
       print('card is already flipped');
     }

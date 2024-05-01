@@ -38,7 +38,6 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
 
       String jsonString = await rootBundle.loadString('assets/json/oshoo_zen_data.json');
       // Parse JSON data
-      // print(jsonString);
       Map<String, dynamic> data = jsonDecode(jsonString);
       // Extract card data based on language code and deck option
       List<dynamic> cards = data[language]['cards'];

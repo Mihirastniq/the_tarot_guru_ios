@@ -100,9 +100,7 @@ class _ActiveSpreadState extends State<ActiveSpread> {
     if (_isAnimating) {
       for (int i = 0; i < 3; i++) {
         if (_isAnimating) {
-          print('value is ${_isAnimating}');
           _updateCardPositions();
-          print('method call of time $i');
           await Future.delayed(Duration(milliseconds: 2100));
         }
       }
@@ -820,7 +818,6 @@ class _CardWidgetState extends State<CardWidget>
       curve: Curves.easeInOut,
     ));
     _controller.forward();
-    print("initstate");
   }
 
   void _animateToNewPosition() {

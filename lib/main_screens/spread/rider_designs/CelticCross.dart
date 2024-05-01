@@ -137,7 +137,6 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
         }
       });
     } catch (e) {
-      print('the list is : ${widget.selectedCards}');
       print('Error fetching card data: $e');
     }
   }
@@ -327,7 +326,6 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
           }
         }
       });
-      print('card status $cardnumber');
     } else {
       print('card is already flipped');
     }

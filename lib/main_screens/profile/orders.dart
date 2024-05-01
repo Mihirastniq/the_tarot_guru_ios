@@ -37,10 +37,8 @@ class _OrderDetailsState extends State<OrderDetails> {
     });
 
     if (response.statusCode == 200) {
-      print('Response body: ${response.body}'); // Print response body
       Map<String, dynamic> responseData = jsonDecode(response.body);
       if (responseData['status'] == 'success') {
-        print('success');
         setState(() {
           _orderDetails = responseData['orderDetails'];
           _isLoading = false;
@@ -50,14 +48,12 @@ class _OrderDetailsState extends State<OrderDetails> {
         setState(() {
           _isLoading = false;
         });
-        print('No order details found');
       }
     } else {
       // Error in API request
       setState(() {
         _isLoading = false;
       });
-      print('Failed to fetch order details');
     }
   }
 

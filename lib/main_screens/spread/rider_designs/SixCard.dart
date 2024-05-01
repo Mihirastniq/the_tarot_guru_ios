@@ -71,7 +71,7 @@ List<dynamic> cardData = [];
       List<Map<String, dynamic>> cardDataList = [];
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
-      print('the list of card IDs is: $cardIds');
+      
 
       for (int id in cardIds) {
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
@@ -111,7 +111,6 @@ List<dynamic> cardData = [];
         }
       });
     } catch (e) {
-      print('the list is : ${widget.selectedCards}');
       print('Error fetching card data: $e');
     }
   }
@@ -210,7 +209,7 @@ List<dynamic> cardData = [];
           }
         }
       });
-      print('card status $cardnumber');
+      
     } else {
       print('card is already flipped');
     }

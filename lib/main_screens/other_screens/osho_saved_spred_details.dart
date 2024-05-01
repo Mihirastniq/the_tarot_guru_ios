@@ -31,7 +31,6 @@ class _TheSavedSpreadDetailsScreenOshoState extends State<OshoSavedSpreadDetails
 
   Future<List<dynamic>> fetchData() async {
     List<dynamic> allCardData = [];
-    print(widget.selectedCards);
     SharedPreferences sp = await SharedPreferences.getInstance();
     final String language = sp.getString('lang') ?? 'en';
 

@@ -31,10 +31,7 @@ class _ProductsState extends State<Products> {
       'request_type': 'FetchProducts',
     };
 
-    print("Request Body: $requestBody"); // Print request body
     var res = await http.post(Uri.parse(uri), body: requestBody);
-    print("Response Status Code: ${res.statusCode}");
-    print("Response Body: ${res.body}");
 
     if (res.statusCode == 200) {
       setState(() {
@@ -43,7 +40,6 @@ class _ProductsState extends State<Products> {
       });
     } else {
       // Handle error response
-      print("Error: Unable to fetch products");
       setState(() {
         isLoading = false; // Set loading state to false in case of error
       });

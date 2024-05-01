@@ -116,7 +116,6 @@ int currentAudio = 1;
   }
 
   Future<void> toggleAudio() async {
-    print('$currentIndex');
     switch(currentAudio){
       case 1:
         unMuteAudio();

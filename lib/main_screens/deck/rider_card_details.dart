@@ -85,7 +85,6 @@ class _RiderCardDetailsScreenState extends State<RiderCardDetailsScreen> {
                             return Center(child: Text('Error: ${snapshot.error}'));
                           } else {
                             final cardData = snapshot.data!;
-                            print('Card ID: ${widget.cardId}');
                             return Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -433,7 +432,6 @@ Future<Map<String, dynamic>> fetchCardDetails(String tarotType, String cardId) a
   try {
     SharedPreferences sp = await SharedPreferences.getInstance();
     final String language = sp.getString('lang') ?? 'en';
-    print(language);
     String jsonString = await rootBundle.loadString('assets/json/rider_waite_data.json');
     // Parse JSON data
     Map<String, dynamic> data = jsonDecode(jsonString);

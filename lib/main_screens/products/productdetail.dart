@@ -60,13 +60,9 @@ class _ProductDetailsState extends State<ProductInfoScreen>
       'productId': '${widget.productid}',
     };
 
-    print("Request Body: $requestBody"); // Print request body
     var res = await http.post(Uri.parse(uri), body: requestBody);
-    print("Response Status Code: ${res.statusCode}");
-    print("Response Body: ${res.body}");
 
     if (res.statusCode == 200) {
-      print(res.body);
       List<dynamic> jsonResponse = json.decode(res.body);
       if (jsonResponse.isNotEmpty) {
         Map<String, dynamic> productData = jsonResponse[0];
@@ -83,11 +79,9 @@ class _ProductDetailsState extends State<ProductInfoScreen>
           ProductSecondImage = ProductFirstImage;
         }
       } else {
-        print('No product data found');
       }
     } else {
       // Handle error response
-      print("Error: Unable to fetch products");
     }
   }
 
@@ -123,22 +117,10 @@ class _ProductDetailsState extends State<ProductInfoScreen>
 
   void addToCart() {
     OrderValue = (ProductPrice * quantity).toInt();
-    print('Quantity: $quantity');
-    print('order_controller value is  : ${OrderValue}');
 
     CartService().addToCart(widget.productid, ProductName, ProductPrice,
         quantity, OrderValue, ProductFirstImage);
 
-    CartService().getCart().then((cart) {
-      cart.forEach((item) {
-        print('Product ID: ${item['productId']}');
-        print('Product Name: ${item['productName']}');
-        print('Product image: ${item['ProductFirstImage']}');
-        print('Quantity: ${item['quantity']}');
-        print('order_controller Value: ${item['orderValue']}');
-        print('-------------------');
-      });
-    });
   }
 
   @override

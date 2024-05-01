@@ -74,9 +74,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
       try {
         String uri = "https://thetarotguru.com/tarotapi/userverifaction.php";
         var requestBody = jsonEncode(widget.response);
-        print(requestBody);
         var res = await http.post(Uri.parse(uri), body: requestBody);
-        print(res.body);
         var response = jsonDecode(res.body);
         if (response["status"] == 'success') {
           prefs.setBool(LOGINKEY, true);

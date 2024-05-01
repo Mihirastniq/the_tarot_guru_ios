@@ -73,7 +73,6 @@ class _RiderMoneySpreadScreenState extends State<RiderMoneySpreadScreen> with Ti
       List<Map<String, dynamic>> cardDataList = [];
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
-      print('the list of card IDs is: $cardIds');
 
       // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
@@ -113,7 +112,6 @@ class _RiderMoneySpreadScreenState extends State<RiderMoneySpreadScreen> with Ti
         }
       });
     } catch (e) {
-      print('the list is : ${widget.selectedCards}');
       print('Error fetching card data: $e');
     }
   }
@@ -173,7 +171,6 @@ class _RiderMoneySpreadScreenState extends State<RiderMoneySpreadScreen> with Ti
         }
 
       });
-      print('card status $cardnumber');
     } else {
       print('card is already flipped');
     }

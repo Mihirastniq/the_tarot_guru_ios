@@ -59,7 +59,6 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
       List<Map<String, dynamic>> cardDataList = [];
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
-      print('the list of card IDs is: $cardIds');
 
       // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
@@ -78,13 +77,6 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
         }
       }
 
-      // Print the fetched data
-      print('Fetched Card Data:');
-      cardDataList.forEach((cardData) {
-        print('Card Image: ${cardData['card_image']}');
-        print('Card Category: ${cardData['card_category']}');
-      });
-      print('object is : ${cardDataList}');
 
       // Update UI with the fetched data
       setState(() {
@@ -95,14 +87,12 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
           image1category = cardDataList[0]['card_category'];
           image2category = cardDataList[1]['card_category'];
           image3category = cardDataList[2]['card_category'];
-          print('image category ${image1category}');
         } else {
           // Handle the case where not enough cards are fetched
           // Maybe set default values or show an error message
         }
       });
     } catch (e) {
-      print('the list is : ${widget.selectedCards}');
       print('Error fetching card data: $e');
     }
   }
@@ -145,7 +135,6 @@ class _TheThreeCardScreenState extends State<TheThreeCardSpread> with TickerProv
         }
 
       });
-      print('card status $cardnumber');
     } else {
       print('card is already flipped');
     }

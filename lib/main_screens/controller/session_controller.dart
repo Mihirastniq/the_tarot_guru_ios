@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/Login/login_pin.dart';
 import 'package:the_tarot_guru/introduction_animation/introduction_animation_screen.dart';
 import 'package:the_tarot_guru/main_screens/Register/otp_verify.dart';
-import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
-import 'package:provider/provider.dart';
 
 
 class LoginController {
@@ -92,7 +90,6 @@ class LoginController {
     if(isLogin == true) {
       NavigateToPinEntry(context,prefs.getString('lang')??'en');
     } else {
-      print('No home');
       NavigateToIntro(context);
     }
   }

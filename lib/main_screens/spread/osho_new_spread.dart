@@ -31,8 +31,6 @@ class _NewSpreadState extends State<NewSpread> {
 
 
   void fetchOptions() {
-    print('fetchOptions');
-    print(widget.tarotType);
     setState(() {
       if (widget.tarotType == 'Osho Zen') {
         optionCardCounts = {

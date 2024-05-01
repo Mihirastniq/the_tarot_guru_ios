@@ -69,9 +69,6 @@ class OshoCardDetailsScreen extends StatelessWidget {
                         } else {
                           final cardData = snapshot.data!;
                           CardFetchedName = cardData['card_name'];
-                          print('card data is : $cardData');
-                          print('card image: ${cardData['card_image']}');
-                          print('card name: ${cardData['card_name']}');
                           return Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                             child: Container(
                               decoration: BoxDecoration(
@@ -255,22 +252,11 @@ Future<Map<String, dynamic>> fetchCardDetails(String tarotType, int cardId) asyn
     for (var card in cards) {
 
       if (card['id'] == cardId) {
-        // print('=======================================');
-        // print('card is ${card['id']} and type is ${card['id'].runtimeType}');
-        // print('=======================================');
-        // print(card);
         cardDetails = card;
-        // print(cardDetails);
         break;
       }
     }
-    // print(cardId);
-
-    // return cardDetails;
     if (cardDetails != null) {
-      print('=============================================');
-      print('returning data is ${cardDetails}');
-      print('=============================================');
       return cardDetails;
     } else {
       throw Exception('Card details not found');

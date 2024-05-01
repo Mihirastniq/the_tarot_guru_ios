@@ -75,7 +75,6 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
       List<Map<String, dynamic>> cardDataList = [];
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
-      print('the list of card IDs is: $cardIds');
 
       // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
@@ -93,14 +92,6 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
           });
         }
       }
-
-      // Print the fetched data
-      print('Fetched Card Data:');
-      cardDataList.forEach((cardData) {
-        print('Card Image: ${cardData['card_image']}');
-        print('Card Category: ${cardData['card_category']}');
-      });
-      print('object is : ${cardDataList}');
 
       // Update UI with the fetched data
       setState(() {
@@ -126,7 +117,6 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
         }
       });
     } catch (e) {
-      print('the list is : ${widget.selectedCards}');
       print('Error fetching card data: $e');
     }
   }
@@ -201,7 +191,6 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
         }
 
       });
-      print('card status $cardnumber');
     } else {
       print('card is already flipped');
     }

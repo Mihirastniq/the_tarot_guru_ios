@@ -47,14 +47,10 @@ class RegistrationController {
           "confirm_password": confirm_password.text,
           "country":country.text
         };
-        print("Request Body: $requestBody"); // Print request body
         final http.Response res = await http.post(Uri.parse(uri), body: requestBody);
-        print("Response Status Code: ${res.statusCode}");
-        print("Response Body: ${res.body}");
 
         final dynamic response = jsonDecode(res.body);
         if (response["status"] == 'success') {
-          print("record inserted");
           _navigateToOTPVerifyPage(response, context);
         } else {
           Fluttertoast.showToast(

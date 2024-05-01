@@ -43,17 +43,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           "user_name": firstName + lastName,
         };
 
-        print('req body is : $requestBody');
 
         var response = await http.post(Uri.parse(uri), body: requestBody);
 
         if (response.statusCode == 200) {
-          print('Address added successfully');
           Navigator.of(context).pop(); // Close the screen
         } else {
           // Handle error response
-          print(response.body);
-          print('Failed to add address: ${response.body}');
           // Show error message to the user
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -63,7 +59,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         }
       } catch (e) {
         // Handle network or other errors
-        print('Error adding address: $e');
         // Show error message to the user
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

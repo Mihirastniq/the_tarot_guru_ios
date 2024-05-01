@@ -85,21 +85,15 @@ class _OrderProcessScreenState extends State<OrderProcessScreen> {
 
     try {
       await _cartService.clearCart();
-      print('body is : ${body}');
 
       var webresponse = await http.post(Uri.parse(url), body: body);
       var responseData = json.decode(webresponse.body);
       if (responseData['status'] == 'success') {
-        print('Payment details updated successfully');
-        print('Message: ${responseData['message']}');
-        print('id is ${responseData['id']}');
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SubscriptionSuccessPage(title: 'Thank you for subscribe',)),
         );
       } else {
-        print('Failed to update payment details');
-        print('Error Message: ${responseData['message']}');
       }
     } catch (e) {
       print('Error: $e');
@@ -107,21 +101,15 @@ class _OrderProcessScreenState extends State<OrderProcessScreen> {
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    print('Payment Error Response: $response');
-    print('Error or fail');
-    print(response);
     Navigator.pop(context);
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    print('External Wallet Response: $response');
-    print('External wallet');
     // Navigate back to subscription screen
     Navigator.pop(context);
   }
 
   void _startPayment() {
-    print('Processs Start');
     var userDetails = {
       'userId': userid,
       'firstName': _firstName,
@@ -144,7 +132,6 @@ class _OrderProcessScreenState extends State<OrderProcessScreen> {
       _razorpay.open(options);
     } catch (e) {
       print('Error : ${e}');
-      debugPrint('Error: $e');
     }
   }
 
@@ -170,9 +157,7 @@ class _OrderProcessScreenState extends State<OrderProcessScreen> {
           "user_id": (userId).toString(),
           "type":'fetchAddress',
         };
-        print("req body = ${requestBody}");
         var response = await http.post(Uri.parse(uri), body: requestBody);
-        print('Response is : ${response.body}');
 
         // Parse the response and update _addresses list
         var jsonResponse = json.decode(response.body);
@@ -185,7 +170,6 @@ class _OrderProcessScreenState extends State<OrderProcessScreen> {
             _addresses = addresses;
           });
         } else {
-          print('Failed to retrieve addresses: ${jsonResponse['message']}');
         }
       } catch (e) {
         print('Error fetching addresses: $e');
@@ -806,9 +790,7 @@ class _BillingInformationState extends State<BillingInformation> {
           "user_id": (userId).toString(),
           "type":'fetchAddress',
         };
-        print("req body = ${requestBody}");
         var response = await http.post(Uri.parse(uri), body: requestBody);
-        print('Response is : ${response.body}');
 
         // Parse the response and update _addresses list
         var jsonResponse = json.decode(response.body);
@@ -821,7 +803,6 @@ class _BillingInformationState extends State<BillingInformation> {
             _addresses = addresses;
           });
         } else {
-          print('Failed to retrieve addresses: ${jsonResponse['message']}');
         }
       } catch (e) {
         print('Error fetching addresses: $e');
@@ -1068,21 +1049,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
     try {
       await _cartService.clearCart();
-      print('body is : ${body}');
 
       var webresponse = await http.post(Uri.parse(url), body: body);
       var responseData = json.decode(webresponse.body);
       if (responseData['status'] == 'success') {
-        print('Payment details updated successfully');
-        print('Message: ${responseData['message']}');
-        print('id is ${responseData['id']}');
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SubscriptionSuccessPage(title: 'Thank you for subscribe',)),
         );
-      } else {
-        print('Failed to update payment details');
-        print('Error Message: ${responseData['message']}');
       }
     } catch (e) {
       print('Error: $e');
@@ -1090,21 +1064,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    print('Payment Error Response: $response');
-    print('Error or fail');
-    print(response);
     Navigator.pop(context);
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    print('External Wallet Response: $response');
-    print('External wallet');
     // Navigate back to subscription screen
     Navigator.pop(context);
   }
 
   void _startPayment() {
-    print('Processs Start');
     var userDetails = {
       'userId': userid,
       'firstName': _firstName,
@@ -1126,8 +1094,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     try {
       _razorpay.open(options);
     } catch (e) {
-      print('Error : ${e}');
-      debugPrint('Error: $e');
+      print('Error: $e');
     }
   }
 
@@ -1153,9 +1120,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           "user_id": (userId).toString(),
           "type":'fetchAddress',
         };
-        print("req body = ${requestBody}");
         var response = await http.post(Uri.parse(uri), body: requestBody);
-        print('Response is : ${response.body}');
 
         // Parse the response and update _addresses list
         var jsonResponse = json.decode(response.body);
@@ -1168,7 +1133,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             _addresses = addresses;
           });
         } else {
-          print('Failed to retrieve addresses: ${jsonResponse['message']}');
         }
       } catch (e) {
         print('Error fetching addresses: $e');

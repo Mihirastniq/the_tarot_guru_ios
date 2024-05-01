@@ -86,7 +86,6 @@ class _RiderFiveCardScreenState extends State<RiderFiveCardScreen> with TickerPr
       List<Map<String, dynamic>> cardDataList = [];
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
-      print('the list of card IDs is: $cardIds');
 
       for (int id in cardIds) {
         // Find the card with the corresponding ID
@@ -124,7 +123,6 @@ class _RiderFiveCardScreenState extends State<RiderFiveCardScreen> with TickerPr
         }
       });
     } catch (e) {
-      print('the list is : ${widget.selectedCards}');
       print('Error fetching card data: $e');
     }
   }
@@ -175,7 +173,6 @@ class _RiderFiveCardScreenState extends State<RiderFiveCardScreen> with TickerPr
         }
 
       });
-      print('card status $cardnumber');
     } else {
       print('card is already flipped');
     }

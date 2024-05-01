@@ -62,7 +62,6 @@ class _SubscribeAppState extends State<SubscribeApp> {
       'payment_status': 'Success',
       'payment_type': 'subscription',
     };
-    print('body is : ${body}');
 
     var webresponse = await http.post(Uri.parse(url), body: body);
     var responseData = json.decode(webresponse.body);
@@ -73,7 +72,6 @@ class _SubscribeAppState extends State<SubscribeApp> {
         MaterialPageRoute(builder: (context) => SubscriptionSuccessPage(title: 'Thank you for subscribe',)),
       );
     } else {
-      print('Failed to update payment details');
       print('Error Message: ${responseData['message']}');
     }
   }
@@ -86,8 +84,6 @@ class _SubscribeAppState extends State<SubscribeApp> {
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    print('External Wallet Response: $response');
-    print('External wallet');
     // Navigate back to subscription screen
     Navigator.pop(context);
   }

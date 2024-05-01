@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:the_tarot_guru/demo/demo2.dart';
-import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/about_rider.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_new_spread.dart';
 import 'package:the_tarot_guru/main_screens/spread/saved_spread/rider_saved_spread.dart';

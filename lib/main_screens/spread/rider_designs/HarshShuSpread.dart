@@ -75,7 +75,6 @@ class _RiderHarshuShuCardScreenState extends State<RiderHarshuShuCardScreen> {
       List<Map<String, dynamic>> cardDataList = [];
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
-      print('the list of card IDs is: $cardIds');
 
       // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
@@ -94,14 +93,6 @@ class _RiderHarshuShuCardScreenState extends State<RiderHarshuShuCardScreen> {
         }
       }
 
-      // Print the fetched data
-      print('Fetched Card Data:');
-      cardDataList.forEach((cardData) {
-        print('Card Image: ${cardData['card_image']}');
-        print('Card Category: ${cardData['card_category']}');
-      });
-      print('object is : ${cardDataList}');
-print(cardDataList);
       setState(() {
         if (cardDataList.length >= 0) {
           setState(() {
@@ -127,7 +118,6 @@ print(cardDataList);
         }
       });
     } catch (e) {
-      print('the list is : ${widget.selectedCards}');
       print('Error fetching card data: $e');
     }
   }
@@ -204,7 +194,6 @@ print(cardDataList);
         }
 
       });
-      print('card status $cardnumber');
     } else {
       print('card is already flipped');
     }

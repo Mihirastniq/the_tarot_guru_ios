@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:the_tarot_guru/demo/demo1.dart';
 import 'package:the_tarot_guru/main_screens/deck/osho_option_deck.dart';
 import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/about_osho.dart';

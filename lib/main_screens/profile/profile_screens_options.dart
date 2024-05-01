@@ -376,7 +376,6 @@ class _UserAddressesState extends State<UserAddresses> {
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = jsonDecode(response.body);
       if (responseData['status'] == 'success') {
-        print('Address : ${response.body}');
         setState(() {
           _addresses =
               List<Map<String, dynamic>>.from(responseData['addresses']);
@@ -387,14 +386,12 @@ class _UserAddressesState extends State<UserAddresses> {
         setState(() {
           _isLoading = false;
         });
-        print('No address found');
       }
     } else {
       // Error in API request
       setState(() {
         _isLoading = false;
       });
-      print('Failed to fetch user addresses');
     }
   }
 
@@ -405,14 +402,12 @@ class _UserAddressesState extends State<UserAddresses> {
           "type": "removeAddress",
           "address_id": address_id,
         };
-        print('req body is : $requestBody');
 
         var response = await http.post(Uri.parse(uri), body: requestBody);
 
         if (response.statusCode == 200) {
           Navigator.of(context).pop(); // Close the screen
         } else {
-          print(response.body);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Failed to remove address. Please try again later.'),
@@ -421,7 +416,6 @@ class _UserAddressesState extends State<UserAddresses> {
         }
       } catch (e) {
 
-        print('Error removing address: $e');
         // Show error message to the user
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -601,7 +595,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = jsonDecode(response.body);
       if (responseData['status'] == 'success') {
-        print(response.body);
         setState(() {
           _orders = List<Map<String, dynamic>>.from(responseData['orders']);
           _isLoading = false;
@@ -611,14 +604,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
         setState(() {
           _isLoading = false;
         });
-        print('No orders found');
       }
     } else {
       // Error in API request
       setState(() {
         _isLoading = false;
       });
-      print('Failed to fetch user orders');
     }
   }
 

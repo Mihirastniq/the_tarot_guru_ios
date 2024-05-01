@@ -37,7 +37,6 @@ class CartService {
       // Save the updated cart data to SharedPreferences
       await prefs.setString(cartKey, json.encode(cart));
 
-      print('Product added to cart successfully!');
     } catch (e) {
       print('Error adding product to cart: $e');
     }
@@ -57,7 +56,6 @@ class CartService {
       // Save the updated cart data to SharedPreferences
       await prefs.setString(cartKey, json.encode(cart));
 
-      print('Product removed from cart successfully!');
     } catch (e) {
       print('Error removing product from cart: $e');
     }
@@ -72,8 +70,6 @@ class CartService {
 
       // Clear the cart data from SharedPreferences
       await prefs.remove(cartKey);
-
-      print('Cart cleared successfully!');
     } catch (e) {
       print('Error clearing cart: $e');
     }

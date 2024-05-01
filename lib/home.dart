@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:the_tarot_guru/main_screens/Products/cart.dart';
 import 'package:the_tarot_guru/main_screens/OshoZen.dart';
 import 'package:the_tarot_guru/main_screens/Profile/profile.dart';
 import 'package:the_tarot_guru/main_screens/RiderWaite.dart';
-import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
-import 'package:the_tarot_guru/main_screens/controller/counter_provider.dart';
 import 'package:the_tarot_guru/main_screens/products/products.dart';
-import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/subscription/pre_subscribe.dart';
 import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
-import 'package:provider/provider.dart';
 import 'package:the_tarot_guru/main_screens/warnings/unsubscribe.dart';
-import 'main_screens/controller/language_controller/language_change_handler.dart';
 
 
 

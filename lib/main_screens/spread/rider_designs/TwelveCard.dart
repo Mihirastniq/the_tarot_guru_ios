@@ -146,7 +146,7 @@ Future<void> fetchData() async {
       }
     });
   } catch (e) {
-    print('the list is : ${widget.selectedCards}');
+    
     print('Error fetching card data: $e');
   }
 }
@@ -394,7 +394,7 @@ void flipCard(FlipCardController controller, bool cardnumber) {
         }
       }
     });
-    print('card status $cardnumber');
+    
   } else {
     print('card is already flipped');
   }
