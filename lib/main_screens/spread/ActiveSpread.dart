@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 
-
 import 'package:the_tarot_guru/main_screens/spread/osho_designs/Flying_bard.dart';
 import 'osho_designs/Paradox.dart';
 import 'osho_designs/Celtic_cross.dart';
@@ -96,16 +95,25 @@ class _ActiveSpreadState extends State<ActiveSpread> {
           _isAnimating = !_isAnimating;
           if (_isAnimating) {
             for (int i = 0; i < 3; i++) {
-              _updateCardPositions();
-              print('method call of time $i');
-              await Future.delayed(Duration(milliseconds: 2200)); // Delay between updates
+              if(_isAnimating) {
+                print('value is ${_isAnimating}');
+                _updateCardPositions();
+                print('method call of time $i');
+                await Future.delayed(Duration(milliseconds: 2100));
+              }
             }
             setState(() {
-              _isAnimating = false; // Stop the animation after updating positions
+              _isAnimating = false;
             });
           }
         });
       });
+    });
+  }
+
+  void stopAnimation() {
+    setState(() {
+      _isAnimating = false;
     });
   }
 
@@ -144,38 +152,89 @@ class _ActiveSpreadState extends State<ActiveSpread> {
         selectedCards: selectedCards,
         left: left,
         top: top,
+        isAnimating: _isAnimating,
+        onStopAnimation: stopAnimation,
+        onUpdatePosition: (newLeft, newTop) {
+
+          setState(() {
+            card.position = '$newLeft,$newTop';
+          });
+        },
+
       );
     }).toList();
   }
 
   void _onCardTap(CardInfo card) {
-    if (selectedCards.length < widget.numberOfCards) {
-      setState(() {
-        totalselectedcards = totalselectedcards+1;
-      });
-      _animateCardRemoval(card.id);
-      selectedCards.add(card.id);
-      if (selectedCards.length == widget.numberOfCards) {
-        List<SelectedCard> selectedCardsList = selectedCards.map((id) {
-          CardInfo card = cards.firstWhere((card) => card.id == id);
-          return SelectedCard(id: card.id, name: card.name);
-        }).toList();
-        NavigateToRevealCard(
-            selectedCards: selectedCardsList,
-            tarotType: widget.tarotType,
-            spreadName: widget.spreadName);
+    if (_isAnimating == false) {
+      // Check if the card is already selected
+      if (!selectedCards.contains(card.id)) {
+        if (selectedCards.length < widget.numberOfCards) {
+          _animateCardRemoval(card.id);
+          selectedCards.add(card.id);
+          setState(() {
+            totalselectedcards = totalselectedcards + 1;
+          });
+          if (selectedCards.length == widget.numberOfCards) {
+            List<SelectedCard> selectedCardsList =
+            selectedCards.map((id) {
+              CardInfo card =
+              cards.firstWhere((card) => card.id == id);
+              return SelectedCard(id: card.id, name: card.name);
+            }).toList();
+            NavigateToRevealCard(
+                selectedCards: selectedCardsList,
+                tarotType: widget.tarotType,
+                spreadName: widget.spreadName);
+          }
+        } else {
+          List<SelectedCard> selectedCardsList =
+          selectedCards.map((id) {
+            CardInfo card =
+            cards.firstWhere((card) => card.id == id);
+            return SelectedCard(id: card.id, name: card.name);
+          }).toList();
+          NavigateToRevealCard(
+              selectedCards: selectedCardsList,
+              tarotType: widget.tarotType,
+              spreadName: widget.spreadName);
+        }
       }
     } else {
-      List<SelectedCard> selectedCardsList = selectedCards.map((id) {
-        CardInfo card = cards.firstWhere((card) => card.id == id);
-        return SelectedCard(id: card.id, name: card.name);
-      }).toList();
-      NavigateToRevealCard(
-          selectedCards: selectedCardsList,
-          tarotType: widget.tarotType,
-          spreadName: widget.spreadName);
+      setState(() {
+        _isAnimating = false;
+      });
     }
   }
+
+  void _autoDeal() {
+    int totalCards = widget.numberOfCards;
+    Set<int> selectedNumbers = {};
+
+    // Generate random numbers and add them to the set until we have enough unique numbers
+    while (selectedNumbers.length < totalCards) {
+      int randomNumber = Random().nextInt(79) + 1; // Generate a random number from 1 to 79
+      selectedNumbers.add(randomNumber); // Add the number to the set
+    }
+
+    selectedCards.clear();
+
+    selectedNumbers.forEach((number) {
+      selectedCards.add(number);
+    });
+
+    List<SelectedCard> selectedCardsList = selectedCards.map((id) {
+      CardInfo card = cards.firstWhere((card) => card.id == id);
+      return SelectedCard(id: card.id, name: card.name);
+    }).toList();
+
+    NavigateToRevealCard(
+      selectedCards: selectedCardsList,
+      tarotType: widget.tarotType,
+      spreadName: widget.spreadName,
+    );
+  }
+
 
   void NavigateToRevealCard({required List<SelectedCard> selectedCards,required String tarotType, required String spreadName}) {
     if (widget.tarotType == "Osho Zen" && widget.spreadName == "${AppLocalizations.of(context)!.singlecard}") {
@@ -438,9 +497,9 @@ class _ActiveSpreadState extends State<ActiveSpread> {
         cards = List<CardInfo>.generate(
           numberOfCards,
               (index) => CardInfo(
-            id: index + 1, // Assuming IDs start from 1
+            id: index + 1,
             position: '0,0',
-            name: '', // You can remove the name parameter since it's not needed
+            name: '',
           ),
         );
         fixedPositions = List<bool>.filled(numberOfCards, false);
@@ -449,6 +508,7 @@ class _ActiveSpreadState extends State<ActiveSpread> {
       print('Error fetching cards: $e');
     }
   }
+
   String getOptionText(BuildContext context, String tarotType, String spreadName) {
     if (tarotType == 'Osho Zen') {
       switch (widget.spreadEnglishName) {
@@ -630,13 +690,35 @@ class _ActiveSpreadState extends State<ActiveSpread> {
               ),
             ),
           ),
-
           Positioned(
-            bottom: AppBar().preferredSize.height,
-            left: MediaQuery.of(context).size.width * 0.8/2,
-            child: Text('Selected $totalselectedcards / ${widget.numberOfCards}',style: TextStyle(color: Colors.white,fontSize: 20),),
-          )
-          // if(showText == false)
+            bottom: AppBar().preferredSize.height-20,
+            child: Container(
+              width: MediaQuery.sizeOf(context).width,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Selected $totalselectedcards / ${widget.numberOfCards}',style: TextStyle(color: Colors.white,fontSize: 20),),
+                  Visibility(
+                    visible: !_isAnimating, // Show the button only when not animating
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _autoDeal();
+                          },
+                          child: Text('Auto Deal'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -653,13 +735,11 @@ class CardInfo {
   final int id;
   String position;
   final String name;
-  // bool isVisible; // Add isVisible property
 
   CardInfo({
     required this.id,
     required this.name,
     required this.position,
-    // this.isVisible = true, // Default isVisible to true
   });
 }
 
@@ -670,6 +750,9 @@ class CardWidget extends StatefulWidget {
   final Set<int> selectedCards;
   final double left;
   final double top;
+  final bool isAnimating;
+  final Function(double, double) onUpdatePosition;
+  final Function() onStopAnimation;
 
   const CardWidget({
     required this.cardInfo,
@@ -678,6 +761,8 @@ class CardWidget extends StatefulWidget {
     required this.selectedCards,
     required this.left,
     required this.top,
+    required this.isAnimating,
+    required this.onUpdatePosition, required this.onStopAnimation,
   });
 
   @override
@@ -752,31 +837,25 @@ class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateM
         duration: Duration(seconds: 2),
         curve: Curves.easeInOut,
         top: newtop,
-        left:newleft,
+        left: newleft,
         child: GestureDetector(
-          behavior: HitTestBehavior.opaque, // Ensure that the GestureDetector receives taps even during dragging
+          behavior: HitTestBehavior.opaque,
           onPanStart: (details) {
-
-            setState(() {
-              isDragging = true; // Set dragging flag to true when dragging starts
-            });
+            if(widget.isAnimating == false) {
+              setState(() {
+                isDragging = true;
+              });
+            }
           },
           onPanUpdate: (details) {
             if (isDragging) {
               setState(() {
-                print('top and left before update is : $newtop & $newleft');
                 position = position + details.delta;
-                print('detail is  : ${details.delta.dx} & ${details.delta.dy}');
-                print('position is  : ${position.dx} & ${position.dy}');
-                print('top and left is  : ${position.dx} & ${position.dy}');
               });
             }
           },
           onPanEnd: (details) {
             setState(() {
-              print('hit');
-              print('top and left after update is : $newtop & $newleft');
-              print('and position is $position');
               isDragged = true;
               isDragging = false;
             });
@@ -787,32 +866,32 @@ class _CardWidgetState extends State<CardWidget> with SingleTickerProviderStateM
           child: SlideTransition(
             position: _offsetAnimation,
             child: Transform.translate(
-              offset: Offset(position.dx,position.dy),
-              child: GestureDetector(
-                onTap:(){
-                  widget.onCardTap(widget.cardInfo);
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7),
-                    border: Border.all(
-                      width: 1,
-                      color: bordercolor,
+                offset: Offset(position.dx,position.dy),
+                child: GestureDetector(
+                  onTap:(){
+                    widget.onCardTap(widget.cardInfo);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7),
+                      border: Border.all(
+                        width: 1,
+                        color: bordercolor,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(7.0),
+                      child: Image.asset(
+                        imageUrl,
+                        width: imagewidth,
+                        height: imageheight,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
                     ),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(7.0),
-                    child: Image.asset(
-                      imageUrl,
-                      width: imagewidth,
-                      height: imageheight,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                    ),
-                  ),
-                ),
-              )
+                )
             ),
           ),
         ),

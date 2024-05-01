@@ -105,9 +105,18 @@ class OshoCardDetailsScreen extends StatelessWidget {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Icon(Icons.star,color: Colors.white,),
-                                                  Text(cardData['card_name'],style: _getTitleTextStyle(context)),
-                                                  Icon(Icons.star,color: Colors.white,)
+                                                  Container(
+                                                    width: MediaQuery.sizeOf(context).width *0.1,
+                                                    child: Icon(Icons.star,color: Colors.white,),
+                                                  ),
+                                                  Container(
+                                                    width: MediaQuery.sizeOf(context).width * 0.5,
+                                                    child: Text(cardData['card_name'],style: _getTitleTextStyle(context),textAlign: TextAlign.center,),
+                                                  ),
+                                                  Container(
+                                                    width: MediaQuery.sizeOf(context).width *0.1,
+                                                    child: Icon(Icons.star,color: Colors.white,),
+                                                  ),
                                                 ],
                                               ),
                                               SizedBox(

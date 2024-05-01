@@ -109,13 +109,13 @@ class _OtpState extends State<PinEntryScreen> {
                   width: 200,
                   height: 200,
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.shade50,
+                    // color: Colors.deepPurple.shade50,
                     shape: BoxShape.circle,
                   ),
-                  // child: Image.asset(
-                  //   'assets/images/demoimg/logo.png',
-                  // ),
-                  child: Text('logo',style: TextStyle(fontSize: 20),),
+                  child: Image.asset(
+                    'assets/images/intro/logo.png',
+                  ),
+                  // child: Text('logo',style: TextStyle(fontSize: 20),),
                 ),
                 SizedBox(
                   height: 24,

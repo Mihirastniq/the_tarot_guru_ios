@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/Login/login_pin.dart';
@@ -65,16 +66,26 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           Center(
             child: Container(
-              width: 200,
-              height: 200,
+              width: MediaQuery.sizeOf(context).width*0.7,
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
               ),
               child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(200),
-                  child: Image.asset('assets/images/intro/logo.png'),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(200),
+                      child: Image.asset('assets/images/intro/logo.png'),
+                    ),
+                    Text(
+                        "Know your past, recognize your present and create your future. Know the answer to every question of your life through Tarot cards.",
+                        textAlign: TextAlign.center,
+                        style: _getTitleTextStyle(context)
+                    ),
+                  ],
                 )
               ),
             ),
@@ -82,5 +93,29 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
     );
+  }
+  TextStyle _getTitleTextStyle(BuildContext context) {
+    // Define default text style
+    double lineHeight = 1.8;
+    TextStyle defaultStyle = GoogleFonts.anekDevanagari(
+        color: Colors.white,
+        fontSize: 23,
+        fontWeight:
+        FontWeight.w600,
+        height: lineHeight
+    );
+
+    // Check the language and set appropriate font
+    if (Localizations.localeOf(context).languageCode == 'hi') {
+      return GoogleFonts.anekDevanagari(
+          color: Colors.white,
+          fontSize: 23,
+          fontWeight:
+          FontWeight.w600,
+          height: lineHeight
+      );
+    } else {
+      return defaultStyle;
+    }
   }
 }

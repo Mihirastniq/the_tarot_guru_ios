@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeView extends StatelessWidget {
   final AnimationController animationController;
@@ -89,12 +90,9 @@ class WelcomeView extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: 64, right: 64, top: 16, bottom: 16),
                 child: Text(
-                  "Your gateway to enlightenment and self-discovery through the mystical art of tarot. Explore, learn, and find guidance in every card drawn.",
+                  "Know your past, recognize your present and create your future. Know the answer to every question of your life through Tarot cards.",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
+                  style: _getTitleTextStyle(context)
                 ),
               ),
             ],
@@ -102,5 +100,30 @@ class WelcomeView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  TextStyle _getTitleTextStyle(BuildContext context) {
+    // Define default text style
+    double lineHeight = 1.4;
+    TextStyle defaultStyle = GoogleFonts.anekDevanagari(
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight:
+        FontWeight.w600,
+        height: lineHeight
+    );
+
+    // Check the language and set appropriate font
+    if (Localizations.localeOf(context).languageCode == 'hi') {
+      return GoogleFonts.anekDevanagari(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight:
+          FontWeight.w600,
+          height: lineHeight
+      );
+    } else {
+      return defaultStyle;
+    }
   }
 }

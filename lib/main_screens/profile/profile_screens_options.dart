@@ -3,7 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_tarot_guru/main_screens/controller/session_controller.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/add_address.dart';
+import 'package:the_tarot_guru/main_screens/profile/orders.dart';
+import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   const UserDetailsScreen({Key? key}) : super(key: key);
@@ -21,11 +25,27 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   late String _language = '';
   late String _createdAt = '';
   late int _subscriptionStatus = 0;
+  final LoginController loginController = LoginController();
+  bool pinEnabled = false;
 
   @override
   void initState() {
     super.initState();
     _getUserDetails();
+    fetchEnablePin();
+  }
+
+  // Update enablePin value in SharedPreferences
+  Future<void> updateEnablePin(bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('enablePin', value);
+  }
+
+  Future<void> fetchEnablePin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      pinEnabled = prefs.getBool('enablePin') ?? false;
+    });
   }
 
   Future<void> _getUserDetails() async {
@@ -235,9 +255,79 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             fontSize: 20,
                           ),
                         ),
-                        // Display other user details similarly
                       ],
                     ),
+                    const Divider(
+                      height: 45,
+                      thickness: 1,
+                      indent: 5,
+                      endIndent: 0,
+                      color: Colors.grey,
+                    ),
+                    GestureDetector(
+                      child: Container(
+                        // padding: EdgeInsets.only(10),
+                        decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.grey,
+                            )
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.lock,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Enable PIN',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Switch(
+                                  value: pinEnabled,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      pinEnabled = value;
+                                    });
+                                    updateEnablePin(value);
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      height: 45,
+                      thickness: 1,
+                      indent: 5,
+                      endIndent: 0,
+                      color: Colors.grey,
+                    ),
+                    ProfileButton(
+                        text: '${AppLocalizations.of(context)!.logoutlabel}',
+                        onPressed: (){
+                          loginController.logout(context);
+                        },
+                        icon: Icons.language),
                   ],
                 )),
           ),
@@ -511,7 +601,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = jsonDecode(response.body);
       if (responseData['status'] == 'success') {
-        // User orders found
+        print(response.body);
         setState(() {
           _orders = List<Map<String, dynamic>>.from(responseData['orders']);
           _isLoading = false;
@@ -585,32 +675,67 @@ class _OrdersScreenState extends State<OrdersScreen> {
               ),
             ),
           ),
-          Center(
-            child: _isLoading
-                ? CircularProgressIndicator()
-                : _orders.isNotEmpty
-                ? ListView.builder(
-              itemCount: _orders.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Order ${index + 1}:'),
-                    // Display order details here
-                    SizedBox(height: 20),
-                  ],
-                );
-              },
-            )
-                : Text(
-              'No orders found',
-              style: TextStyle(fontSize: 22, color: Colors.white),
+          Container(
+            margin: EdgeInsets.only(top: AppBar().preferredSize.height+20),
+            child: Center(
+              child: _isLoading
+                  ? CircularProgressIndicator()
+                  : _orders.isNotEmpty
+                  ? ListView.builder(
+                itemCount: _orders.length,
+                itemBuilder: (context, index) {
+                  // Extract order details from the list
+                  Map<String, dynamic> order = _orders[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => OrderDetails(orderId: order['id'])),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      margin: EdgeInsets.all(15),
+                      padding: EdgeInsets.all(10),
+                      width: MediaQuery.sizeOf(context).width * 0.8,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Order ${index + 1}:',
+                            style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 8),
+                          Text('Order ID: ${order['id']}',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                          Text('Billing Name: ${order['billing_name']}',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                          Text('Order Date: ${order['order_date']}',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                          Text('Total Price: ${order['total_price']}',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              )
+                  : Text(
+                'No orders found',
+                style: TextStyle(fontSize: 22, color: Colors.white),
+              ),
             ),
-          ),
+          )
         ],
       ),
     );
   }
 }
-
 

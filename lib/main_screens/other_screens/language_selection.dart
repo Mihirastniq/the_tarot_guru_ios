@@ -36,24 +36,24 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   final List<Map<String, String>> languageOptions = [
     {'en': 'English'},
     {'hi': 'Hindi'},
-    {'bn': 'Bengali'},
-    {'ta': 'Tamil'},
-    {'te': 'Telugu'},
-    {'kn': 'Kannada'},
-    {'ml': 'Malayalam'},
-    {'mr': 'Marathi'},
+    // {'bn': 'Bengali'},
+    // {'ta': 'Tamil'},
+    // {'te': 'Telugu'},
+    // {'kn': 'Kannada'},
+    // {'ml': 'Malayalam'},
+    // {'mr': 'Marathi'},
     {'gu': 'Gujarati'},
-    {'pa': 'Punjabi'},
-    {'or': 'Odia'},
-    {'es': 'Spanish'},
-    {'fr': 'French'},
-    {'de': 'German'},
-    {'pt': 'Portuguese'},
-    {'ru': 'Russian'},
-    {'ja': 'Japanese'},
-    {'ko': 'Korean'},
-    {'vi': 'Vietnamese'},
-    {'id': 'Indonesian'}
+    // {'pa': 'Punjabi'},
+    // {'or': 'Odia'},
+    // {'es': 'Spanish'},
+    // {'fr': 'French'},
+    // {'de': 'German'},
+    // {'pt': 'Portuguese'},
+    // {'ru': 'Russian'},
+    // {'ja': 'Japanese'},
+    // {'ko': 'Korean'},
+    // {'vi': 'Vietnamese'},
+    // {'id': 'Indonesian'}
   ];
 
   @override
@@ -129,11 +129,11 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               child: Column(
                 children: [
                   SizedBox(height: 20),
-                  Text(
-                    '${AppLocalizations.of(context)!.selectlangauge}',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  SizedBox(height: 20),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.selectlangauge}',
+                  //   style: TextStyle(color: Colors.white, fontSize: 20),
+                  // ),
+                  SizedBox(height: 40),
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: languageOptions.length,

@@ -624,7 +624,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                     ],
@@ -647,7 +647,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                     ],
@@ -670,7 +670,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                       Container(
@@ -689,7 +689,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                       Container(
@@ -707,7 +707,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                     ],
@@ -731,7 +731,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                       SizedBox(
@@ -754,7 +754,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                     ],
@@ -777,7 +777,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                       Container(
@@ -796,7 +796,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                       Container(
@@ -814,30 +814,7 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                        width: containerWidth,
-                                        height: containerHeightWithAspectRatio,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Colors.black.withOpacity(0.3),
-                                            borderRadius:
-                                                BorderRadius.circular(7),
-                                            border: Border.all(
-                                              width: 3,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            )),
-                                        child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
                                         ),
                                       ),
                                     ],
@@ -860,7 +837,30 @@ class _TheMirrorScreenState extends State<TheMirrorScreen> {
                                                   .primaryColor,
                                             )),
                                         child: Center(
-                                          child: Text("Container 1"),
+                                          child: Text(""),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                        width: containerWidth,
+                                        height: containerHeightWithAspectRatio,
+                                        decoration: BoxDecoration(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(7),
+                                            border: Border.all(
+                                              width: 3,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            )),
+                                        child: Center(
+                                          child: Text(""),
                                         ),
                                       ),
                                     ],

@@ -35,16 +35,11 @@ class RiderSingleCardScreen extends StatefulWidget {
 class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with TickerProviderStateMixin {
   late FlipCardController _card1Controller;
   bool cardflipchecker = false;
-  String imagesite = "";
   List<dynamic> cardData = [];
   String image1 = '';
   String imagecategory = '';
   bool card1Status = false;
   String buttonText ='Reveal card';
-
-  late String extractPath;
-  late Directory appDirectory;
-  late final AudioController _audioController;
 
   @override
   void initState() {
@@ -64,10 +59,8 @@ class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with Tick
       print('the list of card IDs is: $cardIds');
 
       for (int id in cardIds) {
-        // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
               (card) => card['id'] == id,
-          orElse: () => null,
         );
 
         if (card != null) {
@@ -78,20 +71,11 @@ class _RiderSingleCardScreenState extends State<RiderSingleCardScreen> with Tick
         }
       }
 
-      // Print the fetched data
-      print('Fetched Card Data:');
-      cardDataList.forEach((cardData) {
-        print('Card Image: ${cardData['card_image']}');
-        print('Card Category: ${cardData['card_category']}');
-      });
-      print('object is : ${cardDataList}');
-
-      // Update UI with the fetched data
       setState(() {
-        if (cardDataList.length >= 5) {
-          image1 = cardDataList[0]['card_image'];
-          imagecategory = cardDataList[0]['card_category'];
+        if (cardDataList.length >= 0) {
           setState(() {
+            image1 = cardDataList[0]['card_image'];
+            imagecategory = cardDataList[0]['card_category'];
           });
         } else {
 

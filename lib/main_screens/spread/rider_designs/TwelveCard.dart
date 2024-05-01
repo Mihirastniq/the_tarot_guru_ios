@@ -94,21 +94,15 @@ Future<void> fetchData() async {
   try {
     String data = await rootBundle.loadString('assets/json/rider_images.json');
     Map<String, dynamic> jsonData = jsonDecode(data);
-
     List<Map<String, dynamic>> cardDataList = [];
-
     List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
-    print('the list of card IDs is: $cardIds');
 
-    // Loop through selected card IDs and match them with the data from the JSON
     for (int id in cardIds) {
-      // Find the card with the corresponding ID
       Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
             (card) => card['id'] == id,
         orElse: () => null,
       );
 
-      // If the card is found, add it to the list
       if (card != null) {
         cardDataList.add({
           'card_image': card['card_image'],
@@ -117,42 +111,35 @@ Future<void> fetchData() async {
       }
     }
 
-    // Print the fetched data
-    print('Fetched Card Data:');
-    cardDataList.forEach((cardData) {
-      print('Card Image: ${cardData['card_image']}');
-      print('Card Category: ${cardData['card_category']}');
-    });
-    print('object is : ${cardDataList}');
-
-    // Update UI with the fetched data
     setState(() {
-      if (cardDataList.length >= 12) {
-        image1 = cardDataList[0]['card_image'];
-        image2 = cardDataList[1]['card_image'];
-        image3 = cardDataList[2]['card_image'];
-        image4 = cardDataList[3]['card_image'];
-        image5 = cardDataList[4]['card_image'];
-        image6 = cardDataList[5]['card_image'];
-        image7 = cardDataList[6]['card_image'];
-        image8 = cardDataList[7]['card_image'];
-        image9 = cardDataList[8]['card_image'];
-        image10 = cardDataList[9]['card_image'];
-        image11 = cardDataList[10]['card_image'];
-        image12 = cardDataList[11]['card_image'];
+      if (cardDataList.length >= 0) {
+        setState(() {
+          image1 = cardDataList[0]['card_image'];
+          image2 = cardDataList[1]['card_image'];
+          image3 = cardDataList[2]['card_image'];
+          image4 = cardDataList[3]['card_image'];
+          image5 = cardDataList[4]['card_image'];
+          image6 = cardDataList[5]['card_image'];
+          image7 = cardDataList[6]['card_image'];
+          image8 = cardDataList[7]['card_image'];
+          image9 = cardDataList[8]['card_image'];
+          image10 = cardDataList[9]['card_image'];
+          image11 = cardDataList[10]['card_image'];
+          image12 = cardDataList[11]['card_image'];
 
-        image1category = cardDataList[0]['card_category'];
-        image2category = cardDataList[1]['card_category'];
-        image3category = cardDataList[2]['card_category'];
-        image4category = cardDataList[3]['card_category'];
-        image5category = cardDataList[4]['card_category'];
-        image6category = cardDataList[5]['card_category'];
-        image7category = cardDataList[6]['card_category'];
-        image8category = cardDataList[7]['card_category'];
-        image9category = cardDataList[8]['card_category'];
-        image10category = cardDataList[9]['card_category'];
-        image11category = cardDataList[10]['card_category'];
-        image12category = cardDataList[11]['card_category'];
+          image1category = cardDataList[0]['card_category'];
+          image2category = cardDataList[1]['card_category'];
+          image3category = cardDataList[2]['card_category'];
+          image4category = cardDataList[3]['card_category'];
+          image5category = cardDataList[4]['card_category'];
+          image6category = cardDataList[5]['card_category'];
+          image7category = cardDataList[6]['card_category'];
+          image8category = cardDataList[7]['card_category'];
+          image9category = cardDataList[8]['card_category'];
+          image10category = cardDataList[9]['card_category'];
+          image11category = cardDataList[10]['card_category'];
+          image12category = cardDataList[11]['card_category'];
+        });
       } else {
         // Handle the case where not enough cards are fetched
         // Maybe set default values or show an error message

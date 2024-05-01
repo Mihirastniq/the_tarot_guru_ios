@@ -20,21 +20,8 @@ class _SettingScreenClassState extends State<SettingScreenClass> {
   @override
   void initState() {
     super.initState();
-    // Fetch enablePin value from SharedPreferences when the widget initializes
-    fetchEnablePin();
-  }
-  Future<void> fetchEnablePin() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      pinEnabled = prefs.getBool('enablePin') ?? false;
-    });
   }
 
-  // Update enablePin value in SharedPreferences
-  Future<void> updateEnablePin(bool value) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('enablePin', value);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,62 +83,13 @@ class _SettingScreenClassState extends State<SettingScreenClass> {
                 children: [
                   Column(
                     children: [
-                      ProfileButton(
-                          text: '${AppLocalizations.of(context)!.languageslabel}',
-                          onPressed: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => LanguageSelectionScreen()),
-                            );
-                          },
-                          icon: Icons.language),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      GestureDetector(
-                        child: Container(
-                          // padding: EdgeInsets.only(10),
-                          decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 2,
-                                color: Colors.grey,
-                              )
-                          ),
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                            ),
-                            title: Text(
-                              'Enable PIN',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                            trailing: Switch(
-                              value: pinEnabled,
-                              onChanged: (value) {
-                                setState(() {
-                                  pinEnabled = value;
-                                });
-                                updateEnablePin(value);
-                              },
-                            ),
-                          ),
-                        ),
-                      )
+
+
                     ],
                   ),
                   Column(
                     children: [
-                      ProfileButton(
-                          text: '${AppLocalizations.of(context)!.logoutlabel}',
-                          onPressed: (){
-                            loginController.logout(context);
-                          },
-                          icon: Icons.language),
+
                       SizedBox(
                         height: 15,
                       ),

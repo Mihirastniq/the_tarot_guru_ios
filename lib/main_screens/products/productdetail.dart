@@ -5,6 +5,9 @@ import 'cart.dart';
 import 'designtheme.dart';
 import 'package:http/http.dart' as http;
 import 'cart_functions.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 
 class ProductInfoScreen extends StatefulWidget {
   final int productid;
@@ -30,6 +33,7 @@ class _ProductDetailsState extends State<ProductInfoScreen>
   String ProductName = "";
   double ProductPrice = 895;
   String ProductFirstImage = '';
+  String ProductSecondImage = '';
   String ProductDiscription = "";
   int TotalSold = 0;
   int OrderValue =  0;
@@ -69,10 +73,13 @@ class _ProductDetailsState extends State<ProductInfoScreen>
         ProductDiscription = productData['description'];
         ProductPrice = double.parse(productData['price']);
         ProductFirstImage = productData['images'][0]['image_url'];
-
-        print('Product Name: $ProductName');
-        print('Product Description: $ProductDiscription');
-        print('Product Price: $ProductPrice');
+        // Check if the images list contains at least two elements
+        if (productData['images'].length > 1 && productData['images'][1] != null) {
+          ProductSecondImage = productData['images'][1]['image_url'];
+        } else {
+          // If the second image is null or not available, add the first image URL into the second
+          ProductSecondImage = ProductFirstImage;
+        }
       } else {
         print('No product data found');
       }
@@ -164,282 +171,320 @@ class _ProductDetailsState extends State<ProductInfoScreen>
               ),
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) - 24.0,
+              top: MediaQuery.of(context).padding.top + kToolbarHeight,
               bottom: 0,
               left: 0,
               right: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF3D2E53),
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(32.0),
-                      topRight: Radius.circular(32.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: DesignCourseAppTheme.grey.withOpacity(0.2),
-                        offset: const Offset(1.1, 1.1),
-                        blurRadius: 10.0),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      constraints: BoxConstraints(
-                          minHeight: infoHeight,
-                          maxHeight: tempHeight > infoHeight
-                              ? tempHeight
-                              : infoHeight),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 32.0, left: 18, right: 16),
-                            child: Text(
-                              'Osho Zen\nTarot',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 22,
-                                letterSpacing: 0.27,
-                                color: Colors.white,
-                              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    CarouselSlider(
+                      items: [
+                        // 1st Image of Slider
+                        Container(
+                          margin: EdgeInsets.all(6.0),
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            image: DecorationImage(
+                              image: NetworkImage("${ProductFirstImage}"),
+                              fit: BoxFit.contain,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 16, right: 16, bottom: 8, top: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  '₹899',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 22,
-                                    letterSpacing: 0.27,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Row(
-                                children: <Widget>[
-                                  getTimeBoxUI('189', 'Pages'),
-                                  getTimeBoxUI('200+', 'Sold'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity2,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 16, top: 8, bottom: 8),
-                                child: Text(
-                                  ProductDiscription,
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 14,
-                                    letterSpacing: 0.27,
-                                    color: Colors.white,
-                                  ),
-                                  maxLines: 500,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ),
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity3,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 16, bottom: 16, right: 16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: decrementQuantity,
-                                    child: Container(
-                                      height: 48,
-                                      width: 48,
-                                      decoration: BoxDecoration(
-                                        color: Colors.deepPurple,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0),
-                                        ),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: Colors.deepPurple
-                                                .withOpacity(0.5),
-                                            offset: const Offset(1.1, 1.1),
-                                            blurRadius: 10.0,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Icon(
-                                        Icons.remove,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    '$quantity',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  GestureDetector(
-                                    onTap: incrementQuantity,
-                                    child: Container(
-                                      height: 48,
-                                      width: 48,
-                                      decoration: BoxDecoration(
-                                        color: Colors.deepPurple,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0),
-                                        ),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: Colors.deepPurple
-                                                .withOpacity(0.5),
-                                            offset: const Offset(1.1, 1.1),
-                                            blurRadius: 10.0,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: addToCart,
-                                      child: Container(
-                                        height: 48,
-                                        decoration: BoxDecoration(
-                                          color: Colors.deepPurple,
-                                          borderRadius:
-                                          const BorderRadius.all(
-                                            Radius.circular(16.0),
-                                          ),
-                                          boxShadow: <BoxShadow>[
-                                            BoxShadow(
-                                              color: Colors.deepPurple
-                                                  .withOpacity(0.5),
-                                              offset: const Offset(1.1, 1.1),
-                                              blurRadius: 10.0,
-                                            ),
-                                          ],
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'Add to Cart',
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18,
-                                              letterSpacing: 0.0,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).padding.bottom,
-                          ),
+                        ),
 
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity3,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CartPage()
-                                ));
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, bottom: 16, right: 16),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-
-                                    Expanded(
-                                      child: Container(
-                                        height: 48,
-                                        decoration: BoxDecoration(
-                                          color: Colors.deepPurple,
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(16.0),
-                                          ),
-                                          boxShadow: <BoxShadow>[
-                                            BoxShadow(
-                                                color: Colors.deepPurple
-                                                    .withOpacity(0.5),
-                                                offset: const Offset(1.1, 1.1),
-                                                blurRadius: 10.0),
-                                          ],
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'Go to cart',
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18,
-                                              letterSpacing: 0.0,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
+                        Container(
+                          margin: EdgeInsets.all(6.0),
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            image: DecorationImage(
+                              image: NetworkImage("${ProductSecondImage}"),
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).padding.bottom,
-                          )
-                        ],
+                        ),
+                      ],
+
+                      options: CarouselOptions(
+                        height: MediaQuery.of(context).size.width * 0.8, // Set to square size
+                        enlargeCenterPage: true,
+                        autoPlay: false,
+                        aspectRatio: 1.0, // Set aspect ratio to 1:1 for square
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enableInfiniteScroll: true,
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        viewportFraction: 0.8,
                       ),
                     ),
-                  ),
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xFF3D2E53),
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(32.0),
+                              topRight: Radius.circular(32.0)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: DesignCourseAppTheme.grey.withOpacity(0.2),
+                                offset: const Offset(1.1, 1.1),
+                                blurRadius: 10.0),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8, right: 8),
+                              child: SingleChildScrollView(
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                      minHeight: infoHeight,
+                                      maxHeight: tempHeight > infoHeight
+                                          ? tempHeight
+                                          : infoHeight),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 32.0, left: 18, right: 16),
+                                        child: Text(
+                                          '${ProductName}',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 22,
+                                            letterSpacing: 0.27,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 16, right: 16, bottom: 8, top: 16),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text(
+                                              '₹${ProductPrice}',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w200,
+                                                fontSize: 22,
+                                                letterSpacing: 0.27,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: AnimatedOpacity(
+                                          duration: const Duration(milliseconds: 500),
+                                          opacity: opacity2,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 16, right: 16, top: 8, bottom: 8),
+                                            child: Text(
+                                              ProductDiscription,
+                                              textAlign: TextAlign.justify,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w200,
+                                                fontSize: 14,
+                                                letterSpacing: 0.27,
+                                                color: Colors.white,
+                                              ),
+                                              maxLines: 500,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      AnimatedOpacity(
+                                        duration: const Duration(milliseconds: 500),
+                                        opacity: opacity3,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 16, bottom: 16, right: 16),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              GestureDetector(
+                                                onTap: decrementQuantity,
+                                                child: Container(
+                                                  height: 48,
+                                                  width: 48,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.deepPurple,
+                                                    borderRadius: const BorderRadius.all(
+                                                      Radius.circular(16.0),
+                                                    ),
+                                                    boxShadow: <BoxShadow>[
+                                                      BoxShadow(
+                                                        color: Colors.deepPurple
+                                                            .withOpacity(0.5),
+                                                        offset: const Offset(1.1, 1.1),
+                                                        blurRadius: 10.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.remove,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 16),
+                                              Text(
+                                                '$quantity',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 16),
+                                              GestureDetector(
+                                                onTap: incrementQuantity,
+                                                child: Container(
+                                                  height: 48,
+                                                  width: 48,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.deepPurple,
+                                                    borderRadius: const BorderRadius.all(
+                                                      Radius.circular(16.0),
+                                                    ),
+                                                    boxShadow: <BoxShadow>[
+                                                      BoxShadow(
+                                                        color: Colors.deepPurple
+                                                            .withOpacity(0.5),
+                                                        offset: const Offset(1.1, 1.1),
+                                                        blurRadius: 10.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 16),
+                                              Expanded(
+                                                child: GestureDetector(
+                                                  onTap: addToCart,
+                                                  child: Container(
+                                                    height: 48,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.deepPurple,
+                                                      borderRadius:
+                                                      const BorderRadius.all(
+                                                        Radius.circular(16.0),
+                                                      ),
+                                                      boxShadow: <BoxShadow>[
+                                                        BoxShadow(
+                                                          color: Colors.deepPurple
+                                                              .withOpacity(0.5),
+                                                          offset: const Offset(1.1, 1.1),
+                                                          blurRadius: 10.0,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'Add to Cart',
+                                                        textAlign: TextAlign.left,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.w600,
+                                                          fontSize: 18,
+                                                          letterSpacing: 0.0,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: MediaQuery.of(context).padding.bottom,
+                                      ),
+
+                                      AnimatedOpacity(
+                                          duration: const Duration(milliseconds: 500),
+                                          opacity: opacity3,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => CartPage()
+                                                  ));
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 16, bottom: 16, right: 16),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: <Widget>[
+
+                                                  Expanded(
+                                                    child: Container(
+                                                      height: 48,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.deepPurple,
+                                                        borderRadius: const BorderRadius.all(
+                                                          Radius.circular(16.0),
+                                                        ),
+                                                        boxShadow: <BoxShadow>[
+                                                          BoxShadow(
+                                                              color: Colors.deepPurple
+                                                                  .withOpacity(0.5),
+                                                              offset: const Offset(1.1, 1.1),
+                                                              blurRadius: 10.0),
+                                                        ],
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          'Go to cart',
+                                                          textAlign: TextAlign.left,
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w600,
+                                                            fontSize: 18,
+                                                            letterSpacing: 0.0,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                      ),
+                                      SizedBox(
+                                        height: MediaQuery.of(context).padding.bottom,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                    ),
+                  ],
                 ),
-              ),
+              )
             ),
 
             Padding(
@@ -517,3 +562,5 @@ class _ProductDetailsState extends State<ProductInfoScreen>
     );
   }
 }
+
+

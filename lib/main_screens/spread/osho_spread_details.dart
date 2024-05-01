@@ -210,21 +210,30 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Icon(Icons.star,color: Colors.white,),
-                                              Text(currentCard['card_name'],style: _getTitleTextStyle(context)),
-                                              Icon(Icons.star,color: Colors.white,)
+                                              Container(
+                                                width: MediaQuery.sizeOf(context).width *0.1,
+                                                child: Icon(Icons.star,color: Colors.white,),
+                                              ),
+                                              Container(
+                                                width: MediaQuery.sizeOf(context).width * 0.5,
+                                                child: Text(currentCard['card_name'],style: _getTitleTextStyle(context),textAlign: TextAlign.center,),
+                                              ),
+                                              Container(
+                                                width: MediaQuery.sizeOf(context).width *0.1,
+                                                child: Icon(Icons.star,color: Colors.white,),
+                                              ),
                                             ],
                                           ),
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Text('${AppLocalizations.of(context)!.cardcategory} : ${currentCard['card_translated_category']}',style: _getCustomTextStyle(context),),
+                                          Text('${AppLocalizations.of(context)!.cardcategory} : ${currentCard['card_translated_category']}',style: _getCustomTextStyle(context),textAlign: TextAlign.justify,),
                                           SizedBox(
                                             height: 20,
                                           ),
 
                                           Text("${currentCard['card_content']}",
-                                              style: _getCustomTextStyle(context)),
+                                              style: _getCustomTextStyle(context),textAlign: TextAlign.justify),
                                           SizedBox(
                                             height: 10,
                                           ),
@@ -240,7 +249,8 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
                                           ),
                                           Text(
                                             "${currentCard['card_description']}",
-                                            style: _getCustomTextStyle(context)
+                                            style: _getCustomTextStyle(context),
+                                              textAlign: TextAlign.justify
                                           ),
                                         ],
                                       ),

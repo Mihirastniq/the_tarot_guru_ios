@@ -115,7 +115,7 @@
   "@cardcategory": {
     "description": "Use as button title"
   },
-  "descriptioninspread": "description",
+  "descriptioninspread": "Description",
   "@descriptioninspread": {
     "description": "Use as button title"
   },

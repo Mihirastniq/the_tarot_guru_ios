@@ -90,14 +90,15 @@ class _RiderThreeCardScreenState extends State<RiderThreeCardScreen> with Ticker
 
       // Update UI with the fetched data
       setState(() {
-        if (cardDataList.length >= 3) {
-          image1 = cardDataList[0]['card_image'];
-          image2 = cardDataList[1]['card_image'];
-          image3 = cardDataList[2]['card_image'];
-          image1category = cardDataList[0]['card_category'];
-          image2category = cardDataList[1]['card_category'];
-          image3category = cardDataList[2]['card_category'];
-          print('image category ${image1category}');
+        if (cardDataList.length >= 0) {
+          setState(() {
+            image1 = cardDataList[0]['card_image'];
+            image2 = cardDataList[1]['card_image'];
+            image3 = cardDataList[2]['card_image'];
+            image1category = cardDataList[0]['card_category'];
+            image2category = cardDataList[1]['card_category'];
+            image3category = cardDataList[2]['card_category'];
+          });
         } else {
           // Handle the case where not enough cards are fetched
           // Maybe set default values or show an error message

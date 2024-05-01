@@ -103,27 +103,21 @@ class _RiderFiveCardScreenState extends State<RiderFiveCardScreen> with TickerPr
         }
       }
 
-      // Print the fetched data
-      print('Fetched Card Data:');
-      cardDataList.forEach((cardData) {
-        print('Card Image: ${cardData['card_image']}');
-        print('Card Category: ${cardData['card_category']}');
-      });
-      print('object is : ${cardDataList}');
-
       // Update UI with the fetched data
       setState(() {
-        if (cardDataList.length >= 5) {
-          image1 = cardDataList[0]['card_image'];
-          image2 = cardDataList[1]['card_image'];
-          image3 = cardDataList[2]['card_image'];
-          image4 = cardDataList[3]['card_image'];
-          image5 = cardDataList[4]['card_image'];
-          image1category = cardDataList[0]['card_category'];
-          image2category = cardDataList[1]['card_category'];
-          image3category = cardDataList[2]['card_category'];
-          image4category = cardDataList[3]['card_category'];
-          image5category = cardDataList[4]['card_category'];
+        if (cardDataList.length >= 0) {
+          setState(() {
+            image1 = cardDataList[0]['card_image'];
+            image2 = cardDataList[1]['card_image'];
+            image3 = cardDataList[2]['card_image'];
+            image4 = cardDataList[3]['card_image'];
+            image5 = cardDataList[4]['card_image'];
+            image1category = cardDataList[0]['card_category'];
+            image2category = cardDataList[1]['card_category'];
+            image3category = cardDataList[2]['card_category'];
+            image4category = cardDataList[3]['card_category'];
+            image5category = cardDataList[4]['card_category'];
+          });
         } else {
           // Handle the case where not enough cards are fetched
           // Maybe set default values or show an error message

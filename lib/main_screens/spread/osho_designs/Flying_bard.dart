@@ -373,7 +373,7 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
                                   )
                               ),
                                   child: Center(
-                                    child: Text("Container 6"),
+                                    child: Text(""),
                                   ),
                                 ),
                                 Container(
@@ -389,7 +389,7 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
                                   )
                               ),
                                   child: Center(
-                                    child: Text("Container 4"),
+                                    child: Text(""),
                                   ),
                                 ),
                                 Container(
@@ -405,7 +405,7 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
                                   )
                               ),
                                   child: Center(
-                                    child: Text("Container 2"),
+                                    child: Text(""),
                                   ),
                                 ),
                                 Container(
@@ -421,7 +421,7 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
                                   )
                               ),
                                   child: Center(
-                                    child: Text("Container 1"),
+                                    child: Text(""),
                                   ),
                                 ),
                                 Container(
@@ -437,7 +437,7 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
                                   )
                               ),
                                   child: Center(
-                                    child: Text("Container 3"),
+                                    child: Text(""),
                                   ),
                                 ),
                                 Container(
@@ -453,7 +453,7 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
                                   )
                               ),
                                   child: Center(
-                                    child: Text("Container 5"),
+                                    child: Text(""),
                                   ),
                                 ),
                                 Container(
@@ -469,7 +469,7 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
                                   )
                               ),
                                   child: Center(
-                                    child: Text("Container 7"),
+                                    child: Text(""),
                                   ),
                                 ),
                               ],

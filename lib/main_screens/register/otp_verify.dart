@@ -123,6 +123,7 @@ class _OtpState extends State<OTPVerifyPageState> {
                     child: Image.asset(
                       'assets/images/intro/logo.png',
                     ),
+                    // child: Text('logo',style: TextStyle(fontSize: 20),),
                   ),
                   SizedBox(
                     height: 24,

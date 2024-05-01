@@ -92,11 +92,13 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
       // print(cardDataList);
       // Update UI with the fetched data
       setState(() {
-        if (cardDataList.length >= 2) {
-          image1 = cardDataList[0]['card_image'];
-          image2 = cardDataList[1]['card_image'];
-          image1category = cardDataList[0]['card_category'];
-          image2category = cardDataList[1]['card_category'];
+        if (cardDataList.length >= 0) {
+         setState(() {
+           image1 = cardDataList[0]['card_image'];
+           image2 = cardDataList[1]['card_image'];
+           image1category = cardDataList[0]['card_category'];
+           image2category = cardDataList[1]['card_category'];
+         });
         } else {
           // Handle the case where not enough cards are fetched
           // Maybe set default values or show an error message

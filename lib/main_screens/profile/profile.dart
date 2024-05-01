@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
+import 'package:the_tarot_guru/main_screens/controller/session_controller.dart';
+import 'package:the_tarot_guru/main_screens/other_screens/language_selection.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/profile/profile_screens_options.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
@@ -15,6 +17,7 @@ class _ProfileState extends State<Profile> {
   late String _firstName = '';
   late String _lastName = '';
   late String _email = '';
+
 
   int _selectedIndex = 1;
   void _onItemTapped(int index) {
@@ -36,6 +39,8 @@ class _ProfileState extends State<Profile> {
     _email = prefs.getString('email') ?? '';
     setState(() {}); // Update the UI with fetched data
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -117,27 +122,17 @@ class _ProfileState extends State<Profile> {
                             Container(
                               width: 100,
                               height: 100,
-                              padding: EdgeInsets.all(5),
+                              padding: EdgeInsets.all(0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Colors.pink,
-                                    Colors.yellow,
-                                  ]
-                                )
+
                               ),
                               child: Container(
                                 decoration: BoxDecoration(
                                     color: Color(0xFF1C1C2D),
                                     borderRadius: BorderRadius.circular(100)
                                 ),
-                                child: Icon(
-                                  Icons.person_2,
-                                  color: Colors.white,
-                                  size: 50.0,
-                                  semanticLabel: 'user icon',
-                                ),
+                                child: Image.asset('assets/images/intro/logo.png',width: 50,height: 50,)
                               ),
                             ),
                             SizedBox(
@@ -147,8 +142,8 @@ class _ProfileState extends State<Profile> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('$_firstName $_lastName',style: TextStyle(color: Colors.white,fontSize: 30),),
-                                Text('$_email',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                Text('$_firstName $_lastName',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                Text('$_email',style: TextStyle(color: Colors.white,fontSize: 16),),
                               ],
                             )
                           ],
@@ -201,18 +196,15 @@ class _ProfileState extends State<Profile> {
                       SizedBox(
                         height: 15,
                       ),
-                      ProfileButton(text: '${AppLocalizations.of(context)!.settinglabel}',
+                      ProfileButton(
+                          text: '${AppLocalizations.of(context)!.languageslabel}',
                           onPressed: (){
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SettingScreenClass()),
+                              MaterialPageRoute(builder: (context) => LanguageSelectionScreen()),
                             );
                           },
-                          icon: Icons.settings),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      // ProfileButton(text: '${AppLocalizations.of(context)!.subscriptionlabel}', onPressed: (){}, icon: Icons.loyalty),
+                          icon: Icons.language),
                       SizedBox(
                         height: 15,
                       ),

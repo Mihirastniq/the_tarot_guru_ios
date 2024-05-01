@@ -120,44 +120,39 @@ class _RiderCircularCardScreenState extends State<RiderCircularCardScreen> {
         }
       }
 
-      // Print the fetched data
-      print('Fetched Card Data:');
-      cardDataList.forEach((cardData) {
-        print('Card Image: ${cardData['card_image']}');
-        print('Card Category: ${cardData['card_category']}');
-      });
-      print('object is : ${cardDataList}');
 
       // Update UI with the fetched data
       setState(() {
-        if (cardDataList.length >= 13) {
-          image1 = cardDataList[0]['card_image'];
-          image2 = cardDataList[1]['card_image'];
-          image3 = cardDataList[2]['card_image'];
-          image4 = cardDataList[3]['card_image'];
-          image5 = cardDataList[4]['card_image'];
-          image6 = cardDataList[5]['card_image'];
-          image7 = cardDataList[6]['card_image'];
-          image8 = cardDataList[7]['card_image'];
-          image9 = cardDataList[8]['card_image'];
-          image10 = cardDataList[9]['card_image'];
-          image11 = cardDataList[10]['card_image'];
-          image12 = cardDataList[11]['card_image'];
-          image13 = cardDataList[12]['card_image'];
+        if (cardDataList.length >= 0) {
+          setState(() {
+            image1 = cardDataList[0]['card_image'];
+            image2 = cardDataList[1]['card_image'];
+            image3 = cardDataList[2]['card_image'];
+            image4 = cardDataList[3]['card_image'];
+            image5 = cardDataList[4]['card_image'];
+            image6 = cardDataList[5]['card_image'];
+            image7 = cardDataList[6]['card_image'];
+            image8 = cardDataList[7]['card_image'];
+            image9 = cardDataList[8]['card_image'];
+            image10 = cardDataList[9]['card_image'];
+            image11 = cardDataList[10]['card_image'];
+            image12 = cardDataList[11]['card_image'];
+            image13 = cardDataList[12]['card_image'];
 
-          image1category = cardDataList[0]['card_category'];
-          image2category = cardDataList[1]['card_category'];
-          image3category = cardDataList[2]['card_category'];
-          image4category = cardDataList[3]['card_category'];
-          image5category = cardDataList[4]['card_category'];
-          image6category = cardDataList[5]['card_category'];
-          image7category = cardDataList[6]['card_category'];
-          image8category = cardDataList[7]['card_category'];
-          image9category = cardDataList[8]['card_category'];
-          image10category = cardDataList[9]['card_category'];
-          image11category = cardDataList[10]['card_category'];
-          image12category = cardDataList[11]['card_category'];
-          image13category = cardDataList[12]['card_category'];
+            image1category = cardDataList[0]['card_category'];
+            image2category = cardDataList[1]['card_category'];
+            image3category = cardDataList[2]['card_category'];
+            image4category = cardDataList[3]['card_category'];
+            image5category = cardDataList[4]['card_category'];
+            image6category = cardDataList[5]['card_category'];
+            image7category = cardDataList[6]['card_category'];
+            image8category = cardDataList[7]['card_category'];
+            image9category = cardDataList[8]['card_category'];
+            image10category = cardDataList[9]['card_category'];
+            image11category = cardDataList[10]['card_category'];
+            image12category = cardDataList[11]['card_category'];
+            image13category = cardDataList[12]['card_category'];
+          });
         } else {
           // Handle the case where not enough cards are fetched
           // Maybe set default values or show an error message

@@ -21,7 +21,6 @@ class _SubscribeAppState extends State<SubscribeApp> {
   int? userid = 0;
   String email = '';
 
-
   _loadFirstName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -36,21 +35,10 @@ class _SubscribeAppState extends State<SubscribeApp> {
   void initState() {
     super.initState();
     _loadFirstName();
-    checkStatus();
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-  }
-
-  void checkStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? user_status;
-    user_status = prefs.getInt('subscription_status');
-
-    if(user_status == 1) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => PreSubscribeUSer()));
-    }
   }
 
   @override
@@ -61,9 +49,8 @@ class _SubscribeAppState extends State<SubscribeApp> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
 
-    String apiKey = 'rzp_live_0Zk9RSsYyWRK1m';
     String? paymentId = response.paymentId;
-    // fetchPaymentDetails(apiKey, paymentId!);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var url = 'https://thetarotguru.com/tarotapi/subscription.php';
     var body = {
@@ -80,9 +67,7 @@ class _SubscribeAppState extends State<SubscribeApp> {
     var webresponse = await http.post(Uri.parse(url), body: body);
     var responseData = json.decode(webresponse.body);
     if (responseData['status'] == 'success') {
-      print('Payment details updated successfully');
-      print('Message: ${responseData['message']}');
-      print('id is ${responseData['id']}');
+      prefs.setInt('subscription_status', 1);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => SubscriptionSuccessPage(title: 'Thank you for subscribe',)),
@@ -115,8 +100,8 @@ class _SubscribeAppState extends State<SubscribeApp> {
         'email': email,
       };
     var options = {
-      'key': 'rzp_test_wTcTwzsmdJyIpK',
-      'amount': 100,
+      'key': 'rzp_live_BOSf3y7tudC48z',
+      'amount': 159900,
       'name': 'The Tarot Guru',
       'description': 'Subscription Payment',
       'prefill': {'contact': '7878765502', 'email': 'mihirgopani@gmail.com'},

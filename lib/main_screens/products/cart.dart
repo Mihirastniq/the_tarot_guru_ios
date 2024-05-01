@@ -79,6 +79,9 @@ import 'package:shared_preferences/shared_preferences.dart';
       }
     }
 
+    void _removeItem(int index) async {
+      _cartService.removeFromCart(index);
+    }
 
     @override
     Widget build(BuildContext context) {
@@ -239,8 +242,9 @@ import 'package:shared_preferences/shared_preferences.dart';
                                       color: Colors.white,
                                     ),
                                     onPressed: () async {
+                                      _removeItem(cartItem['productId']);
                                       await _cartItems.remove(_cartItems[index]['productId']);
-                                      _fetchCartItems(); // Refresh the page after removal
+                                      _fetchCartItems();
                                     },
                                   ),
                                 ],

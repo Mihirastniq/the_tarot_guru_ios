@@ -50,7 +50,7 @@ class _OrderProcessScreenState extends State<OrderProcessScreen> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    String apiKey = 'rzp_live_0Zk9RSsYyWRK1m';
+    String apiKey = 'rzp_live_BOSf3y7tudC48z';
     String? paymentId = response.paymentId;
     var url = 'https://thetarotguru.com/tarotapi/orderHandler.php';
 
@@ -129,7 +129,7 @@ class _OrderProcessScreenState extends State<OrderProcessScreen> {
       'email': _email,
     };
     var options = {
-      'key': 'rzp_test_wTcTwzsmdJyIpK',
+      'key': 'rzp_live_BOSf3y7tudC48z',
       'amount': _totalCartValue * 100,
       'name': 'The Tarot Guru',
       'description': 'order_controller',
@@ -1033,7 +1033,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    String apiKey = 'rzp_live_0Zk9RSsYyWRK1m';
+    String apiKey = 'rzp_live_BOSf3y7tudC48z';
     String? paymentId = response.paymentId;
     var url = 'https://thetarotguru.com/tarotapi/orderHandler.php';
 
@@ -1112,7 +1112,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'email': _email,
     };
     var options = {
-      'key': 'rzp_test_wTcTwzsmdJyIpK',
+      'key': 'rzp_live_BOSf3y7tudC48z',
       'amount': _totalCartValue * 100,
       'name': 'The Tarot Guru',
       'description': 'order_controller',

@@ -222,19 +222,18 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                         children: [
-                                                          Icon(
-                                                            Icons.star,
-                                                            color: Colors.black,
+                                                          Container(
+                                                            width: MediaQuery.sizeOf(context).width *0.1,
+                                                            child: Icon(Icons.star,color: Colors.white,),
                                                           ),
-                                                          Text(
-                                                            currentCard['card_name'],
-                                                            style: _getTitleTextStyle(
-                                                                context),
+                                                          Container(
+                                                            width: MediaQuery.sizeOf(context).width * 0.5,
+                                                            child: Text(currentCard['card_name'],style: _getTitleTextStyle(context),textAlign: TextAlign.center,),
                                                           ),
-                                                          Icon(
-                                                            Icons.star,
-                                                            color: Colors.black,
-                                                          )
+                                                          Container(
+                                                            width: MediaQuery.sizeOf(context).width *0.1,
+                                                            child: Icon(Icons.star,color: Colors.white,),
+                                                          ),
                                                         ],
                                                       ),
                                                       SizedBox(

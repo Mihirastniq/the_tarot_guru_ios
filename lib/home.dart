@@ -7,11 +7,14 @@ import 'package:the_tarot_guru/main_screens/RiderWaite.dart';
 import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
 import 'package:the_tarot_guru/main_screens/controller/counter_provider.dart';
 import 'package:the_tarot_guru/main_screens/products/products.dart';
+import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
+import 'package:the_tarot_guru/main_screens/subscription/pre_subscribe.dart';
 import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:the_tarot_guru/main_screens/warnings/unsubscribe.dart';
 import 'main_screens/controller/language_controller/language_change_handler.dart';
 
 
@@ -32,31 +35,43 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
 
   String firstName = '';
   String lastName = '';
-  // late SharedPreferences _prefs;
-  // String? _selectedLanguageCode;
-  // late LanguageChangeController _languageChangeController;
+  String createdAt = '';
+  int SubscriptionStatus=0;
+  int freebyadmin=0;
+  int freewarning=0;
+
 
   @override
   void initState() {
     super.initState();
     _loadFirstName();
-    // _initLanguage();
-    // _languageChangeController = Provider.of<LanguageChangeController>(context, listen: false);
   }
-
-  // Future<void> _initLanguage() async {
-  //   _prefs = await SharedPreferences.getInstance();
-  //   final String language = _prefs.getString('lang') ?? 'en';
-  //   await _languageChangeController.changelanguage(Locale(language));
-  // }
-
 
   _loadFirstName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       firstName = prefs.getString('firstName') ?? '';
       lastName = prefs.getString('lastName') ?? '';
+      SubscriptionStatus = prefs.getInt('subscription_status') ?? 0;
+      freebyadmin = prefs.getInt('free_by_admin') ?? 0 ;
+      freewarning = prefs.getInt('warning') ?? 0 ;
+      createdAt = prefs.getString('created_at')?? '';
     });
+  }
+
+  bool isWithin48Hours() {
+    if (createdAt.isEmpty) {
+      return false; // Assuming createdAt is a non-empty string
+    }
+
+    // Parse the createdAt string to DateTime
+    DateTime createdAtDateTime = DateTime.parse(createdAt);
+
+    // Calculate the difference between current time and createdAt
+    Duration difference = DateTime.now().difference(createdAtDateTime);
+
+    // Check if the difference is less than 48 hours
+    return difference.inHours < 24;
   }
 
   static const TextStyle optionStyle =
@@ -82,7 +97,7 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
           ),
           Positioned.fill(
             child: Image.asset(
-              'assets/images/Screen_Backgrounds/bg1.png', // Replace with your image path
+              'assets/images/Screen_Backgrounds/bg1.png',
               fit: BoxFit.cover,
               opacity: const AlwaysStoppedAnimation(.3),
             ),
@@ -119,11 +134,19 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                   color: Colors.white,
                 )),
                 IconButton(onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SubscribeApp(),
-                    ),
-                  );
+                  if(SubscriptionStatus == 1) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PreSubscribeUSer(),
+                      ),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SubscribeApp(),
+                      ),
+                    );
+                  }
                 }, icon: Icon(
                   Icons.money,
                   size: 30,
@@ -177,7 +200,26 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                     children: [
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => OshoZenTarot()));
+                          if(SubscriptionStatus == 1 || freebyadmin == 1 || isWithin48Hours()) {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => OshoZenTarot()));
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SubscriptionExpire(
+                                  title: 'Please Subscribe the application!!',
+                                  message: 'Your subscription has expired. Please subscribe to continue using the app.',
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SubscribeApp(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          }
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -218,7 +260,26 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                       ),
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => RiderWaiteTarot()));
+                          if(SubscriptionStatus == 1 || freebyadmin == 1 || isWithin48Hours()) {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => RiderWaiteTarot()));
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SubscriptionExpire(
+                                  title: 'Your Subscription is Expired!',
+                                  message: 'Your subscription has expired. Please subscribe to continue using the app.',
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SubscribeApp(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          }
                         },
                         child: Container(
                           decoration: BoxDecoration(
