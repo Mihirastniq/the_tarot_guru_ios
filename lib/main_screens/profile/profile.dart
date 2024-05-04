@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
-import 'package:the_tarot_guru/main_screens/controller/session_controller.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/language_selection.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/profile/profile_screens_options.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,14 +15,6 @@ class _ProfileState extends State<Profile> {
   late String _lastName = '';
   late String _email = '';
 
-
-  int _selectedIndex = 1;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +26,7 @@ class _ProfileState extends State<Profile> {
     _firstName = prefs.getString('firstName') ?? '';
     _lastName = prefs.getString('lastName') ?? '';
     _email = prefs.getString('email') ?? '';
-    setState(() {}); // Update the UI with fetched data
+    setState(() {});
   }
 
 
@@ -55,10 +44,6 @@ class _ProfileState extends State<Profile> {
                 colors: [
                   Color(0xFF1C1C2D),
                   Color(0xFF1C1C2D),
-
-                  // Color.fromRGBO(19, 14, 42, 1),
-                  // Color.fromRGBO(19, 14, 42, 1),
-                  // Colors.deepPurple.shade900.withOpacity(0.9),
                 ],
               ),
             ),

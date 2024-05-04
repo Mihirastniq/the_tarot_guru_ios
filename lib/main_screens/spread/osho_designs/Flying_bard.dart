@@ -1,18 +1,15 @@
-// Import required libraries
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import '../ActiveSpread.dart';
 import '../osho_spread_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// Define the main widget class
+
 class TheFlyingBirdScreen extends StatefulWidget {
 
   final List<SelectedCard> selectedCards;
@@ -65,7 +62,6 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
   String image5category = '';
   String image6category = '';
   String image7category = '';
-  late final AudioController _audioController;
 
   Future<void> fetchData() async {
     try {
@@ -76,15 +72,12 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
-        // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
               (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -93,7 +86,6 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
         }
       }
 
-      // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 7) {
           image1 = cardDataList[0]['card_image'];
@@ -112,8 +104,6 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
           image6category = cardDataList[5]['card_category'];
           image7category = cardDataList[6]['card_category'];
         } else {
-          // Handle the case where not enough cards are fetched
-          // Maybe set default values or show an error message
         }
       });
     } catch (e) {
@@ -125,7 +115,6 @@ class _TheFlyingBirdScreenState extends State<TheFlyingBirdScreen> {
   void initState() {
     super.initState();
     fetchData();
-    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();

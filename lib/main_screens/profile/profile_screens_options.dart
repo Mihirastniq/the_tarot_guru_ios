@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,7 +57,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     _language = prefs.getString('lang') ?? '';
     _createdAt = prefs.getString('created_at') ?? '';
     _subscriptionStatus = prefs.getInt('subscription_status') ?? 0;
-    setState(() {}); // Update the UI with fetched data
+    setState(() {});
   }
 
   @override
@@ -365,7 +364,6 @@ class _UserAddressesState extends State<UserAddresses> {
       _userId = prefs.getInt('userid') ?? 0;
     });
 
-    // API endpoint URL
     String apiUrl = 'https://thetarotguru.com/tarotapi/addresses.php';
 
     var response = await http.post(Uri.parse(apiUrl), body: {
@@ -382,13 +380,11 @@ class _UserAddressesState extends State<UserAddresses> {
           _isLoading = false;
         });
       } else {
-        // No address found
         setState(() {
           _isLoading = false;
         });
       }
     } else {
-      // Error in API request
       setState(() {
         _isLoading = false;
       });
@@ -416,7 +412,6 @@ class _UserAddressesState extends State<UserAddresses> {
         }
       } catch (e) {
 
-        // Show error message to the user
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error removing address. Please try again later.'),
@@ -613,6 +608,39 @@ class _OrdersScreenState extends State<OrdersScreen> {
     }
   }
 
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'Success':
+        return Colors.green.shade900;
+      case 'Reject':
+        return Colors.red.shade900;
+      case 'Processing':
+        return Colors.grey.shade900;
+      case 'Approved':
+        return Colors.yellow.shade900;
+      case 'Shipped':
+        return Colors.orange.shade900;
+      default:
+        return Colors.grey;
+    }
+  }
+  Color _getbackgriundColor(String status) {
+    switch (status) {
+      case 'Success':
+        return Colors.green.shade100;
+      case 'Reject':
+        return Colors.red.shade100;
+      case 'Processing':
+        return Colors.grey.shade400;
+      case 'Approved':
+        return Colors.yellow.shade100;
+      case 'Shipped':
+        return Colors.orange.shade200;
+      default:
+        return Colors.grey;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -675,6 +703,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   ? ListView.builder(
                 itemCount: _orders.length,
                 itemBuilder: (context, index) {
+                  print(_orders.length);
                   // Extract order details from the list
                   Map<String, dynamic> order = _orders[index];
                   return GestureDetector(
@@ -695,9 +724,29 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Order ${index + 1}:',
-                            style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Order ${index + 1}:',
+                                style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                    color:_getStatusColor(order['order_status']),
+                                    width: 1
+                                  ),
+                                  color: _getbackgriundColor(order['order_status']),
+                              ),
+                                child: Text('${order['order_status']}',
+                                  style: TextStyle(color: _getStatusColor(order['order_status']), fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            ],
                           ),
+
                           SizedBox(height: 8),
                           Text('Order ID: ${order['id']}',
                             style: TextStyle(color: Colors.black, fontSize: 16),

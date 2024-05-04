@@ -120,7 +120,6 @@ class _ActiveSpreadState extends State<ActiveSpread> {
     setState(() {
       for (int i = 0; i < cards.length; i++) {
         if (!fixedPositions[i]) {
-          // Only update positions if the card is not in a fixed position
           double newLeft = Random().nextDouble() *
               (MediaQuery.of(context).size.width * 0.9 - 90);
           double newTop = Random().nextDouble() *
@@ -134,7 +133,6 @@ class _ActiveSpreadState extends State<ActiveSpread> {
   void _animateCardRemoval(int cardId) {
     int index = cards.indexWhere((card) => card.id == cardId);
     if (index != -1) {
-      // Set the new position outside the screen
       setState(() {
         cards[index].position =
             '${MediaQuery.of(context).size.width}, ${MediaQuery.of(context).size.height}';
@@ -168,7 +166,6 @@ class _ActiveSpreadState extends State<ActiveSpread> {
 
   void _onCardTap(CardInfo card) {
     if (_isAnimating == false) {
-      // Check if the card is already selected
       if (!selectedCards.contains(card.id)) {
         if (selectedCards.length < widget.numberOfCards) {
           _animateCardRemoval(card.id);
@@ -208,7 +205,6 @@ class _ActiveSpreadState extends State<ActiveSpread> {
     int totalCards = widget.numberOfCards;
     Set<int> selectedNumbers = {};
 
-    // Generate random numbers and add them to the set until we have enough unique numbers
     while (selectedNumbers.length < totalCards) {
       int randomNumber =
           Random().nextInt(79) + 1; // Generate a random number from 1 to 79
@@ -820,17 +816,6 @@ class _CardWidgetState extends State<CardWidget>
     _controller.forward();
   }
 
-  void _animateToNewPosition() {
-    _controller.reset();
-    _offsetAnimation = Tween<Offset>(
-      begin: Offset(widget.left, widget.top),
-      end: Offset(widget.left, widget.top),
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
-    _controller.forward();
-  }
 
   @override
   Widget build(BuildContext context) {

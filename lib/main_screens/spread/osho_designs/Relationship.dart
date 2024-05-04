@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,9 +7,7 @@ import '../osho_spread_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flip_card/flip_card_controller.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -37,7 +33,6 @@ class _TheRelationScreenState extends State<TheRelationSpread> with TickerProvid
   late FlipCardController _card3Controller;
   late FlipCardController _card4Controller;
 
-  List<bool> _cardFlippedState = [false];
   bool cardflipchecker = false;
   List<dynamic> cardData = [];
 
@@ -57,7 +52,6 @@ class _TheRelationScreenState extends State<TheRelationSpread> with TickerProvid
   bool card2Status = false;
   bool card3Status = false;
   bool card4Status = false;
-  late final AudioController _audioController;
   String buttonText ='Reveal card';
 
   Future<void> fetchData() async {
@@ -69,15 +63,12 @@ class _TheRelationScreenState extends State<TheRelationSpread> with TickerProvid
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
-        // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
               (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -86,7 +77,6 @@ class _TheRelationScreenState extends State<TheRelationSpread> with TickerProvid
         }
       }
 
-      // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 4) {
           image1 = cardDataList[0]['card_image'];
@@ -98,8 +88,6 @@ class _TheRelationScreenState extends State<TheRelationSpread> with TickerProvid
           image3category = cardDataList[2]['card_category'];
           image4category = cardDataList[3]['card_category'];
         } else {
-          // Handle the case where not enough cards are fetched
-          // Maybe set default values or show an error message
         }
       });
     } catch (e) {
@@ -118,7 +106,6 @@ class _TheRelationScreenState extends State<TheRelationSpread> with TickerProvid
   void initState() {
     super.initState();
     fetchData();
-    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();

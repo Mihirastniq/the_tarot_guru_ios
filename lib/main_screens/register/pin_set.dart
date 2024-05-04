@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'language.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -51,7 +50,6 @@ class _SetLoginPinState extends State<SetLoginPin> {
     _focusNode2.dispose();
     _focusNode3.dispose();
     _focusNode4.dispose();
-
     super.dispose();
   }
 

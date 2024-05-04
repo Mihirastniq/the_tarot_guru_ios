@@ -18,13 +18,6 @@ class AppSelect extends StatefulWidget {
 }
 
 class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMixin {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   String firstName = '';
   String lastName = '';
@@ -56,19 +49,12 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
     if (createdAt.isEmpty) {
       return false; // Assuming createdAt is a non-empty string
     }
+  DateTime createdAtDateTime = DateTime.parse(createdAt);
 
-    // Parse the createdAt string to DateTime
-    DateTime createdAtDateTime = DateTime.parse(createdAt);
-
-    // Calculate the difference between current time and createdAt
     Duration difference = DateTime.now().difference(createdAtDateTime);
 
-    // Check if the difference is less than 48 hours
     return difference.inHours < 24;
   }
-
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +229,10 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                                 width: 100,
                                 child: Image.asset('assets/images/cards/osho.jpg',width: 50,height: 50,),
                               ),
-                              Text('${AppLocalizations.of(context)!.oshotitle}',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w800),)
+                              Container(
+                                width: MediaQuery.sizeOf(context).width * 0.4,
+                                child: Text('${AppLocalizations.of(context)!.oshotitle}',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w800),),
+                              )
                             ],
                           ),
                         ),
@@ -304,7 +293,10 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                                 width: 100,
                                 child: Image.asset('assets/images/cards/rider.jpg',width: 75,height: 75,),
                               ),
-                              Text('${AppLocalizations.of(context)!.ridertitle}',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w800),)
+                              Container(
+                                width: MediaQuery.sizeOf(context).width *0.9-200,
+                                child: Text('${AppLocalizations.of(context)!.ridertitle}',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w800),),
+                              )
                             ],
                           ),
                         ),

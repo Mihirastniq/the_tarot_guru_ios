@@ -7,7 +7,6 @@ import '../ActiveSpread.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -34,7 +33,6 @@ class _RiderSixCardScreenState extends State<RiderSixCardScreen> with TickerProv
   late FlipCardController _card4Controller;
   late FlipCardController _card5Controller;
   late FlipCardController _card6Controller;
-List<bool> _cardFlippedState = [false];
 bool cardflipchecker = false;
 List<dynamic> cardData = [];
 
@@ -87,7 +85,6 @@ List<dynamic> cardData = [];
         }
       }
 
-      // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 0) {
           setState(() {
@@ -106,8 +103,6 @@ List<dynamic> cardData = [];
             image6category = cardDataList[5]['card_category'];
           });
         } else {
-          // Handle the case where not enough cards are fetched
-          // Maybe set default values or show an error message
         }
       });
     } catch (e) {
@@ -284,7 +279,6 @@ Widget build(BuildContext context) {
 
   double screenWidth = MediaQuery.of(context).size.width * 0.9;
   double screenHeight = MediaQuery.of(context).size.height * 0.7;
-  double containerHeight = screenHeight / 7;
   double imageAspectRatio = 2600 / 1480;
 
   double containerWidth = screenWidth / 3-10;
@@ -325,16 +319,6 @@ Widget build(BuildContext context) {
               ),
             ),
             actions: [
-              IconButton(
-                icon: Icon(Icons.settings),
-                color: Colors.white,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                  );
-                },
-              ),
               IconButton(
                 icon: Icon(Icons.palette),
                 color: Colors.white,

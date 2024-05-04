@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
@@ -9,8 +7,6 @@ import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
 import '../ActiveSpread.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flip_card/flip_card_controller.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -37,7 +33,6 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
   late FlipCardController _card4Controller;
   late FlipCardController _card5Controller;
   late FlipCardController _card6Controller;
-  List<bool> _cardFlippedState = [false];
   bool cardflipchecker = false;
   List<dynamic> cardData = [];
 
@@ -62,7 +57,6 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
   bool card4Status = false;
   bool card5Status = false;
   bool card6Status = false;
-  late final AudioController _audioController;
 
   String buttonText = 'Reveal card';
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
@@ -77,15 +71,12 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
       
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
-        // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
               (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -94,7 +85,6 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
         }
       }
 
-      // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 0) {
           setState(() {
@@ -113,8 +103,6 @@ class _RiderElcemistCardScreenState extends State<RiderElcemistCardScreen> with 
             image6category = cardDataList[5]['card_category'];
           });
         } else {
-          // Handle the case where not enough cards are fetched
-          // Maybe set default values or show an error message
         }
       });
     } catch (e) {

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/Products/productdetail.dart';
-import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
-import 'package:the_tarot_guru/main_screens/controller/functions.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:convert';
 

@@ -1,11 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
 import 'ActiveSpread.dart';
-import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewSpread extends StatefulWidget {
@@ -174,7 +171,6 @@ class _NewSpreadState extends State<NewSpread> {
       body: Stack(
         children: [
           Container(
-            // Your background widget
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -314,14 +310,17 @@ class _NewSpreadState extends State<NewSpread> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text(
-                    option,
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      color: Colors.white.withOpacity(0.5),
-                      fontWeight: FontWeight.w800,
+                Container(
+                  width: MediaQuery.sizeOf(context).width*0.55,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      option,
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        color: Colors.white.withOpacity(0.5),
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
                 ),

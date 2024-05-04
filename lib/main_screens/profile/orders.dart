@@ -23,11 +23,9 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 
   Future<void> _fetchOrderDetails() async {
-    // Fetch user ID from SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int userId = prefs.getInt('userid') ?? 0;
 
-    // API endpoint URL
     String apiUrl = 'https://thetarotguru.com/tarotapi/order_details.php';
 
     var response = await http.post(Uri.parse(apiUrl), body: {
@@ -44,13 +42,11 @@ class _OrderDetailsState extends State<OrderDetails> {
           _isLoading = false;
         });
       } else {
-        // No order details found
         setState(() {
           _isLoading = false;
         });
       }
     } else {
-      // Error in API request
       setState(() {
         _isLoading = false;
       });
@@ -141,11 +137,15 @@ class _OrderDetailsState extends State<OrderDetails> {
               )
               ).toList(),
               ListTile(
+                title: Text('Order Status: ${_orderDetails['order_status']}',style: TextStyle(color: Colors.white),),
+              ),
+              ListTile(
                 title: Text('Order Date: ${_orderDetails['order_date']}',style: TextStyle(color: Colors.white),),
               ),
               ListTile(
                 title: Text('Billing Name: ${_orderDetails['billing_name']}',style: TextStyle(color: Colors.white),),
               ),
+
               ListTile(
                 title: Text('Address:',style: TextStyle(color: Colors.white),),
               ),
@@ -178,7 +178,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ),
               ),
               SizedBox(height: 20),
-              // Display items
 
             ],
           )

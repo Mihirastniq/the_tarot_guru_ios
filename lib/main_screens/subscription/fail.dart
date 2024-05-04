@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/home.dart';
-import 'package:the_tarot_guru/main_screens/subscription/success.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaymentFailScreen extends StatefulWidget {

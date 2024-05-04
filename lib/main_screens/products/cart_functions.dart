@@ -6,17 +6,13 @@ class CartService {
 
   Future<void> addToCart(int productId, String productName, double productPrice, int quantity, int orderValue, String productFirstImage) async {
     try {
-      // Create or retrieve SharedPreferences instance
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      // Retrieve existing cart data or initialize an empty list
       List<Map<String, dynamic>> cart = json.decode(prefs.getString(cartKey) ?? '[]').cast<Map<String, dynamic>>();
 
-      // Check if the product is already in the cart
       bool productExists = cart.any((item) => item['productId'] == productId);
 
       if (productExists) {
-        // If the product exists, update its quantity and order value
         cart.forEach((item) {
           if (item['productId'] == productId) {
             item['quantity'] += quantity;
@@ -34,7 +30,6 @@ class CartService {
         });
       }
 
-      // Save the updated cart data to SharedPreferences
       await prefs.setString(cartKey, json.encode(cart));
 
     } catch (e) {
@@ -44,16 +39,12 @@ class CartService {
 
   void removeFromCart(int productId) async {
     try {
-      // Create or retrieve SharedPreferences instance
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      // Retrieve existing cart data or initialize an empty list
       List<Map<String, dynamic>> cart = json.decode(prefs.getString(cartKey) ?? '[]').cast<Map<String, dynamic>>();
 
-      // Remove the item with the given productId from the cart
       cart.removeWhere((item) => item['productId'] == productId);
 
-      // Save the updated cart data to SharedPreferences
       await prefs.setString(cartKey, json.encode(cart));
 
     } catch (e) {

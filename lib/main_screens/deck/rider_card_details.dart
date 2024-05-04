@@ -1,12 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RiderCardDetailsScreen extends StatefulWidget {
@@ -360,16 +357,6 @@ class _RiderCardDetailsScreenState extends State<RiderCardDetailsScreen> {
               ),
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
-                IconButton(
                   icon: const Icon(Icons.palette),
                   color: Colors.white,
                   onPressed: () {
@@ -388,7 +375,7 @@ class _RiderCardDetailsScreenState extends State<RiderCardDetailsScreen> {
 
     // Define default text style
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: FontWeight.w400,
         color: Colors.black,
         height: lineHeight
@@ -406,6 +393,7 @@ class _RiderCardDetailsScreenState extends State<RiderCardDetailsScreen> {
       return defaultStyle;
     }
   }
+  
   TextStyle _getTitleTextStyle(BuildContext context) {
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
         color: Colors.black,

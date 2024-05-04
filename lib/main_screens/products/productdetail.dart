@@ -1,7 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:photo_view/photo_view.dart';
@@ -70,18 +67,15 @@ class _ProductDetailsState extends State<ProductInfoScreen>
         ProductDiscription = productData['description'];
         ProductPrice = double.parse(productData['price']);
         ProductFirstImage = productData['images'][0]['image_url'];
-        // Check if the images list contains at least two elements
         if (productData['images'].length > 1 &&
             productData['images'][1] != null) {
           ProductSecondImage = productData['images'][1]['image_url'];
         } else {
-          // If the second image is null or not available, add the first image URL into the second
           ProductSecondImage = ProductFirstImage;
         }
       } else {
       }
     } else {
-      // Handle error response
     }
   }
 

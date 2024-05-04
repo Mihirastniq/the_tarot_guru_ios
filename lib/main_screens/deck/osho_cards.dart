@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For loading JSON file
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/Deck/osho_card_details.dart';
-import 'package:the_tarot_guru/main_screens/Deck/rider_card_details.dart';
-import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 
 class OshoCardSelectionScreen extends StatefulWidget {

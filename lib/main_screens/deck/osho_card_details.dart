@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
-import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OshoCardDetailsScreen extends StatelessWidget {
@@ -173,19 +170,6 @@ class OshoCardDetailsScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
-
-              ],
             ),
           ),
         ],
@@ -197,7 +181,7 @@ class OshoCardDetailsScreen extends StatelessWidget {
 
     // Define default text style
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: FontWeight.w400,
         color: Colors.white,
         height: lineHeight

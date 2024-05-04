@@ -1,20 +1,17 @@
-// Import required libraries
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import '../ActiveSpread.dart';
 import '../osho_spread_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// Define the main widget class
+
 class TheParadoxScreen extends StatefulWidget {
 
   final List<SelectedCard> selectedCards;
@@ -56,7 +53,6 @@ class _TheParadoxScreenState extends State<TheParadoxScreen> {
   bool card3Status = false;
 
   String buttonText ='Reveal card';
-  late final AudioController _audioController;
 
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
   Future<void> fetchData() async {
@@ -68,15 +64,12 @@ class _TheParadoxScreenState extends State<TheParadoxScreen> {
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
-        // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
               (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -85,7 +78,6 @@ class _TheParadoxScreenState extends State<TheParadoxScreen> {
         }
       }
 
-      // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 3) {
           image1 = cardDataList[0]['card_image'];
@@ -95,8 +87,6 @@ class _TheParadoxScreenState extends State<TheParadoxScreen> {
           image2category = cardDataList[1]['card_category'];
           image3category = cardDataList[2]['card_category'];
         } else {
-          // Handle the case where not enough cards are fetched
-          // Maybe set default values or show an error message
         }
       });
     } catch (e) {
@@ -107,7 +97,6 @@ class _TheParadoxScreenState extends State<TheParadoxScreen> {
   void initState() {
     super.initState();
     fetchData();
-    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
@@ -181,20 +170,16 @@ class _TheParadoxScreenState extends State<TheParadoxScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Define screen dimensions and container height
     double screenWidth = MediaQuery.of(context).size.width * 0.9;
     double screenHeight = MediaQuery.of(context).size.height * 0.7;
-    double containerHeight = screenHeight / 7;
     double imageAspectRatio = 671 / 457;
 
     double containerWidth = screenWidth / 3 + 15;
     double containerHeightWithAspectRatio = containerWidth * imageAspectRatio;
 
-    // Build the UI
     return Scaffold(
       body: Stack(
         children: [
-          // Background gradient container
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(

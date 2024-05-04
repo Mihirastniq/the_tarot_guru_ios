@@ -21,13 +21,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   Future<void> _submitAddress() async {
     if (_formKey.currentState!.validate()) {
-      // Fetch user ID, first name, and last name
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       int userId = _prefs.getInt('userid') ?? 0;
       String firstName = _prefs.getString('firstName') ?? '';
       String lastName = _prefs.getString('lastName') ?? '';
 
-      // Validate succeeded, send data to PHP API
       try {
         String uri = "https://thetarotguru.com/tarotapi/addresses.php";
         var requestBody = {
@@ -49,8 +47,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         if (response.statusCode == 200) {
           Navigator.of(context).pop(); // Close the screen
         } else {
-          // Handle error response
-          // Show error message to the user
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Failed to add address. Please try again later.'),

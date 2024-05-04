@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
-import '../other_screens/settings.dart';
 import '../controller/spread_controller/save_spread_controller.dart';
 import 'ActiveSpread.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -88,7 +86,6 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
 
     double screenWidth = MediaQuery.of(context).size.width * 0.9;
     double screenHeight = MediaQuery.of(context).size.height * 0.7;
-    double containerHeight = screenHeight / 7;
     double imageAspectRatio = 671 / 457;
 
     double containerWidth = screenWidth/1.5 - 5;
@@ -172,7 +169,6 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
                             itemCount: cardData.length,
                             itemBuilder: (context, index) {
                               var currentCard = cardData[index];
-                              // Build UI for each card here
                               return Container(
                                 color: Colors.transparent,
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
@@ -190,7 +186,6 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
                                       decoration: BoxDecoration(
 
                                       ),
-                                      // child: Text('image here'),
                                       child: Image.asset(
                                         'assets/images/tarot_cards/${widget.tarotType}/${currentCard['card_category']}/${currentCard['card_image']}',
                                         width: containerWidth,
@@ -227,13 +222,13 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Text('${AppLocalizations.of(context)!.cardcategory} : ${currentCard['card_translated_category']}',style: _getCustomTextStyle(context),textAlign: TextAlign.justify,),
+                                          Text('${AppLocalizations.of(context)!.cardcategory} : ${currentCard['card_translated_category']}',style: _getCustomTextStyle(context),textAlign: TextAlign.left,),
                                           SizedBox(
                                             height: 20,
                                           ),
 
                                           Text("${currentCard['card_content']}",
-                                              style: _getCustomTextStyle(context),textAlign: TextAlign.justify),
+                                              style: _getCustomTextStyle(context),textAlign: TextAlign.left),
                                           SizedBox(
                                             height: 10,
                                           ),
@@ -250,7 +245,8 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
                                           Text(
                                             "${currentCard['card_description']}",
                                             style: _getCustomTextStyle(context),
-                                              textAlign: TextAlign.justify
+                                              textAlign: TextAlign.left
+
                                           ),
                                         ],
                                       ),
@@ -321,19 +317,17 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
 
   }
   TextStyle _getCustomTextStyle(BuildContext context) {
-    // Define default text style
     double lineHeight = 1.8;
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-      fontSize: 21,
+      fontSize: 16,
       fontWeight: FontWeight.w400,
       color: Colors.white,
         height: lineHeight
     );
 
-    // Check the language and set appropriate font
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: FontWeight.w400,
         color: Colors.white,
           height: lineHeight

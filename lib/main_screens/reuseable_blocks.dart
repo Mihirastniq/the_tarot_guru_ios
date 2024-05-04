@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FullWidthButton extends StatelessWidget {
   final String text;
@@ -24,8 +23,6 @@ class FullWidthButton extends StatelessWidget {
                   colors: [
                     Colors.white,
                     Colors.white
-                    // Theme.of(context).primaryColor,
-                    // Theme.of(context).highlightColor
                   ],
                 ),
                 borderRadius: BorderRadius.circular(10.0),
@@ -215,5 +212,3 @@ class ProfileButton extends StatelessWidget {
     );
   }
 }
-
-

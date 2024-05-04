@@ -237,7 +237,6 @@ class _RegisterUserState extends State<RegisterUserDetails> {
                           ],
                         ),
 
-                        //continue with email for sign in app text
                         Text(
                           '${AppLocalizations.of(context)!.registermessage}',
                           style: GoogleFonts.inter(
@@ -248,7 +247,6 @@ class _RegisterUserState extends State<RegisterUserDetails> {
                         const SizedBox(
                           height: 16,
                         ),
-                        //email and password TextField here
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

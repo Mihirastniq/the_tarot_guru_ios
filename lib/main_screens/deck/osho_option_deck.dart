@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/main_screens/Deck/osho_cards.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeckScreen extends StatefulWidget {
@@ -105,18 +104,6 @@ class _DeckScreenState extends State<DeckScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
-              ],
             ),
           ),
         ],

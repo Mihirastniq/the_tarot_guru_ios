@@ -1,18 +1,13 @@
-// ignore_for_file: unused_field
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
 import '../ActiveSpread.dart';
-import '../osho_spread_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flip_card/flip_card_controller.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -37,10 +32,8 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
   late FlipCardController _card1Controller;
   late FlipCardController _card2Controller;
 
-  List<bool> _cardFlippedState = [false];
   bool cardflipchecker = false;
   List<dynamic> cardData = [];
-  late final AudioController _audioController;
 
   String image1 = '';
   String image2 = '';
@@ -65,9 +58,7 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
       
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
-        // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
               (card) => card['id'] == id,
           orElse: () => null,
@@ -83,7 +74,6 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
 
       
       
-      // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 0) {
          setState(() {
@@ -93,8 +83,6 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
            image2category = cardDataList[1]['card_category'];
          });
         } else {
-          // Handle the case where not enough cards are fetched
-          // Maybe set default values or show an error message
         }
       });
     } catch (e) {
@@ -107,7 +95,6 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
   @override
   void initState() {
     super.initState();
-    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     fetchData();
@@ -174,7 +161,6 @@ class _RiderTwoCardScreenState extends State<RiderTwoCardScreen> with TickerProv
 
     double screenWidth = MediaQuery.of(context).size.width * 0.9;
     double screenHeight = MediaQuery.of(context).size.height * 0.7;
-    double containerHeight = screenHeight / 7;
     double imageAspectRatio = 2600 / 1480;
 
     double containerWidth = screenWidth / 2 -10;

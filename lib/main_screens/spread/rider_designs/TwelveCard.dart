@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
@@ -10,7 +8,6 @@ import '../ActiveSpread.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -31,7 +28,6 @@ _RiderTwelveCardScreenState createState() => _RiderTwelveCardScreenState();
 }
 
 class _RiderTwelveCardScreenState extends State<RiderTwelveCardScreen> with TickerProviderStateMixin {
-List<bool> _cardFlippedState = [false];
 bool cardflipchecker = false;
 List<dynamic> cardData = [];
 
@@ -88,7 +84,6 @@ bool card11Status = false;
 bool card12Status = false;
 String buttonText = 'Reveal card';
 String imagesite = "https://thetarotguru.com/tarotapi/cards";
-late final AudioController _audioController;
 
 Future<void> fetchData() async {
   try {
@@ -156,7 +151,6 @@ Future<void> fetchData() async {
 void initState() {
   super.initState();
 
-  _audioController = AudioController();
   _card1Controller = FlipCardController();
   _card2Controller = FlipCardController();
   _card3Controller = FlipCardController();
@@ -559,16 +553,6 @@ Widget build(BuildContext context) {
               ),
             ),
             actions: [
-              IconButton(
-                icon: Icon(Icons.settings),
-                color: Colors.white,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SettingScreenClass()),
-                  );
-                },
-              ),
               IconButton(
                 icon: Icon(Icons.palette),
                 color: Colors.white,

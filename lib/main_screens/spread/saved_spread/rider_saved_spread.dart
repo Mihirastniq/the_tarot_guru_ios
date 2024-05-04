@@ -18,7 +18,6 @@ class _RiderSavedSpreadListState extends State<RiderSavedSpreadList> {
   @override
   void initState() {
     super.initState();
-    // Fetch saved spreads when the widget initializes
     fetchSavedSpreads();
   }
 
@@ -48,8 +47,6 @@ class _RiderSavedSpreadListState extends State<RiderSavedSpreadList> {
                 colors: [
                   Color(0xFF171625),
                   Color(0xFF171625),
-                  // Color.fromRGBO(19, 14, 42, 1),
-                  // Colors.deepPurple.shade900.withOpacity(0.9),
                 ],
               ),
             ),
@@ -114,7 +111,6 @@ class _RiderSavedSpreadListState extends State<RiderSavedSpreadList> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(savedSpreads[index]['spreadName']),
-                        // Add onTap handler to navigate to spread details
                         onTap: () {
 
                         },

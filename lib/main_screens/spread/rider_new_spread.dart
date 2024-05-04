@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
 import 'ActiveSpread.dart';
-import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RiderNewSpread extends StatefulWidget {
@@ -314,8 +313,6 @@ class _NewSpreadState extends State<RiderNewSpread> {
                 colors: [
                   Color(0xFF171625),
                   Color(0xFF171625),
-                  // Color.fromRGBO(19, 14, 42, 1),
-                  // Colors.deepPurple.shade900.withOpacity(0.9),
                 ],
               ),
             ),
@@ -474,7 +471,10 @@ class _NewSpreadState extends State<RiderNewSpread> {
               SizedBox(
                 width: 15,
               ),
-              Text(option,style: TextStyle(color: Colors.white,fontSize: 21,fontWeight: FontWeight.w800),),
+              Container(
+                width: MediaQuery.sizeOf(context).width * 0.7 - 15 -45,
+                child: Text(option,style: TextStyle(color: Colors.white,fontSize: 21,fontWeight: FontWeight.w800),),
+              )
             ],
           ),
         ),

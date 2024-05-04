@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/Login/login_pin.dart';
 import 'package:the_tarot_guru/introduction_animation/introduction_animation_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
 
     Timer(
-      Duration(seconds: 2),
+      Duration(seconds: 6),
           () async {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         bool isLoggedIn = prefs.getBool("isLogin") ?? false;
@@ -32,7 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
           if (isPinEnabled) {
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PinEntryScreen()));
           } else {
-            // Navigate to home screen if the user is logged in and PIN is not enabled
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppSelect()));
           }
         } else {
@@ -81,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Image.asset('assets/images/intro/logo.png'),
                     ),
                     Text(
-                        "Know your past, recognize your present and create your future. Know the answer to every question of your life through Tarot cards.",
+                        "${AppLocalizations.of(context)!.punchline}",
                         textAlign: TextAlign.center,
                         style: _getTitleTextStyle(context)
                     ),
@@ -94,8 +94,8 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+
   TextStyle _getTitleTextStyle(BuildContext context) {
-    // Define default text style
     double lineHeight = 1.8;
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
         color: Colors.white,
@@ -105,7 +105,6 @@ class _SplashScreenState extends State<SplashScreen> {
         height: lineHeight
     );
 
-    // Check the language and set appropriate font
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
           color: Colors.white,

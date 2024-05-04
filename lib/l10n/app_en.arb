@@ -87,7 +87,7 @@
   "@sucscriptionsubtitle": {
     "description": "Use as button title"
   },
-  "subsctiptionpointone": "All spread_controller access",
+  "subsctiptionpointone": "All spread access",
   "@subsctiptionpointone": {
     "description": "Use as button title"
   },
@@ -103,7 +103,7 @@
   "@subscribenow": {
     "description": "Use as button title"
   },
-  "presubscribemaintitle": "You have our \\nExclusive Access",
+  "presubscribemaintitle": "You have our \nExclusive Access",
   "@presubscribemaintitle": {
     "description": "Use as button title"
   },
@@ -187,7 +187,7 @@
   "@unification": {
     "description": "This is button label"
   },
-  "twocard": "Two Card",
+  "twocard": "Two Card Spread",
   "@twocard": {
     "description": "This is button label"
   },
@@ -223,7 +223,7 @@
   "@ninecardspread": {
     "description": "This is button label"
   },
-  "twelvecardspread": "Twelve card",
+  "twelvecardspread": "Twelve Card Spread",
   "@twelvecardspread": {
     "description": "This is button label"
   },
@@ -231,7 +231,7 @@
   "@circularspread": {
     "description": "This is button label"
   },
-  "theelcemist": "The Elcemist",
+  "theelcemist": "The Alchemist",
   "@theelcemist": {
     "description": "This is button label"
   },
@@ -656,5 +656,9 @@
   "regiureconfirmpassword": "Please confirm Password",
   "@regiureconfirmpassword": {
     "description": "Error label for empty field"
+  },
+  "punchline": "Know your past, recognize your present and create your future. Know the answer to every question of your life through Tarot cards.",
+  "@punchline": {
+    "description": "Tagline of the application"
   }
 }

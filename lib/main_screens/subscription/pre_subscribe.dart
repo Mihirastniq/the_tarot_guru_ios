@@ -41,7 +41,6 @@ class _PreSubscribeUSerState extends State<PreSubscribeUSer> {
                   scrollDirection: Axis.vertical,
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 0.8,
-                    // height: MediaQuery.sizeOf(context).height * 0.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25)
                     ),

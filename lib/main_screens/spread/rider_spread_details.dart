@@ -2,12 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import '../other_screens/settings.dart';
-import '../controller/functions.dart';
 import 'ActiveSpread.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -37,10 +35,8 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
           await rootBundle.loadString('assets/json/rider_waite_data.json');
       Map<String, dynamic> jsonData = jsonDecode(data);
 
-      // Access the top-level cards array directly
       List<dynamic>? cards = jsonData[language]['cards'];
 
-      // Check if cards exist and iterate through them
       if (cards != null) {
         List<int> cardIds =
             widget.selectedCards.map((card) => card.id).toList();
@@ -88,7 +84,6 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width * 0.9;
-    double screenHeight = MediaQuery.of(context).size.height * 0.75;
     double imageAspectRatio = 2600 / 1480;
     double containerWidth = screenWidth / 2 - 10;
     double containerHeightWithAspectRatio = containerWidth * imageAspectRatio;
@@ -129,19 +124,6 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.save),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SettingScreenClass()),
-                    );
-                  },
-                ),
-              ],
             ),
           ),
           Center(
@@ -175,7 +157,6 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
                                   itemCount: cardData.length,
                                   itemBuilder: (context, index) {
                                     var currentCard = cardData[index];
-                                    // Build UI for each card here
                                     return Container(
                                       color: Colors.transparent,
                                       padding: EdgeInsets.fromLTRB(20, 25, 20, 25),
@@ -187,8 +168,6 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  // padding: EdgeInsets.all(15),
-                                                  // margin: EdgeInsets.fromLTRB(15, 15, 25, 0),
                                                   width: containerWidth,
                                                   height:
                                                   containerHeightWithAspectRatio,
@@ -459,14 +438,12 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
   TextStyle _getCustomTextStyle(BuildContext context) {
     double lineHeight = 1.8;
 
-    // Define default text style
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: FontWeight.w400,
         color: Colors.black,
         height: lineHeight);
 
-    // Check the language and set appropriate font
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
           fontSize: 20,
@@ -479,11 +456,9 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
   }
 
   TextStyle _getTitleTextStyle(BuildContext context) {
-    // Define default text style
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
         color: Colors.black, fontSize: 23, fontWeight: FontWeight.w600);
 
-    // Check the language and set appropriate font
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
           color: Colors.black, fontSize: 23, fontWeight: FontWeight.w600);

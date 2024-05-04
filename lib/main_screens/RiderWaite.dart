@@ -11,17 +11,6 @@ class RiderWaiteTarot extends StatefulWidget {
 }
 
 class _AppSelectState extends State<RiderWaiteTarot> with TickerProviderStateMixin{
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-
-
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +25,13 @@ class _AppSelectState extends State<RiderWaiteTarot> with TickerProviderStateMix
                 colors: [
                   Color(0xFF171625),
                   Color(0xFF171625),
-                  // Color.fromRGBO(19, 14, 42, 1),
-                  // Colors.deepPurple.shade900.withOpacity(0.9),
                 ],
               ),
             ),
           ),
           Positioned.fill(
             child: Image.asset(
-              'assets/images/Screen_Backgrounds/bg2.png', // Replace with your image path
+              'assets/images/Screen_Backgrounds/bg2.png',
               fit: BoxFit.cover,
               opacity: const AlwaysStoppedAnimation(.1),
             ),
@@ -106,9 +93,6 @@ class _AppSelectState extends State<RiderWaiteTarot> with TickerProviderStateMix
                           ],
                         ),
                       ),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
                         child: SingleChildScrollView(

@@ -4,12 +4,10 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import '../ActiveSpread.dart';
 import '../osho_spread_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -75,7 +73,6 @@ class _TheUnificationScreenState extends State<TheUnificationScreen> {
   bool card8Status = false;
   bool card9Status = false;
   bool card10Status = false;
-  late final AudioController _audioController;
 
   String buttonText = 'Reveal card';
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
@@ -89,15 +86,12 @@ class _TheUnificationScreenState extends State<TheUnificationScreen> {
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
-        // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
               (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -108,7 +102,6 @@ class _TheUnificationScreenState extends State<TheUnificationScreen> {
 
 
 
-      // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 10) {
           image1 = cardDataList[0]['card_image'];
@@ -134,8 +127,6 @@ class _TheUnificationScreenState extends State<TheUnificationScreen> {
           image9category = cardDataList[8]['card_category'];
           image10category = cardDataList[9]['card_category'];
         } else {
-          // Handle the case where not enough cards are fetched
-          // Maybe set default values or show an error message
         }
       });
     } catch (e) {
@@ -147,8 +138,6 @@ class _TheUnificationScreenState extends State<TheUnificationScreen> {
   void initState() {
     super.initState();
     fetchData();
-    _audioController = AudioController();
-    // Initialize flip card controllers
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();

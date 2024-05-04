@@ -3,8 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
-import 'package:provider/provider.dart';
 
 class PinEntryScreen extends StatefulWidget {
   @override

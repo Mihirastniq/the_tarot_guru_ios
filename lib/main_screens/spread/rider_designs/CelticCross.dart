@@ -4,13 +4,10 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
 import '../ActiveSpread.dart';
-import '../osho_spread_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -76,7 +73,6 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
   bool card8Status = false;
   bool card9Status = false;
   bool card10Status = false;
-  late final AudioController _audioController;
 
   String buttonText = 'Reveal card';
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
@@ -90,15 +86,12 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
-        // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
               (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -145,8 +138,6 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
   @override
   void initState() {
     super.initState();
-    _audioController = AudioController();
-
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
@@ -424,20 +415,16 @@ class _RiderCelticCrossCardScreenState extends State<RiderCelticCrossCardScreen>
 
   @override
   Widget build(BuildContext context) {
-    // Define screen dimensions and container height
     double screenWidth = MediaQuery.of(context).size.width * 0.9;
     double screenHeight = MediaQuery.of(context).size.height * 0.7;
-    double containerHeight = screenHeight / 7;
     double imageAspectRatio = 2600 / 1480;
 
     double containerWidth = screenWidth / 6 - 10;
     double containerHeightWithAspectRatio = containerWidth * imageAspectRatio;
 
-    // Build the UI
     return Scaffold(
       body: Stack(
         children: [
-          // Background gradient container
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(

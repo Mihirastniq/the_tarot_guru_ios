@@ -8,7 +8,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
-import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageSelection extends StatefulWidget {
@@ -21,7 +20,7 @@ class LanguageSelection extends StatefulWidget {
 }
 
 class _LanguageSelectionState extends State<LanguageSelection> {
-  String _selectedLanguage = 'English';
+  // String _selectedLanguage = 'en';
   String LOGINKEY = "isLogin";
   bool? isLogin = false;
   late LanguageChangeController _languageChangeController;
@@ -38,39 +37,14 @@ class _LanguageSelectionState extends State<LanguageSelection> {
     {'gu': 'Gujarati'},
   ];
 
-  List<Map<String, String>> allLanguages = [
-    {'en': 'English'},
-    {'hi': 'Hindi'},
-    {'bn': 'Bengali'},
-    {'ta': 'Tamil'},
-    {'te': 'Telugu'},
-    {'kn': 'Kannada'},
-    {'ml': 'Malayalam'},
-    {'mr': 'Marathi'},
-    {'gu': 'Gujarati'},
-    {'pa': 'Punjabi'},
-    {'or': 'Odia'},
-    {'es': 'Spanish'},
-    {'fr': 'French'},
-    {'de': 'German'},
-    {'pt': 'Portuguese'},
-    {'ru': 'Russian'},
-    {'ja': 'Japanese'},
-    {'ko': 'Korean'},
-    {'vi': 'Vietnamese'},
-    {'id': 'Indonesian'},
-  ];
-
   String? selectedLanguageKey;
-  bool otherLanguageSelected = false;
 
   Future<void> updaterecord() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (_selectedLanguage.isNotEmpty) {
-      Locale locale = Locale(_selectedLanguage);
+    if (selectedLanguageKey!.isNotEmpty) {
+      Locale locale = Locale(selectedLanguageKey!);
       await _languageChangeController.changelanguage(locale);
-      widget.response['language'] = _selectedLanguage;
-
+      widget.response['language'] = selectedLanguageKey;
       try {
         String uri = "https://thetarotguru.com/tarotapi/userverifaction.php";
         var requestBody = jsonEncode(widget.response);
@@ -81,10 +55,9 @@ class _LanguageSelectionState extends State<LanguageSelection> {
           prefs.setString('firstName', response['firstName']);
           prefs.setString('lastName', response['lastName']);
           prefs.setString('email', response['email']);
-          // prefs.setString('phone', response['phone']); // Commented out for testing
           prefs.setInt('appPin', int.parse(response['appPin']));
           prefs.setInt('userid', int.parse(response['userid']));
-          prefs.setString('lang', _selectedLanguage);
+          prefs.setString('lang', selectedLanguageKey??'en');
           prefs.setString('created_at', response['created_at']['created_at']);
           prefs.setInt('subscription_status', response['subscription_status']);
           prefs.setInt('free_by_admin', response['free_by_admin']);
@@ -233,7 +206,6 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                             onTap: () {
                               setState(() {
                                 selectedLanguageKey = language.keys.first;
-                                otherLanguageSelected = false;
                               });
                             },
                             child: Container(
@@ -248,7 +220,6 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                                 onChanged: (String? value) {
                                   setState(() {
                                     selectedLanguageKey = value;
-                                    otherLanguageSelected = false;
                                   });
                                 },
                                 title: Text(
@@ -260,41 +231,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                               ),
                             ),
                           ),
-                        // Other Language option
-                        Container(
-                          decoration: BoxDecoration(
-                              color: otherLanguageSelected ? Color(0xFF272B34) : null,
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          child: ListTile(
-                            title: Text(
-                              'Other Language',
-                              style: TextStyle(
-                                color: otherLanguageSelected ? Colors.white : Colors.white,
-                              ),
-                            ),
-                            leading: Radio<String>(
-                              value: '',
-                              activeColor: otherLanguageSelected ? Color(0xFF272B34) : null,
-                              groupValue: selectedLanguageKey,
-                              onChanged: (String? value) {
-                                setState(() {
-                                  otherLanguageSelected = true;
-                                  _showLanguagePopup(context);
-                                });
-                              },
-                            ),
-                            onTap: () {
-                              setState(() {
-                                otherLanguageSelected = true;
-                              });
-                              _showLanguagePopup(context);
-                            },
-                          ),
-                        ),
                         SizedBox(height: 20),
-                        // Submit button
-
                       ],
                     ),
                   ),
@@ -313,6 +250,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                     onTap: () {
                       if (selectedLanguageKey != null && selectedLanguageKey!.isNotEmpty) {
                         updaterecord();
+                        print(selectedLanguageKey);
                       } else {
                         print('Please select a language');
                       }
@@ -324,35 +262,6 @@ class _LanguageSelectionState extends State<LanguageSelection> {
           ],
         ),
       ),
-    );
-  }
-
-  void _showLanguagePopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Select Language'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                // Create language options for all languages in a popup
-                for (var language in allLanguages)
-                  ListTile(
-                    title: Text(language.values.first),
-                    onTap: () {
-                      setState(() {
-                        selectedLanguageKey = language.keys.first;
-                        otherLanguageSelected = true;
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

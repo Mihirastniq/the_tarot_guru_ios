@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
 import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_tarot_guru/main_screens/controller/session_controller.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/subscription/fail.dart';
-import 'package:the_tarot_guru/main_screens/subscription/pre_subscribe.dart';
 import 'package:the_tarot_guru/main_screens/subscription/success.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -85,7 +83,6 @@ class _SubscribeAppState extends State<SubscribeApp> {
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    // Navigate back to subscription screen
     Navigator.pop(context);
   }
 

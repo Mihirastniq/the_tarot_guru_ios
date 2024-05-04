@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import '../ActiveSpread.dart';
 import '../osho_spread_details.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -67,7 +65,6 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
   bool card6Status = false;
   bool card7Status = false;
   bool card8Status = false;
-  late final AudioController _audioController;
 
 
   String imagesite = "https://thetarotguru.com/tarotapi/cards";
@@ -81,15 +78,12 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
 
       List<int> cardIds = widget.selectedCards.map((card) => card.id).toList();
 
-      // Loop through selected card IDs and match them with the data from the JSON
       for (int id in cardIds) {
-        // Find the card with the corresponding ID
         Map<String, dynamic>? card = jsonData['en']['cards'].firstWhere(
               (card) => card['id'] == id,
           orElse: () => null,
         );
 
-        // If the card is found, add it to the list
         if (card != null) {
           cardDataList.add({
             'card_image': card['card_image'],
@@ -98,7 +92,6 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
         }
       }
 
-      // Update UI with the fetched data
       setState(() {
         if (cardDataList.length >= 8) {
           image1 = cardDataList[0]['card_image'];
@@ -119,8 +112,6 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
           image7category = cardDataList[6]['card_category'];
           image8category = cardDataList[7]['card_category'];
         } else {
-          // Handle the case where not enough cards are fetched
-          // Maybe set default values or show an error message
         }
       });
     } catch (e) {
@@ -132,7 +123,6 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
   void initState() {
     super.initState();
     fetchData();
-    _audioController = AudioController();
     _card1Controller = FlipCardController();
     _card2Controller = FlipCardController();
     _card3Controller = FlipCardController();
@@ -277,7 +267,6 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Define screen dimensions and container height
     double screenWidth = MediaQuery.of(context).size.width * 0.9;
     double screenHeight = MediaQuery.of(context).size.height * 0.7;
     double containerHeight = screenHeight / 7;
@@ -290,7 +279,6 @@ class _TheKeyScreenState extends State<TheKeyScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background gradient container
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/main_screens/deck/osho_option_deck.dart';
-import 'package:the_tarot_guru/main_screens/Drawer/drawer.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/about_osho.dart';
 import 'package:the_tarot_guru/main_screens/spread/osho_new_spread.dart';
 import 'package:the_tarot_guru/main_screens/spread/saved_spread/osho_saved_spread.dart';
-import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OshoZenTarot extends StatefulWidget {
@@ -13,20 +11,6 @@ class OshoZenTarot extends StatefulWidget {
 }
 
 class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
-  int _selectedIndex = 0;
-  late TabController _tabController = TabController(length: 2, vsync: this);
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-
-
-  // ignore: unused_field
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
@@ -111,9 +95,6 @@ class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
                           ],
                         ),
                       ),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
                         child: SingleChildScrollView(
@@ -266,35 +247,41 @@ class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
+                  Container(
+                    width: MediaQuery.sizeOf(context).width*0.6,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        text,
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Center(
-                      child: Container(
-                          alignment: Alignment.center,
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(100)
+                  Container(
+
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Center(
+                          child: Container(
+                              alignment: Alignment.center,
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(100)
+                              ),
+                              child: Icon(
+                                icons,
+                                color: Color(0xFF141945),
+                                size: 35,
+                              )
                           ),
-                          child: Icon(
-                            icons,
-                            color: Color(0xFF141945),
-                            size: 35,
-                          )
-                      ),
-                    )
+                        )
+                    ),
                   )
                 ],
               ),

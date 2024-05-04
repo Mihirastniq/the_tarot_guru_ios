@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
     Locale defaultLocale = Locale('en');
 
     Locale locale = widget.local != null && widget.local!.isNotEmpty ? Locale(widget.local!) : defaultLocale;
-    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    // FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
 
     return MultiProvider(

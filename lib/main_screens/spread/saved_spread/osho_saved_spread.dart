@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/osho_saved_spred_details.dart';
-import 'package:the_tarot_guru/main_screens/spread/ActiveSpread.dart';
 
 class OshoSavedSpreadList extends StatefulWidget {
   const OshoSavedSpreadList({super.key});
@@ -20,7 +19,6 @@ class _OshoSavedSpreadListState extends State<OshoSavedSpreadList> {
   @override
   void initState() {
     super.initState();
-    // Fetch saved spreads when the widget initializes
     fetchSavedSpreads();
   }
 
