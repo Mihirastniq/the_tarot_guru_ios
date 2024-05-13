@@ -15,6 +15,9 @@ class SignIn extends StatefulWidget {
 class _SignInFiveState extends State<SignIn> {
   final LoginController loginController = LoginController();
   Color fieldbbackground = Color(0xFF272B34);
+  bool _emailflag = false;
+  bool _passwordflag = false;
+  bool _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -114,10 +117,12 @@ class _SignInFiveState extends State<SignIn> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               emailTextField(size),
+                              customTextWidget('${AppLocalizations.of(context)!.regiureemail}', flag: _emailflag),
                               const SizedBox(
                                 height: 8,
                               ),
                               passwordTextField(size),
+                              customTextWidget('${AppLocalizations.of(context)!.regiurepassword}', flag: _passwordflag),
                               const SizedBox(
                                 height: 16,
                               ),
@@ -291,7 +296,7 @@ class _SignInFiveState extends State<SignIn> {
                 controller: loginController.password,
                 cursorColor: Colors.white70,
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
+                obscureText: !_passwordVisible,
                 style: GoogleFonts.inter(
                   fontSize: 14.0,
                   color: Colors.white,
@@ -304,9 +309,16 @@ class _SignInFiveState extends State<SignIn> {
                       color: Colors.white70,
                       fontWeight: FontWeight.w500,
                     ),
-                    suffixIcon: const Icon(
-                      Icons.visibility,
-                      color: Colors.white70,
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible; // Toggle visibility
+                        });
+                      },
+                      child: Icon(
+                        _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.white70,
+                      ),
                     ),
                     border: InputBorder.none),
               ),
@@ -317,10 +329,51 @@ class _SignInFiveState extends State<SignIn> {
     );
   }
 
+  Widget customTextWidget(String text, {bool flag = true}) {
+    return flag
+        ? Text(
+      text,
+      style: TextStyle(
+        fontSize: 19,
+        color: Colors.white,
+      ),
+      textAlign: TextAlign.left,
+    )
+        : SizedBox.shrink(); // If flag is false, return an empty SizedBox
+  }
+
   Widget signInButton(Size size) {
     return GestureDetector(
       onTap: () {
-        loginController.UserLogin(context);
+        setState(() {
+
+          if (loginController.Username.text.isEmpty) {
+            setState(() {
+              _emailflag = true; // Set flag to true for email
+            });
+          } else {
+            setState(() {
+              _emailflag = false; // Set flag to true for first name
+            });
+          }
+
+          if (loginController.password.text.isEmpty) {
+            setState(() {
+              _passwordflag = true; // Set flag to true for password
+            });
+          } else {
+            setState(() {
+              _passwordflag = false; // Set flag to true for first name
+            });
+          }
+
+          // Proceed with registration only if all fields are filled
+          if (!_emailflag && !_passwordflag) {
+            loginController.UserLogin(context);
+          }
+        });
+
+
       },
       child: Container(
         alignment: Alignment.center,

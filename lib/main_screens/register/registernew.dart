@@ -159,15 +159,18 @@ class _RegisterUserState extends State<RegisterUserDetails> {
   final GlobalKey fieldKey = GlobalKey();
   Color fieldbbackground = Color(0xFF272B34);
   final RegistrationController _registrationController = RegistrationController();
-  bool _submitButtonPressed = false;
+  // bool _submitButtonPressed = false;
+  bool _fnameflag = false;
+  bool _lnameflag = false;
 
+  bool _genderflag = false;
+  bool _dobflag = false;
+  bool _emailflag = false;
+  bool _passwordflag = false;
+  bool _confirmpasswordflag = false;
+  bool _passwordVisible = false;
+  bool _confirmPasswordVisible = false;
 
-  void Register() {
-    _registrationController.phone_number.text = widget.phoneNumber;
-    _registrationController.country_code.text = widget.countryCode;
-    _registrationController.country.text = widget.country;
-    _registrationController.registerFunction(context);
-  }
 
 
   @override
@@ -251,37 +254,37 @@ class _RegisterUserState extends State<RegisterUserDetails> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             FirstName(size),
-                            customTextWidget('${AppLocalizations.of(context)!.regiurefirstname}', flag: _submitButtonPressed),
+                            customTextWidget('${AppLocalizations.of(context)!.regiurefirstname}', flag: _fnameflag),
                             const SizedBox(
                               height: 16,
                             ),
                             LastName(size),
-                            customTextWidget('${AppLocalizations.of(context)!.regiurelastname}', flag: _submitButtonPressed),
+                            customTextWidget('${AppLocalizations.of(context)!.regiurelastname}', flag: _lnameflag),
                             const SizedBox(
                               height: 16,
                             ),
                             emailTextField(size),
-                            customTextWidget('${AppLocalizations.of(context)!.regiureemail}', flag: _submitButtonPressed),
+                            customTextWidget('${AppLocalizations.of(context)!.regiureemail}', flag: _emailflag),
                             const SizedBox(
                               height: 16,
                             ),
                             Gender(size),
-                            customTextWidget('${AppLocalizations.of(context)!.regiuregender}', flag: _submitButtonPressed),
+                            customTextWidget('${AppLocalizations.of(context)!.regiuregender}', flag: _genderflag),
                             const SizedBox(
                               height: 16,
                             ),
                             DateOfBirth(size),
-                            customTextWidget('${AppLocalizations.of(context)!.regiuredob}', flag: _submitButtonPressed),
+                            customTextWidget('${AppLocalizations.of(context)!.regiuredob}', flag: _dobflag),
                             const SizedBox(
                               height: 16,
                             ),
                             passwordTextField(size),
-                            customTextWidget('${AppLocalizations.of(context)!.regiurepassword}', flag: _submitButtonPressed),
+                            customTextWidget('${AppLocalizations.of(context)!.regiurepassword}', flag: _passwordflag),
                             const SizedBox(
                               height: 16,
                             ),
                             ConfirmPassword(size),
-                            customTextWidget('${AppLocalizations.of(context)!.regiureconfirmpassword}', flag: _submitButtonPressed),
+                            customTextWidget('${AppLocalizations.of(context)!.regiureconfirmpassword}', flag: _confirmpasswordflag),
                             const SizedBox(
                               height: 16,
                             ),
@@ -675,7 +678,7 @@ class _RegisterUserState extends State<RegisterUserDetails> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            //lock logo here
+            // lock logo here
             const Icon(
               Icons.lock,
               color: Colors.white70,
@@ -684,7 +687,7 @@ class _RegisterUserState extends State<RegisterUserDetails> {
               width: 16,
             ),
 
-            //divider svg
+            // divider svg
             SvgPicture.string(
               '<svg viewBox="99.0 332.0 1.0 15.5" ><path transform="translate(99.0, 332.0)" d="M 0 0 L 0 15.5" fill="none" fill-opacity="0.6" stroke="#ffffff" stroke-width="1" stroke-opacity="0.6" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
               width: 1.0,
@@ -694,31 +697,39 @@ class _RegisterUserState extends State<RegisterUserDetails> {
               width: 16,
             ),
 
-            //password textField
+            // password textField
             Expanded(
               child: TextField(
                 maxLines: 1,
                 controller: _registrationController.password,
                 cursorColor: Colors.white70,
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
+                obscureText: !_passwordVisible, // Toggle the obscureText property
                 style: GoogleFonts.inter(
                   fontSize: 14.0,
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
                 decoration: InputDecoration(
-                    hintText: '${AppLocalizations.of(context)!.passwordlabel}',
-                    hintStyle: GoogleFonts.inter(
-                      fontSize: 14.0,
+                  hintText: '${AppLocalizations.of(context)!.passwordlabel}',
+                  hintStyle: GoogleFonts.inter(
+                    fontSize: 14.0,
+                    color: Colors.white70,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _passwordVisible = !_passwordVisible; // Toggle visibility
+                      });
+                    },
+                    child: Icon(
+                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
                       color: Colors.white70,
-                      fontWeight: FontWeight.w500,
                     ),
-                    suffixIcon: const Icon(
-                      Icons.visibility,
-                      color: Colors.white70,
-                    ),
-                    border: InputBorder.none),
+                  ),
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ],
@@ -726,6 +737,7 @@ class _RegisterUserState extends State<RegisterUserDetails> {
       ),
     );
   }
+
   Widget ConfirmPassword(Size size) {
     return Container(
       alignment: Alignment.center,
@@ -739,7 +751,7 @@ class _RegisterUserState extends State<RegisterUserDetails> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            //lock logo here
+            // lock logo here
             const Icon(
               Icons.lock,
               color: Colors.white70,
@@ -748,7 +760,7 @@ class _RegisterUserState extends State<RegisterUserDetails> {
               width: 16,
             ),
 
-            //divider svg
+            // divider svg
             SvgPicture.string(
               '<svg viewBox="99.0 332.0 1.0 15.5" ><path transform="translate(99.0, 332.0)" d="M 0 0 L 0 15.5" fill="none" fill-opacity="0.6" stroke="#ffffff" stroke-width="1" stroke-opacity="0.6" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
               width: 1.0,
@@ -758,31 +770,39 @@ class _RegisterUserState extends State<RegisterUserDetails> {
               width: 16,
             ),
 
-            //password textField
+            // password textField
             Expanded(
               child: TextField(
                 maxLines: 1,
                 controller: _registrationController.confirm_password,
                 cursorColor: Colors.white70,
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
+                obscureText: !_confirmPasswordVisible, // Toggle the obscureText property
                 style: GoogleFonts.inter(
                   fontSize: 14.0,
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
                 decoration: InputDecoration(
-                    hintText: '${AppLocalizations.of(context)!.confirmpassword}',
-                    hintStyle: GoogleFonts.inter(
-                      fontSize: 14.0,
+                  hintText: '${AppLocalizations.of(context)!.confirmpassword}',
+                  hintStyle: GoogleFonts.inter(
+                    fontSize: 14.0,
+                    color: Colors.white70,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _confirmPasswordVisible = !_confirmPasswordVisible; // Toggle visibility
+                      });
+                    },
+                    child: Icon(
+                      _confirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
                       color: Colors.white70,
-                      fontWeight: FontWeight.w500,
                     ),
-                    suffixIcon: const Icon(
-                      Icons.visibility,
-                      color: Colors.white70,
-                    ),
-                    border: InputBorder.none),
+                  ),
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ],
@@ -790,6 +810,7 @@ class _RegisterUserState extends State<RegisterUserDetails> {
       ),
     );
   }
+
   Widget customTextWidget(String text, {bool flag = true}) {
     return flag
         ? Text(
@@ -806,9 +827,79 @@ class _RegisterUserState extends State<RegisterUserDetails> {
     return GestureDetector(
       onTap: (){
         setState(() {
-          _submitButtonPressed = true;
+          if (_registrationController.first_name.text.isEmpty) {
+            setState(() {
+              _fnameflag = true; // Set flag to true for first name
+            });
+          } else {
+            setState(() {
+              _fnameflag = false; // Set flag to true for first name
+            });
+          }
+          if (_registrationController.last_name.text.isEmpty) {
+            setState(() {
+              _lnameflag = true; // Set flag to true for last name
+            });
+          } else {
+            setState(() {
+              _lnameflag = false; // Set flag to true for first name
+            });
+          }
+          if (_registrationController.email.text.isEmpty) {
+            setState(() {
+              _emailflag = true; // Set flag to true for email
+            });
+          } else {
+            setState(() {
+              _emailflag = false; // Set flag to true for first name
+            });
+          }
+          if (_selectedGender.isEmpty) {
+            setState(() {
+              _genderflag = true; // Set flag to true for gender
+            });
+          } else {
+            setState(() {
+              _genderflag = false; // Set flag to true for first name
+            });
+          }
+          if (_registrationController.dobController.text.isEmpty) {
+            setState(() {
+              _dobflag = true; // Set flag to true for date of birth
+            });
+          } else {
+            setState(() {
+              _dobflag = false; // Set flag to true for first name
+            });
+          }
+          if (_registrationController.password.text.isEmpty) {
+            setState(() {
+              _passwordflag = true; // Set flag to true for password
+            });
+          } else {
+            setState(() {
+              _passwordflag = false; // Set flag to true for first name
+            });
+          }
+          if (_registrationController.confirm_password.text.isEmpty) {
+            setState(() {
+              _confirmpasswordflag = true; // Set flag to true for confirm password
+            });
+          } else {
+            setState(() {
+              _confirmpasswordflag = false; // Set flag to true for first name
+            });
+          }
+
+          // Proceed with registration only if all fields are filled
+          if (!_fnameflag && !_lnameflag && !_emailflag && !_genderflag && !_dobflag && !_passwordflag && !_confirmpasswordflag) {
+            _registrationController.phone_number.text = widget.phoneNumber;
+            _registrationController.country_code.text = widget.countryCode;
+            _registrationController.country.text = widget.country;
+            _registrationController.registerFunction(context);
+          }
         });
-        Register();
+        // Register();
       },
       child: Container(
         alignment: Alignment.center,
