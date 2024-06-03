@@ -657,8 +657,82 @@
   "@regiureconfirmpassword": {
     "description": "Error label for empty field"
   },
-  "punchline": "Know your past, recognize your present and create your future. Know the answer to every question of your life through Tarot cards.",
+  "punchline": "Know your past, recognize your present and create your future. Know the answer to every question of your life through Tarot cards.",
   "@punchline": {
     "description": "Tagline of the application"
+  },
+  "helpandsupportlabel": "Help & Support",
+  "@helpandsupportlabel": {
+    "description": "Help and Support button label"
+  },
+  "helpandsupportintro": "Welcome to the Help and Support page for our Tarot Card Reading app. Here, you can find essential information about using the app, managing your account, handling subscriptions, and understanding our non-refundable policy.",
+  "@helpandsupportintro" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportsubscriptionlabel": "Subscription",
+  "@helpandsupportsubscriptionlabel" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportsubscriptiontext1label": "Subscribing",
+  "@helpandsupportsubscriptiontext1label" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportsubscriptiontext1": "To subscribe to our premium service, visit the subscription section in the app and select your preferred plan.",
+  "@helpandsupportsubscriptiontext1" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportsubscriptiontext2label": "Managing Subscriptions",
+  "@helpandsupportsubscriptiontext2label" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportsubscriptiontext2": "You can not manage or cancel your subscription.",
+  "@helpandsupportsubscriptiontext2" : {
+    "description": "Help and Support text"
+  },
+
+  "helpandsupportprivacylabel": "Non-Refundable Policy",
+  "@helpandsupportprivacylabel" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportprivacytext1label": "Payment and Billing",
+  "@helpandsupportprivacytext1label" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportprivacytext1": "We accept all type of online payment including credit cards and payment methods supported by your device’s app store. For all type of payment problems mail us at : support@thetarotguru.com",
+  "@helpandsupportprivacytext1" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportprivacytext2label": "Privacy and Security",
+  "@helpandsupportprivacytext2label" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportprivacytext2": "We are committed to protecting your privacy. For detailed information on how we use and protect your data, please read our full Privacy Policy.",
+  "@helpandsupportprivacytext2" : {
+    "description": "Help and Support text"
+  },
+
+  "helpandsupportcontactuslabel": "Contact Us",
+  "@helpandsupportcontactuslabel" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportcontactustext1label": "Email: ",
+  "@helpandsupportcontactustext1label" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportcontactustext1": "support@thetarotguru.com",
+  "@helpandsupportcontactustext1" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportcontactustext2label": "Phone: ",
+  "@helpandsupportcontactustext2label" : {
+    "description": "Help and Support text"
+  },
+  "helpandsupportcontactustext2": "+91 98250 38362",
+  "@helpandsupportcontactustext2" : {
+    "description": "Help and Support text"
+  },
+  "selectfontsizelabel": "Select Font Size",
+  "@selectfontsizelabel" : {
+    "description": "Help and Support text"
   }
 }

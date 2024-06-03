@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_tarot_guru/main_screens/Login/login_form.dart';
+import 'package:the_tarot_guru/main_screens/Login/loginnew.dart';
 import 'package:the_tarot_guru/main_screens/theme/theme_settings.dart';
 import 'package:the_tarot_guru/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   SharedPreferences sp = await SharedPreferences.getInstance();
   final String language = sp.getString('lang') ?? 'en';
   runApp(MyApp(local: language));
@@ -29,7 +32,6 @@ class _MyAppState extends State<MyApp> {
     Locale defaultLocale = Locale('en');
 
     Locale locale = widget.local != null && widget.local!.isNotEmpty ? Locale(widget.local!) : defaultLocale;
-    // FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
 
     return MultiProvider(

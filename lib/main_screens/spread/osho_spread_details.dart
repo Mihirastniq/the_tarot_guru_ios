@@ -32,6 +32,10 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
   late final AudioController _audioController;
   List<dynamic> cardData = [];
   final TextEditingController _spreadNameController = TextEditingController();
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
 
   @override
   void dispose() {
@@ -39,7 +43,15 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
     _spreadNameController.dispose();
     super.dispose();
   }
-
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
+  }
   Future<List<dynamic>> fetchData() async {
     List<dynamic> allCardData = [];
     SharedPreferences sp = await SharedPreferences.getInstance();
@@ -77,6 +89,7 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
 
   void initState() {
     super.initState();
+    _loadLocalData();
     _audioController = AudioController();
     fetchData();
   }
@@ -319,7 +332,7 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
   TextStyle _getCustomTextStyle(BuildContext context) {
     double lineHeight = 1.8;
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-      fontSize: 16,
+      fontSize: ContentFontsSize,
       fontWeight: FontWeight.w400,
       color: Colors.white,
         height: lineHeight
@@ -327,7 +340,7 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
 
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
-        fontSize: 18,
+        fontSize: ContentFontsSize,
         fontWeight: FontWeight.w400,
         color: Colors.white,
           height: lineHeight
@@ -341,7 +354,7 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
     double lineHeight = 1.8;
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
         color: Colors.white,
-        fontSize: 23,
+        fontSize: TitleFontsSize,
         fontWeight:
         FontWeight.w600,
         height: lineHeight
@@ -351,7 +364,7 @@ class _TheSpreadDetailsScreenState extends State<TheSpreadDetailsScreen> {
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
           color: Colors.white,
-          fontSize: 23,
+          fontSize: TitleFontsSize,
           fontWeight:
           FontWeight.w600,
           height: lineHeight

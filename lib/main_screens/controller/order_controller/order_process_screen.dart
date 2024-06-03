@@ -1121,8 +1121,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           "type":'fetchAddress',
         };
         var response = await http.post(Uri.parse(uri), body: requestBody);
-
-        // Parse the response and update _addresses list
+        
         var jsonResponse = json.decode(response.body);
         if (jsonResponse['status'] == 'success') {
           List<Map<String, dynamic>> addresses = [];
@@ -1226,7 +1225,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       'Checkout',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18.0, // Increase font size
+                        fontSize: 18.0,
                       ),
                     ),
                   ),

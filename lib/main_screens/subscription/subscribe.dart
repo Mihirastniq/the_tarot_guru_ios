@@ -19,6 +19,7 @@ class _SubscribeAppState extends State<SubscribeApp> {
   String lastName = '';
   int? userid = 0;
   String email = '';
+  int phone = 0;
 
   _loadFirstName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -27,6 +28,7 @@ class _SubscribeAppState extends State<SubscribeApp> {
       lastName = prefs.getString('lastName') ?? '';
       userid = prefs.getInt('userid') ?? 0;
       email = prefs.getString('email') ?? '';
+      phone = prefs.getInt('phone')??0;
     });
   }
 
@@ -98,7 +100,7 @@ class _SubscribeAppState extends State<SubscribeApp> {
       'amount': 159900,
       'name': 'The Tarot Guru',
       'description': 'Subscription Payment',
-      'prefill': {'contact': '7878765502', 'email': 'mihirgopani@gmail.com'},
+      'prefill': {'contact': '${phone}', 'email': '${email}'},
       'external': {
         'wallets': ['paytm']
       },
@@ -133,7 +135,7 @@ class _SubscribeAppState extends State<SubscribeApp> {
           ),
           Positioned.fill(
             child: Image.asset(
-              'assets/images/Screen_Backgrounds/bg1.png', // Replace with your image path
+              'assets/images/Screen_Backgrounds/bg1.png',
               fit: BoxFit.cover,
               opacity: const AlwaysStoppedAnimation(.2),
             ),

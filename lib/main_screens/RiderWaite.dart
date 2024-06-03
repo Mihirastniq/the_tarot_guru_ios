@@ -3,6 +3,7 @@ import 'package:the_tarot_guru/main_screens/other_screens/about_rider.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_new_spread.dart';
 import 'package:the_tarot_guru/main_screens/spread/saved_spread/rider_saved_spread.dart';
 import 'deck/rider_option_deck.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RiderWaiteTarot extends StatefulWidget {
@@ -12,6 +13,26 @@ class RiderWaiteTarot extends StatefulWidget {
 
 class _AppSelectState extends State<RiderWaiteTarot> with TickerProviderStateMixin{
 
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize = 16;
+  late double ButtonFontsSize = 10;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLocalData();
+  }
+
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 10;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,7 +237,7 @@ class _AppSelectState extends State<RiderWaiteTarot> with TickerProviderStateMix
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('${text}',style: TextStyle(color: Colors.white,fontSize: 21,fontWeight: FontWeight.w800),)
+              Text('${text}',style: TextStyle(color: Colors.white,fontSize: ButtonFontsSize,fontWeight: FontWeight.w800),)
             ],
           ),
         ),

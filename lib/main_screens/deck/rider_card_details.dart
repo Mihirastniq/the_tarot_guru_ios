@@ -26,6 +26,24 @@ class RiderCardDetailsScreen extends StatefulWidget {
 
 class _RiderCardDetailsScreenState extends State<RiderCardDetailsScreen> {
 
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
+  @override
+  void initState() {
+    super.initState();
+    _loadLocalData();
+  }
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -375,7 +393,7 @@ class _RiderCardDetailsScreenState extends State<RiderCardDetailsScreen> {
 
     // Define default text style
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-        fontSize: 16,
+        fontSize: ContentFontsSize,
         fontWeight: FontWeight.w400,
         color: Colors.black,
         height: lineHeight
@@ -384,7 +402,7 @@ class _RiderCardDetailsScreenState extends State<RiderCardDetailsScreen> {
     // Check the language and set appropriate font
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
-          fontSize: 20,
+          fontSize: ContentFontsSize,
           fontWeight: FontWeight.w400,
           color: Colors.black,
           height: lineHeight
@@ -397,7 +415,7 @@ class _RiderCardDetailsScreenState extends State<RiderCardDetailsScreen> {
   TextStyle _getTitleTextStyle(BuildContext context) {
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
         color: Colors.black,
-        fontSize: 23,
+        fontSize: TitleFontsSize,
         fontWeight:
         FontWeight.w600
     );
@@ -406,7 +424,7 @@ class _RiderCardDetailsScreenState extends State<RiderCardDetailsScreen> {
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
           color: Colors.black,
-          fontSize: 23,
+          fontSize: TitleFontsSize,
           fontWeight:
           FontWeight.w600
       );

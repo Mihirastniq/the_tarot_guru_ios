@@ -182,31 +182,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         // Display other user details similarly
                       ],
                     ),
-                    const Divider(
-                      height: 45,
-                      thickness: 1,
-                      indent: 5,
-                      endIndent: 0,
-                      color: Colors.grey,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'App login Pin',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          '$_appPin',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                        ),
-                        // Display other user details similarly
-                      ],
-                    ),
+
                     const Divider(
                       height: 45,
                       thickness: 1,
@@ -263,64 +239,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       endIndent: 0,
                       color: Colors.grey,
                     ),
-                    GestureDetector(
-                      child: Container(
-                        // padding: EdgeInsets.only(10),
-                        decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              width: 2,
-                              color: Colors.grey,
-                            )
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.lock,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Enable PIN',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Switch(
-                                  value: pinEnabled,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      pinEnabled = value;
-                                    });
-                                    updateEnablePin(value);
-                                  },
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const Divider(
-                      height: 45,
-                      thickness: 1,
-                      indent: 5,
-                      endIndent: 0,
-                      color: Colors.grey,
-                    ),
+
                     ProfileButton(
                         text: '${AppLocalizations.of(context)!.logoutlabel}',
                         onPressed: (){
@@ -748,7 +667,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           ),
 
                           SizedBox(height: 8),
-                          Text('Order ID: ${order['id']}',
+                          Text('Order ID: ${order['order_id']}',
                             style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                           Text('Billing Name: ${order['billing_name']}',

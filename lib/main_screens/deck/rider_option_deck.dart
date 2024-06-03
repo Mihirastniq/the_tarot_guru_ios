@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'rider_cards.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RiderDeckScreen extends StatefulWidget {
   final String tarotType;
@@ -11,6 +12,26 @@ class RiderDeckScreen extends StatefulWidget {
 }
 
 class _DeckScreenState extends State<RiderDeckScreen> {
+
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
+  @override
+  void initState() {
+    super.initState();
+    _loadLocalData();
+  }
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     late Map<String, String> deckOptions;
@@ -146,7 +167,7 @@ class _DeckScreenState extends State<RiderDeckScreen> {
             children: [
               Text(
                 deckOption,
-                style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800),
+                style: TextStyle(color: Colors.white, fontSize: ButtonFontsSize, fontWeight: FontWeight.w800),
               )
             ],
           ),

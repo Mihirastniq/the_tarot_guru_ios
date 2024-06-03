@@ -4,6 +4,7 @@ import 'package:the_tarot_guru/main_screens/other_screens/about_osho.dart';
 import 'package:the_tarot_guru/main_screens/spread/osho_new_spread.dart';
 import 'package:the_tarot_guru/main_screens/spread/saved_spread/osho_saved_spread.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OshoZenTarot extends StatefulWidget {
   @override
@@ -11,6 +12,27 @@ class OshoZenTarot extends StatefulWidget {
 }
 
 class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
+
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize = 16;
+  late double ButtonFontsSize = 10;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLocalData();
+  }
+
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 10;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +111,7 @@ class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
                               '${AppLocalizations.of(context)!.oshofulltitle}',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 30,
+                                  fontSize: TitleFontsSize,
                                   fontWeight: FontWeight.w600),
                             )
                           ],
@@ -254,7 +276,7 @@ class _AppSelectState extends State<OshoZenTarot> with TickerProviderStateMixin{
                       child: Text(
                         text,
                         style: TextStyle(
-                          fontSize: 24.0,
+                          fontSize: ButtonFontsSize,
                           color: Colors.white,
                           fontWeight: FontWeight.w800,
                         ),

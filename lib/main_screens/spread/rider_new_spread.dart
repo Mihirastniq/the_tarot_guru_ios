@@ -16,13 +16,25 @@ class RiderNewSpread extends StatefulWidget {
 
 class _NewSpreadState extends State<RiderNewSpread> {
   Map<String, Map<String, dynamic>> optionCardCounts = {};
-
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
   @override
   void initState() {
     super.initState();
+    _loadLocalData();
     Future.delayed(Duration.zero, () { fetchOptions(); });
   }
-
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
+  }
   void fetchOptions() {
     setState(() {
       if (widget.tarotType == 'Osho Zen') {
@@ -264,8 +276,9 @@ class _NewSpreadState extends State<RiderNewSpread> {
   void navigateToActiveSpread(String spreadName, int numberOfCards, Color color1, Color color2, String imagePath,String spreadEnglishName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? subscriptionStatus = prefs.getInt('subscription_status');
+    int? freebyadmin = prefs.getInt('free_by_admin');
 
-    if (subscriptionStatus == 1) {
+    if (subscriptionStatus == 1 || freebyadmin == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -473,7 +486,7 @@ class _NewSpreadState extends State<RiderNewSpread> {
               ),
               Container(
                 width: MediaQuery.sizeOf(context).width * 0.7 - 15 -45,
-                child: Text(option,style: TextStyle(color: Colors.white,fontSize: 21,fontWeight: FontWeight.w800),),
+                child: Text(option,style: TextStyle(color: Colors.white,fontSize: ButtonFontsSize,fontWeight: FontWeight.w800),),
               )
             ],
           ),

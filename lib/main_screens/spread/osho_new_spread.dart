@@ -16,16 +16,28 @@ class NewSpread extends StatefulWidget {
 
 class _NewSpreadState extends State<NewSpread> {
   late Map<String, Map<String, dynamic>> optionCardCounts = {};
-
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
   @override
   void initState() {
     super.initState();
-
+    _loadLocalData();
     Future.delayed(Duration.zero, () {
       fetchOptions();
     });
   }
 
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
+  }
 
   void fetchOptions() {
     setState(() {
@@ -129,8 +141,9 @@ class _NewSpreadState extends State<NewSpread> {
   void navigateToActiveSpread(String spreadName, int numberOfCards, Color color1, Color color2, String imagePath,String spreadEnglishName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? subscriptionStatus = prefs.getInt('subscription_status');
+    int? freebyadmin = prefs.getInt('free_by_admin');
 
-    if (subscriptionStatus == 1) {
+    if (subscriptionStatus == 1 || freebyadmin == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -317,7 +330,7 @@ class _NewSpreadState extends State<NewSpread> {
                     child: Text(
                       option,
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: ButtonFontsSize,
                         color: Colors.white.withOpacity(0.5),
                         fontWeight: FontWeight.w800,
                       ),

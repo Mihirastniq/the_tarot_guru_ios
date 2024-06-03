@@ -5,10 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class OshoCardDetailsScreen extends StatelessWidget {
+
+class OshoCardDetailsScreen extends StatefulWidget {
   final String tarotType;
   final String cardId;
   final String deckOption;
+
 
   const OshoCardDetailsScreen({
     Key? key,
@@ -16,6 +18,30 @@ class OshoCardDetailsScreen extends StatelessWidget {
     required this.cardId,
     required this.deckOption,
   }) : super(key: key);
+
+  @override
+  State<OshoCardDetailsScreen> createState() => _OshoCardDetailsScreenState();
+}
+
+class _OshoCardDetailsScreenState extends State<OshoCardDetailsScreen> {
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
+  @override
+  void initState() {
+    super.initState();
+    _loadLocalData();
+  }
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +80,10 @@ class OshoCardDetailsScreen extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: FutureBuilder(
-                      future: fetchCardDetails(tarotType, int.parse(cardId)),
+                      future: fetchCardDetails(widget.tarotType, int.parse(widget.cardId)),
                       builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
@@ -81,7 +107,7 @@ class OshoCardDetailsScreen extends StatelessWidget {
                                       children: [
                                         Image.asset(
                                             width: 150,
-                                            "assets/images/tarot_cards/${tarotType}/${deckOption}/${cardData['card_image']}"
+                                            "assets/images/tarot_cards/${widget.tarotType}/${widget.deckOption}/${cardData['card_image']}"
                                         ),
                                         SizedBox(
                                           height: 35,
@@ -126,9 +152,9 @@ class OshoCardDetailsScreen extends StatelessWidget {
                                                 height: 20,
                                               ),
                                               Text(
-                                                '${AppLocalizations.of(context)!.descriptioninspread}',
-                                                textAlign: TextAlign.center,
-                                                style: _getTitleTextStyle(context)
+                                                  '${AppLocalizations.of(context)!.descriptioninspread}',
+                                                  textAlign: TextAlign.center,
+                                                  style: _getTitleTextStyle(context)
                                               ),
                                               SizedBox(height: 8.0),
                                               Text(
@@ -176,12 +202,13 @@ class OshoCardDetailsScreen extends StatelessWidget {
       ),
     );
   }
+
   TextStyle _getCustomTextStyle(BuildContext context) {
     double lineHeight = 1.8;
 
     // Define default text style
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-        fontSize: 16,
+        fontSize: ContentFontsSize,
         fontWeight: FontWeight.w400,
         color: Colors.white,
         height: lineHeight
@@ -190,7 +217,7 @@ class OshoCardDetailsScreen extends StatelessWidget {
     // Check the language and set appropriate font
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
-          fontSize: 20,
+          fontSize: ContentFontsSize,
           fontWeight: FontWeight.w400,
           color: Colors.white,
           height: lineHeight
@@ -203,7 +230,7 @@ class OshoCardDetailsScreen extends StatelessWidget {
     // Define default text style
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
         color: Colors.white,
-        fontSize: 23,
+        fontSize: TitleFontsSize,
         fontWeight:
         FontWeight.w600
     );
@@ -212,7 +239,7 @@ class OshoCardDetailsScreen extends StatelessWidget {
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
           color: Colors.white,
-          fontSize: 23,
+          fontSize: TitleFontsSize,
           fontWeight:
           FontWeight.w600
       );
@@ -221,6 +248,7 @@ class OshoCardDetailsScreen extends StatelessWidget {
     }
   }
 }
+
 
 Future<Map<String, dynamic>> fetchCardDetails(String tarotType, int cardId) async {
   try {

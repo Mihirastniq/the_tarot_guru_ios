@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
-import 'package:the_tarot_guru/main_screens/Login/login_pin.dart';
 import 'package:the_tarot_guru/introduction_animation/introduction_animation_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,10 +13,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
   @override
   void initState() {
     super.initState();
+    _loadLocalData();
+  }
+
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
   }
 
   @override
@@ -30,11 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
         bool isPinEnabled = prefs.getBool("enablePin") ?? true;
 
         if (isLoggedIn) {
-          if (isPinEnabled) {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PinEntryScreen()));
-          } else {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppSelect()));
-          }
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppSelect()));
         } else {
           Navigator.push(context, MaterialPageRoute(builder: (context) => IntroductionAnimationScreen()));
         }
@@ -99,7 +109,7 @@ class _SplashScreenState extends State<SplashScreen> {
     double lineHeight = 1.8;
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
         color: Colors.white,
-        fontSize: 23,
+        fontSize: TitleFontsSize,
         fontWeight:
         FontWeight.w600,
         height: lineHeight
@@ -108,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
           color: Colors.white,
-          fontSize: 23,
+          fontSize: TitleFontsSize,
           fontWeight:
           FontWeight.w600,
           height: lineHeight

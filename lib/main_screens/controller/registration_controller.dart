@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:the_tarot_guru/main_screens/Register/otp_verify.dart';
+import 'package:the_tarot_guru/main_screens/Register/registernew.dart';
 
 class RegistrationController {
   TextEditingController first_name = TextEditingController();
@@ -61,6 +62,10 @@ class RegistrationController {
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0,
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => RegisterNew()),
           );
         }
       } catch (e) {

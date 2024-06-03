@@ -26,6 +26,11 @@ class TheRiderSpreadDetailsScreen extends StatefulWidget {
 class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
   List<dynamic> cardData = [];
   late final AudioController _audioController;
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
+
   Future<List<dynamic>> fetchData() async {
     List<dynamic> allCardData = [];
     SharedPreferences sp = await SharedPreferences.getInstance();
@@ -74,7 +79,19 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
     super.initState();
     _audioController = AudioController();
     fetchData();
+    _loadLocalData();
   }
+
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
+  }
+
   @override
   void dispose() {
     _audioController.stopAudio();
@@ -439,14 +456,14 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
     double lineHeight = 1.8;
 
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-        fontSize: 16,
+        fontSize: ContentFontsSize,
         fontWeight: FontWeight.w400,
         color: Colors.black,
         height: lineHeight);
 
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
-          fontSize: 20,
+          fontSize: ContentFontsSize,
           fontWeight: FontWeight.w400,
           color: Colors.black,
           height: lineHeight);
@@ -457,11 +474,11 @@ class _TheSpreadDetailsScreenState extends State<TheRiderSpreadDetailsScreen> {
 
   TextStyle _getTitleTextStyle(BuildContext context) {
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-        color: Colors.black, fontSize: 23, fontWeight: FontWeight.w600);
+        color: Colors.black, fontSize: TitleFontsSize, fontWeight: FontWeight.w600);
 
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
-          color: Colors.black, fontSize: 23, fontWeight: FontWeight.w600);
+          color: Colors.black, fontSize: TitleFontsSize, fontWeight: FontWeight.w600);
     } else {
       return defaultStyle;
     }

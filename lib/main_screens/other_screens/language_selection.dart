@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:the_tarot_guru/main_screens/other_screens/fontselections.dart';
+import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 
 class LanguageSelectionScreen extends StatefulWidget {
   const LanguageSelectionScreen({Key? key}) : super(key: key);
@@ -35,24 +37,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   final List<Map<String, String>> languageOptions = [
     {'en': 'English'},
     {'hi': 'Hindi'},
-    // {'bn': 'Bengali'},
-    // {'ta': 'Tamil'},
-    // {'te': 'Telugu'},
-    // {'kn': 'Kannada'},
-    // {'ml': 'Malayalam'},
-    // {'mr': 'Marathi'},
     {'gu': 'Gujarati'},
-    // {'pa': 'Punjabi'},
-    // {'or': 'Odia'},
-    // {'es': 'Spanish'},
-    // {'fr': 'French'},
-    // {'de': 'German'},
-    // {'pt': 'Portuguese'},
-    // {'ru': 'Russian'},
-    // {'ja': 'Japanese'},
-    // {'ko': 'Korean'},
-    // {'vi': 'Vietnamese'},
-    // {'id': 'Indonesian'}
   ];
 
   @override
@@ -127,12 +112,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
-                  SizedBox(height: 20),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.selectlangauge}',
-                  //   style: TextStyle(color: Colors.white, fontSize: 20),
-                  // ),
-                  SizedBox(height: 40),
+
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: languageOptions.length,
@@ -156,8 +137,23 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                     },
                   ),
                   SizedBox(
-                    height: 50,
-                  )
+                    height: 15,
+                  ),
+                  Container(
+                    width: MediaQuery.sizeOf(context).width * 0.9,
+                    child: ProfileButton(
+                        text: '${AppLocalizations.of(context)!.selectfontsizelabel}',
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FontSizeSelection()),
+                          );
+                        },
+                        icon: Icons.format_size),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                 ],
               ),
             ),

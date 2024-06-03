@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/main_screens/Deck/osho_cards.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DeckScreen extends StatefulWidget {
   final String tarotType;
@@ -11,7 +12,24 @@ class DeckScreen extends StatefulWidget {
 }
 
 class _DeckScreenState extends State<DeckScreen> {
-
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
+  @override
+  void initState() {
+    super.initState();
+    _loadLocalData();
+  }
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +170,7 @@ class _DeckScreenState extends State<DeckScreen> {
                   deckOption,
                   style: TextStyle(
                     color: Colors.white, // Text color
-                    fontSize: 22.0,
+                    fontSize: ButtonFontsSize,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

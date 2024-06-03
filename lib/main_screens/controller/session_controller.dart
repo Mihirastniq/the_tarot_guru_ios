@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/Login/login_pin.dart';
 import 'package:the_tarot_guru/introduction_animation/introduction_animation_screen.dart';
 import 'package:the_tarot_guru/main_screens/Register/otp_verify.dart';
@@ -40,30 +41,31 @@ class LoginController {
           prefs.setString('email', response['email']);
           prefs.setInt('phone', int.parse(response['phone']));
           prefs.setInt('appPin', int.parse(response['appPin']));
-          prefs.setBool('enablePin', true);
+          prefs.setBool('enablePin', false);
           prefs.setInt('userid', int.parse(response['userid']));
           prefs.setString('created_at', response['created_at']);
           prefs.setInt('subscription_status', int.parse(response['subscription_status']));
           prefs.setInt('free_by_admin', int.parse(response['free_by_admin']));
           prefs.setInt('warning', int.parse(response['warning']));
+          prefs.setInt('trial_warning', int.parse(response['trial_warning']));
 
           Fluttertoast.showToast(
             msg: "login Successs",
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
+            gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 15,
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.grey,
             textColor: Colors.white,
             fontSize: 16.0,
           );
-          NavigateToPinEntry(context, response['lang']);
+          NavigateToHome(context, response['lang']);
         } else {
           Fluttertoast.showToast(
             msg: response["message"],
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
+            gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 15,
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.grey,
             textColor: Colors.white,
             fontSize: 16.0,
           );
@@ -84,20 +86,10 @@ class LoginController {
     }
   }
 
-  void skipLogin(BuildContext context) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    isLogin = prefs.getBool(LOGINKEY);
-    if(isLogin == true) {
-      NavigateToPinEntry(context,prefs.getString('lang')??'en');
-    } else {
-      NavigateToIntro(context);
-    }
-  }
-
-  void NavigateToPinEntry(BuildContext context,String language) async {
+  void NavigateToHome(BuildContext context,String language) async {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PinEntryScreen()),
+      MaterialPageRoute(builder: (context) => AppSelect()),
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_tarot_guru/main_screens/other_screens/help_and_support.dart';
 import 'package:the_tarot_guru/main_screens/other_screens/language_selection.dart';
 import 'package:the_tarot_guru/main_screens/profile/profile_screens_options.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
@@ -63,10 +64,10 @@ class _ProfileState extends State<Profile> {
               leading: Builder(
                 builder: (context) => IconButton(
                     onPressed: () {
-                      Scaffold.of(context).openDrawer();
+                      Navigator.pop(context);
                     },
                     icon: Icon(
-                      Icons.segment_rounded,
+                      Icons.arrow_back_outlined,
                       color: Colors.white,
                       size: 35,
                     )),
@@ -187,6 +188,18 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => LanguageSelectionScreen()),
+                            );
+                          },
+                          icon: Icons.language),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      ProfileButton(
+                          text: '${AppLocalizations.of(context)!.helpandsupportlabel}',
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => HelpAndSuppportScreen()),
                             );
                           },
                           icon: Icons.language),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:the_tarot_guru/main_screens/register/language.dart';
 import 'pin_set.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,6 +29,7 @@ class _OtpState extends State<OTPVerifyPageState> {
   @override
   void initState() {
     super.initState();
+    print(widget.response['otp']);
     _focusNode1 = FocusNode();
     _focusNode2 = FocusNode();
     _focusNode3 = FocusNode();
@@ -41,9 +43,10 @@ class _OtpState extends State<OTPVerifyPageState> {
     String otpFromResponseString = otpFromResponse.toString(); // Convert it to a string
     if (pin == otpFromResponseString) { // Compare the entered OTP with the OTP from the response
       widget.response['otp_status'] = 'match';
+      widget.response['appPin'] = 0000;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SetLoginPin(response: widget.response)),
+        MaterialPageRoute(builder: (context) => LanguageSelection(response: widget.response)),
       );
     } else {
       Fluttertoast.showToast(

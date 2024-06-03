@@ -22,10 +22,24 @@ class OshoCardSelectionScreen extends StatefulWidget {
 class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
   List<CardData> _cardData = [];
 
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
   @override
   void initState() {
     super.initState();
+    _loadLocalData();
     _loadCardData();
+  }
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
   }
 
   Future<void> _loadCardData() async {
@@ -176,7 +190,7 @@ class _OshoCardSelectionScreenState extends State<OshoCardSelectionScreen> {
                     _cardData[index].cardName,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: SubTitleFontsSize,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),

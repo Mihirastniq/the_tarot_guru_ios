@@ -55,14 +55,15 @@ class _LanguageSelectionState extends State<LanguageSelection> {
           prefs.setString('firstName', response['firstName']);
           prefs.setString('lastName', response['lastName']);
           prefs.setString('email', response['email']);
-          prefs.setInt('appPin', int.parse(response['appPin']));
+          // prefs.setInt('appPin', int.parse(response['appPin']));
           prefs.setInt('userid', int.parse(response['userid']));
           prefs.setString('lang', selectedLanguageKey??'en');
           prefs.setString('created_at', response['created_at']['created_at']);
           prefs.setInt('subscription_status', response['subscription_status']);
           prefs.setInt('free_by_admin', response['free_by_admin']);
           prefs.setInt('warning', response['warning']);
-          prefs.setBool('enablePin', true);
+          prefs.setInt('trial_warning', int.parse(response['trial_warning']));
+          prefs.setBool('enablePin', false);
           _navigateToAppSelect();
         } else {
           Fluttertoast.showToast(
@@ -85,7 +86,6 @@ class _LanguageSelectionState extends State<LanguageSelection> {
           fontSize: 16.0,
         );
       } catch (e) {
-        print(e);
         Fluttertoast.showToast(
           msg: "Try again after some time",
           toastLength: Toast.LENGTH_SHORT,

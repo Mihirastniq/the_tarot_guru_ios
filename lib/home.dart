@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:the_tarot_guru/main_screens/Products/cart.dart';
 import 'package:the_tarot_guru/main_screens/OshoZen.dart';
@@ -9,6 +11,7 @@ import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:the_tarot_guru/main_screens/warnings/unsubscribe.dart';
+import 'package:http/http.dart' as http;
 
 
 
@@ -18,42 +21,128 @@ class AppSelect extends StatefulWidget {
 }
 
 class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMixin {
-
   String firstName = '';
   String lastName = '';
   String createdAt = '';
-  int SubscriptionStatus=0;
-  int freebyadmin=0;
-  int freewarning=0;
+  int SubscriptionStatus = 0;
+  int freebyadmin = 0;
+  int freewarning = 0;
+  int trialperiod = 0;
+  late int userId;
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize = 16;
+  late double ButtonFontsSize = 10;
 
+  Timer? _timer;
+  String remainingTime = '';
 
   @override
   void initState() {
     super.initState();
-    _loadFirstName();
+    _loadLocalData();
+    _fetchUserDetails();
   }
 
-  _loadFirstName() async {
+  _loadLocalData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       firstName = prefs.getString('firstName') ?? '';
       lastName = prefs.getString('lastName') ?? '';
-      SubscriptionStatus = prefs.getInt('subscription_status') ?? 0;
-      freebyadmin = prefs.getInt('free_by_admin') ?? 0 ;
-      freewarning = prefs.getInt('warning') ?? 0 ;
-      createdAt = prefs.getString('created_at')?? '';
+      userId = prefs.getInt('userid') ?? 0;
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 10;
     });
+  }
+
+  _fetchUserDetails() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int userId = prefs.getInt('userid') ?? 0;
+
+      var url = 'https://thetarotguru.com/tarotapi/userprofile.php';
+      var response = await http.post(Uri.parse(url), body: {
+        'user_id': userId.toString(),
+      });
+
+      if (response.statusCode == 200) {
+        var responseData = json.decode(response.body);
+
+        var userDetails = responseData['user_details'] ?? {};
+        var subscriptionDetails = responseData['subscription_details'] ?? {};
+
+        setState(() {
+          SubscriptionStatus = int.tryParse(subscriptionDetails['subscription_status'] ?? '0') ?? 0;
+          freebyadmin = int.tryParse(subscriptionDetails['free_by_admin'] ?? '0') ?? 0;
+          freewarning = int.tryParse(subscriptionDetails['warning'] ?? '0') ?? 0;
+          trialperiod = int.tryParse(subscriptionDetails['trial_warning']) ?? 0;
+
+          prefs.setInt('subscription_status', SubscriptionStatus);
+          prefs.setInt('free_by_admin', freebyadmin);
+          prefs.setInt('warning', freewarning);
+          prefs.setInt('trial_warning', trialperiod);
+          createdAt = userDetails['created_at'] ?? '';
+          prefs.setString('created_at', createdAt);
+        });
+
+        // Call startCountdown only after createdAt is set
+        if (isWithin48Hours()) {
+          startCountdown();
+        }
+      } else {
+        print('Failed to fetch user details. Status Code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching user details: $error');
+    }
+  }
+
+  void startCountdown() {
+    const oneSecond = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSecond,
+          (Timer timer) {
+        setState(() {
+          remainingTime = calculateRemainingTime();
+        });
+      },
+    );
+  }
+
+  String calculateRemainingTime() {
+    if (createdAt.isEmpty) {
+      return '00:00:00';
+    }
+
+    DateTime createdAtDateTime = DateTime.parse(createdAt);
+    DateTime now = DateTime.now();
+    Duration difference = now.difference(createdAtDateTime);
+
+    int remainingHours = 48 - difference.inHours;
+    int remainingMinutes = 59 - difference.inMinutes % 60;
+    int remainingSeconds = 59 - difference.inSeconds % 60;
+
+    return '$remainingHours:${remainingMinutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
   bool isWithin48Hours() {
     if (createdAt.isEmpty) {
-      return false; // Assuming createdAt is a non-empty string
+      return false;
     }
-  DateTime createdAtDateTime = DateTime.parse(createdAt);
 
+    DateTime createdAtDateTime = DateTime.parse(createdAt);
     Duration difference = DateTime.now().difference(createdAtDateTime);
 
-    return difference.inHours < 24;
+    return difference.inHours < 48;
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer only if it has been initialized
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -136,7 +225,7 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                 '${AppLocalizations.of(context)!.apptitle}',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 25.0,
+                  fontSize: SubTitleFontsSize,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -157,7 +246,7 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                         AppLocalizations.of(context)!.hello,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 25,
+                            fontSize: SubTitleFontsSize,
                             fontWeight: FontWeight.w600
                         ),
                       ),
@@ -165,13 +254,43 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                         '${firstName} ${lastName}',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 25,
+                            fontSize: TitleFontsSize,
                             fontWeight: FontWeight.w600
                         ),
                       ),
 
                     ],
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  if (isWithin48Hours())
+                    Text(
+                      'Remaining Time: $remainingTime',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: ContentFontsSize,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  if (!isWithin48Hours() && SubscriptionStatus == 0 && trialperiod == 1)
+                    Text(
+                      'Subscription Expired!',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: SubTitleFontsSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  if (!isWithin48Hours() && SubscriptionStatus == 0 && freebyadmin == 1 && freewarning == 1)
+                    Text(
+                      'Subscription Given By admin!',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: SubTitleFontsSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   SizedBox(
                     height: 20,
                   ),
@@ -230,8 +349,8 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                                 child: Image.asset('assets/images/cards/osho.jpg',width: 50,height: 50,),
                               ),
                               Container(
-                                width: MediaQuery.sizeOf(context).width * 0.4,
-                                child: Text('${AppLocalizations.of(context)!.oshotitle}',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w800),),
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: Text('${AppLocalizations.of(context)!.oshotitle}',style: TextStyle(color: Colors.white,fontSize: ButtonFontsSize,fontWeight: FontWeight.w800),),
                               )
                             ],
                           ),
@@ -295,7 +414,7 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                               ),
                               Container(
                                 width: MediaQuery.sizeOf(context).width *0.9-200,
-                                child: Text('${AppLocalizations.of(context)!.ridertitle}',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w800),),
+                                child: Text('${AppLocalizations.of(context)!.ridertitle}',style: TextStyle(color: Colors.white,fontSize: ButtonFontsSize,fontWeight: FontWeight.w800),),
                               )
                             ],
                           ),
@@ -332,7 +451,7 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text('${AppLocalizations.of(context)!.producttitle}',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w800),)
+                              Text('${AppLocalizations.of(context)!.producttitle}',style: TextStyle(color: Colors.white,fontSize: ButtonFontsSize,fontWeight: FontWeight.w800),)
                             ],
                           ),
                         ),

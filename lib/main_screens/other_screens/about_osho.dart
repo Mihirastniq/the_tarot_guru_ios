@@ -15,10 +15,24 @@ class _AboutOshoZenState extends State<AboutOshoZen> {
   late String _title = '';
   late String _text = '';
 
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
   @override
   void initState() {
     super.initState();
+    _loadLocalData();
     _loadAboutOshoData();
+  }
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
   }
 
   Future<void> _loadAboutOshoData() async {
@@ -120,14 +134,14 @@ class _AboutOshoZenState extends State<AboutOshoZen> {
     double lineHeight = 1.8;
 
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-        fontSize: 20,
+        fontSize: ContentFontsSize,
         fontWeight: FontWeight.w400,
         color: Colors.white,
         height: lineHeight);
 
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
-          fontSize: 20,
+          fontSize: ContentFontsSize,
           fontWeight: FontWeight.w400,
           color: Colors.white,
           height: lineHeight);
@@ -138,11 +152,11 @@ class _AboutOshoZenState extends State<AboutOshoZen> {
 
   TextStyle _getTitleTextStyle(BuildContext context) {
     TextStyle defaultStyle = GoogleFonts.anekDevanagari(
-        color: Colors.white, fontSize: 23, fontWeight: FontWeight.w600);
+        color: Colors.white, fontSize: TitleFontsSize, fontWeight: FontWeight.w600);
 
     if (Localizations.localeOf(context).languageCode == 'hi') {
       return GoogleFonts.anekDevanagari(
-          color: Colors.white, fontSize: 23, fontWeight: FontWeight.w600);
+          color: Colors.white, fontSize: TitleFontsSize, fontWeight: FontWeight.w600);
     } else {
       return defaultStyle;
     }

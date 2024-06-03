@@ -1,8 +1,8 @@
 name: the_tarot_guru
-description: "A new Flutter project."
+description: "The App is focused on spread knowledge about Tarot Cards of Osho Zen Tarot and Rider Wait Tarot."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.3+10
 
 environment:
   sdk: '>=3.3.1 <4.0.0'

@@ -32,6 +32,7 @@ import 'rider_designs/HarshShuSpread.dart';
 import 'rider_designs/MoneySpread.dart';
 import 'rider_designs/TheElcemist.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ActiveSpread extends StatefulWidget {
   final String spreadName;
@@ -65,15 +66,28 @@ class _ActiveSpreadState extends State<ActiveSpread> {
   bool _cardvisible = false;
   int animationCount = 0;
   int totalselectedcards = 0;
+  late double TitleFontsSize = 23;
+  late double SubTitleFontsSize = 18;
+  late double ContentFontsSize =16 ;
+  late double ButtonFontsSize =25;
 
   @override
   void initState() {
     super.initState();
     fetchCards();
+    _loadLocalData();
     _audioController = AudioController();
     _initAudio();
   }
-
+  _loadLocalData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      TitleFontsSize = prefs.getDouble('TitleFontSize') ?? 23;
+      SubTitleFontsSize = prefs.getDouble('SubtitleFontSize') ?? 18;
+      ContentFontsSize = prefs.getDouble('ContentFontSize') ?? 16;
+      ButtonFontsSize = prefs.getDouble('ButtonFontSize') ?? 25;
+    });
+  }
   Future<void> _initAudio() async {
     await _audioController.initSharedPreferences();
     await _audioController.playSelectedAudio();
@@ -178,20 +192,26 @@ class _ActiveSpreadState extends State<ActiveSpread> {
               CardInfo card = cards.firstWhere((card) => card.id == id);
               return SelectedCard(id: card.id, name: card.name);
             }).toList();
-            NavigateToRevealCard(
+            Future.delayed(Duration(seconds: 1), () {
+              NavigateToRevealCard(
                 selectedCards: selectedCardsList,
                 tarotType: widget.tarotType,
-                spreadName: widget.spreadName);
+                spreadName: widget.spreadName,
+              );
+            });
           }
         } else {
           List<SelectedCard> selectedCardsList = selectedCards.map((id) {
             CardInfo card = cards.firstWhere((card) => card.id == id);
             return SelectedCard(id: card.id, name: card.name);
           }).toList();
-          NavigateToRevealCard(
+          Future.delayed(Duration(seconds: 1), () {
+            NavigateToRevealCard(
               selectedCards: selectedCardsList,
               tarotType: widget.tarotType,
-              spreadName: widget.spreadName);
+              spreadName: widget.spreadName,
+            );
+          });
         }
       }
     } else {
@@ -669,7 +689,7 @@ class _ActiveSpreadState extends State<ActiveSpread> {
                         '${getOptionText(context, widget.tarotType, widget.spreadName)}',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: ContentFontsSize,
                           color: Colors.white,
                         ),
                       ),
