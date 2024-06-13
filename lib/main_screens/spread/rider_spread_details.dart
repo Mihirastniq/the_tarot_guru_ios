@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
-import '../other_screens/settings.dart';
 import 'ActiveSpread.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

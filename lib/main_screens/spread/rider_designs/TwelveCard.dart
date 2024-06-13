@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:the_tarot_guru/main_screens/controller/audio/audio_controller.dart';
 import 'package:the_tarot_guru/main_screens/reuseable_blocks.dart';
 import 'package:the_tarot_guru/main_screens/spread/animations/card_animation.dart';
 import 'package:the_tarot_guru/main_screens/spread/rider_spread_details.dart';
 import '../ActiveSpread.dart';
 import 'package:the_tarot_guru/main_screens/controller/functions.dart';
 import 'package:flip_card/flip_card_controller.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/settings.dart';
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

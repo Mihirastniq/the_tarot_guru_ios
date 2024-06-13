@@ -20,10 +20,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   late String _lastName = '';
   late String _email = '';
   late int _phone = 0;
-  late int _appPin = 0;
   late String _language = '';
   late String _createdAt = '';
-  late int _subscriptionStatus = 0;
   final LoginController loginController = LoginController();
   bool pinEnabled = false;
 
@@ -53,10 +51,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     _lastName = prefs.getString('lastName') ?? '';
     _email = prefs.getString('email') ?? '';
     _phone = prefs.getInt('phone') ?? 0;
-    _appPin = prefs.getInt('appPin') ?? 0;
+    // _appPin = prefs.getInt('appPin') ?? 0;
     _language = prefs.getString('lang') ?? '';
     _createdAt = prefs.getString('created_at') ?? '';
-    _subscriptionStatus = prefs.getInt('subscription_status') ?? 0;
+    // _subscriptionStatus = prefs.getInt('subscription_status') ?? 0;
     setState(() {});
   }
 

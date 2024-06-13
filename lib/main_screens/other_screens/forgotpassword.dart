@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:the_tarot_guru/main_screens/Register/registernew.dart';
-import 'package:the_tarot_guru/main_screens/controller/session_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:the_tarot_guru/main_screens/other_screens/forgot_pass_otp.dart';

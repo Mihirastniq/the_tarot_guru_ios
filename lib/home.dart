@@ -5,6 +5,7 @@ import 'package:the_tarot_guru/main_screens/Products/cart.dart';
 import 'package:the_tarot_guru/main_screens/OshoZen.dart';
 import 'package:the_tarot_guru/main_screens/Profile/profile.dart';
 import 'package:the_tarot_guru/main_screens/RiderWaite.dart';
+import 'package:the_tarot_guru/main_screens/other_screens/help_and_support.dart';
 import 'package:the_tarot_guru/main_screens/products/products.dart';
 import 'package:the_tarot_guru/main_screens/subscription/pre_subscribe.dart';
 import 'package:the_tarot_guru/main_screens/subscription/subscribe.dart';
@@ -28,6 +29,7 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
   int freebyadmin = 0;
   int freewarning = 0;
   int trialperiod = 0;
+  int accountStatus = 0;
   late int userId;
   late double TitleFontsSize = 23;
   late double SubTitleFontsSize = 18;
@@ -78,16 +80,16 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
           freebyadmin = int.tryParse(subscriptionDetails['free_by_admin'] ?? '0') ?? 0;
           freewarning = int.tryParse(subscriptionDetails['warning'] ?? '0') ?? 0;
           trialperiod = int.tryParse(subscriptionDetails['trial_warning']) ?? 0;
-
+          accountStatus = int.tryParse(userDetails['account_status']) ?? 0;
           prefs.setInt('subscription_status', SubscriptionStatus);
           prefs.setInt('free_by_admin', freebyadmin);
           prefs.setInt('warning', freewarning);
           prefs.setInt('trial_warning', trialperiod);
+          prefs.setInt('account_status', accountStatus);
           createdAt = userDetails['created_at'] ?? '';
           prefs.setString('created_at', createdAt);
         });
 
-        // Call startCountdown only after createdAt is set
         if (isWithin48Hours()) {
           startCountdown();
         }
@@ -300,7 +302,25 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                         onTap: (){
                           if(SubscriptionStatus == 1 || freebyadmin == 1 || isWithin48Hours()) {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => OshoZenTarot()));
-                          } else {
+                          } else if (accountStatus == 0){
+                          showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AccountBlocked(
+                              title: 'Your Account is Blocked!!',
+                              message: 'Your Account is blocked due to unusual activity. Please contact us at support@thetarotguru.com for unblock account.',
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => HelpAndSuppportScreen(),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          );
+                          }
+                          else {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -363,6 +383,23 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                         onTap: (){
                           if(SubscriptionStatus == 1 || freebyadmin == 1 || isWithin48Hours()) {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => RiderWaiteTarot()));
+                          }else if (accountStatus == 0){
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AccountBlocked(
+                                  title: 'Your Account is Blocked!!',
+                                  message: 'Your Account is blocked due to unusual activity. Please contact us at support@thetarotguru.com for unblock account.',
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => HelpAndSuppportScreen(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           } else {
                             showDialog(
                               context: context,
