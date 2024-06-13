@@ -810,7 +810,6 @@ class _RegisterUserState extends State<RegisterUserDetails> {
       ),
     );
   }
-
   Widget customTextWidget(String text, {bool flag = true}) {
     return flag
         ? Text(

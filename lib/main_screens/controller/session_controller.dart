@@ -4,8 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
-import 'package:the_tarot_guru/main_screens/Login/login_pin.dart';
-import 'package:the_tarot_guru/introduction_animation/introduction_animation_screen.dart';
+import 'package:the_tarot_guru/intro.dart';
 import 'package:the_tarot_guru/main_screens/Register/otp_verify.dart';
 
 
@@ -96,7 +95,7 @@ class LoginController {
   void NavigateToIntro(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => IntroductionAnimationScreen()),
+      MaterialPageRoute(builder: (context) => SplashView()),
     );
   }
 

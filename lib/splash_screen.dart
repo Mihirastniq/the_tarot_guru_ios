@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_tarot_guru/home.dart';
-import 'package:the_tarot_guru/introduction_animation/introduction_animation_screen.dart';
+import 'package:the_tarot_guru/intro.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -46,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (isLoggedIn) {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppSelect()));
         } else {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => IntroductionAnimationScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SplashView()));
         }
       },
     );

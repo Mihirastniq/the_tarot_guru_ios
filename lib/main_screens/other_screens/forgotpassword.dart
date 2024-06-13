@@ -1,24 +1,84 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:the_tarot_guru/main_screens/Register/registernew.dart';
 import 'package:the_tarot_guru/main_screens/controller/session_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:the_tarot_guru/main_screens/other_screens/forgotpassword.dart';
+import 'package:http/http.dart' as http;
+import 'package:the_tarot_guru/main_screens/other_screens/forgot_pass_otp.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({Key? key}) : super(key: key);
 
   @override
-  State<SignIn> createState() => _SignInFiveState();
+  State<ForgotPassword> createState() => _SignInFiveState();
 }
 
-class _SignInFiveState extends State<SignIn> {
-  final LoginController loginController = LoginController();
+class _SignInFiveState extends State<ForgotPassword> {
+  final TextEditingController _emailController = TextEditingController();
   Color fieldbbackground = Color(0xFF272B34);
   bool _emailflag = false;
-  bool _passwordflag = false;
-  bool _passwordVisible = false;
+
+  void _sendForgotPasswordRequest(String email) async {
+    try {
+      final response = await http.post(
+        Uri.parse('https://thetarotguru.com/tarotapi/forgotpassword.php'),
+        body: {
+          'email': email,
+          'request_type': 'forgot_password',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Parse the response JSON
+        Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        // Check the status from the response
+        if (jsonResponse['status'] == 'success') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ForgotPasswordOTPVerify(email: jsonResponse['email'], otp: jsonResponse['otp']),
+            ),
+          );
+        } else {
+          Fluttertoast.showToast(
+            msg: "Incorrect email.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 15,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
+      } else {
+        Fluttertoast.showToast(
+          msg: "Server error, Please try again after some time.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 15,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Technical error, Please try again after some time.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 15,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +138,7 @@ class _SignInFiveState extends State<SignIn> {
                 top: 8.0,
                 child: SizedBox(
                   width: size.width,
-                  height: size.height - 0,
+                  height: size.height,
                   child: Padding(
                     padding:
                     EdgeInsets.symmetric(horizontal: size.width * 0.06),
@@ -103,7 +163,7 @@ class _SignInFiveState extends State<SignIn> {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            '${AppLocalizations.of(context)!.loginsubtitle}',
+                            'Enter your gmail for reset your password',
                             style: GoogleFonts.inter(
                               fontSize: 14.0,
                               color: Colors.white,
@@ -115,25 +175,13 @@ class _SignInFiveState extends State<SignIn> {
                         Expanded(
                           flex: 4,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               emailTextField(size),
                               customTextWidget('${AppLocalizations.of(context)!.regiureemail}', flag: _emailflag),
                               const SizedBox(
                                 height: 8,
                               ),
-                              passwordTextField(size),
-                              customTextWidget('${AppLocalizations.of(context)!.regiurepassword}', flag: _passwordflag),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
-                                },
-                                child: Text('Forgot password?',style: TextStyle(color: Colors.white),textAlign: TextAlign.start,),
-                              )
                             ],
                           ),
                         ),
@@ -147,30 +195,6 @@ class _SignInFiveState extends State<SignIn> {
                               const SizedBox(
                                 height: 16,
                               ),
-                              buildContinueText(),
-                            ],
-                          ),
-                        ),
-
-                        //footer section. google, facebook button and sign up text here
-                        Expanded(
-                          flex: 4,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              GestureDetector(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => RegisterNew(),
-                                    ),
-                                  );
-                                },
-                                child: buildFooter(size),
-                              )
                             ],
                           ),
                         ),
@@ -196,7 +220,7 @@ class _SignInFiveState extends State<SignIn> {
 
   Widget richText(double fontSize) {
     return Text(
-      '${AppLocalizations.of(context)!.logintitle}',
+      'Forgot Password',
       style: TextStyle(
         color: Colors.white,
         fontSize: fontSize,
@@ -241,7 +265,7 @@ class _SignInFiveState extends State<SignIn> {
             Expanded(
               child: TextField(
                 maxLines: 1,
-                controller: loginController.Username,
+                controller: _emailController,
                 cursorColor: Colors.white70,
                 keyboardType: TextInputType.emailAddress,
                 style: GoogleFonts.inter(
@@ -255,78 +279,6 @@ class _SignInFiveState extends State<SignIn> {
                       fontSize: 14.0,
                       color: Colors.white70,
                       fontWeight: FontWeight.w500,
-                    ),
-                    border: InputBorder.none),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget passwordTextField(Size size) {
-    return Container(
-      alignment: Alignment.center,
-      height: size.height / 12,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: fieldbbackground,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            //lock logo here
-            const Icon(
-              Icons.lock,
-              color: Colors.white70,
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-
-            //divider svg
-            SvgPicture.string(
-              '<svg viewBox="99.0 332.0 1.0 15.5" ><path transform="translate(99.0, 332.0)" d="M 0 0 L 0 15.5" fill="none" fill-opacity="0.6" stroke="#ffffff" stroke-width="1" stroke-opacity="0.6" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
-              width: 1.0,
-              height: 15.5,
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-
-            //password textField
-            Expanded(
-              child: TextField(
-                maxLines: 1,
-                controller: loginController.password,
-                cursorColor: Colors.white70,
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: !_passwordVisible,
-                style: GoogleFonts.inter(
-                  fontSize: 14.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
-                decoration: InputDecoration(
-                    hintText: '${AppLocalizations.of(context)!.loginpasswordlabel}',
-                    hintStyle: GoogleFonts.inter(
-                      fontSize: 14.0,
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _passwordVisible = !_passwordVisible; // Toggle visibility
-                        });
-                      },
-                      child: Icon(
-                        _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                        color: Colors.white70,
-                      ),
                     ),
                     border: InputBorder.none),
               ),
@@ -355,29 +307,18 @@ class _SignInFiveState extends State<SignIn> {
       onTap: () {
         setState(() {
 
-          if (loginController.Username.text.isEmpty) {
+          if (_emailController.text.isEmpty) {
             setState(() {
-              _emailflag = true; // Set flag to true for email
+              _emailflag = true;
             });
           } else {
             setState(() {
-              _emailflag = false; // Set flag to true for first name
+              _emailflag = false;
             });
           }
 
-          if (loginController.password.text.isEmpty) {
-            setState(() {
-              _passwordflag = true; // Set flag to true for password
-            });
-          } else {
-            setState(() {
-              _passwordflag = false; // Set flag to true for first name
-            });
-          }
-
-          // Proceed with registration only if all fields are filled
-          if (!_emailflag && !_passwordflag) {
-            loginController.UserLogin(context);
+          if (!_emailflag) {
+            _sendForgotPasswordRequest(_emailController.text);
           }
         });
 
@@ -391,68 +332,12 @@ class _SignInFiveState extends State<SignIn> {
           color: Colors.white,
         ),
         child: Text(
-          '${AppLocalizations.of(context)!.signintextlabel}',
+          'Forgot Password',
           style: GoogleFonts.inter(
             fontSize: 22.0,
             color: Colors.black,
             fontWeight: FontWeight.w600,
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildContinueText() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        const Expanded(
-            child: Divider(
-              color: Colors.white,
-            )),
-        Expanded(
-          child: Text(
-            '${AppLocalizations.of(context)!.orcontinuewith}',
-            style: GoogleFonts.inter(
-              fontSize: 12.0,
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        const Expanded(
-            child: Divider(
-              color: Colors.white,
-            )),
-      ],
-    );
-  }
-
-  Widget buildFooter(Size size) {
-    return Align(
-      alignment: Alignment.center,
-      child: Text.rich(
-        TextSpan(
-          style: GoogleFonts.nunito(
-            fontSize: 16.0,
-            color: Colors.white,
-          ),
-          children: [
-            TextSpan(
-              text: '${AppLocalizations.of(context)!.donthaveaccountlabel}  ',
-              style: GoogleFonts.nunito(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            TextSpan(
-              text: '${AppLocalizations.of(context)!.signup}',
-              style: GoogleFonts.nunito(
-                color: const Color(0xFFF9CA58),
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
         ),
       ),
     );

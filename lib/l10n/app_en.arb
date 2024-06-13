@@ -407,7 +407,7 @@
   "@confirmpassword": {
     "description": "Label for input field asking the user to confirm their password"
   },
-  "singin": "Sign in",
+  "singin": "Login in",
   "@singin": {
     "description": "Button label for signing in to the app"
   },
@@ -419,7 +419,7 @@
   "@donthaveaccountlabel": {
     "description": "Question asking if the user doesn't have an account"
   },
-  "singinlabel": "Sign In",
+  "singinlabel": "Login",
   "@singinlabel": {
     "description": "Label for the sign-in action"
   },
@@ -567,13 +567,13 @@
   "@loginpasswordlabel": {
     "description": "Enter your password"
   },
-  "signintextlabel": "Sign in",
+  "signintextlabel": "Login",
   "@signintextlabel": {
     "description": "Sign in"
   },
-  "signup": "Sign Up",
+  "signup": "Register Now",
   "@signup": {
-    "description": "Sign up"
+    "description": "Register button"
   },
   "loginpinsubtitle": "Verify your secret pin",
   "@loginpinsubtitle": {
