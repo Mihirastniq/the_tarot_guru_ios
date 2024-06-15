@@ -12,7 +12,7 @@ class ThemeManager extends ChangeNotifier {
         return ThemeData(
           primaryColor: Color(0xFF191970), // Midnight Blue
           scaffoldBackgroundColor: Color(0xFF000000),
-          backgroundColor: Color(0xFF000080), // Navy Blue
+
           cardColor: Color(0xFF000080), // Navy Blue
           buttonTheme: ButtonThemeData(
             buttonColor: Color(0xFF000080),
@@ -61,7 +61,7 @@ class ThemeManager extends ChangeNotifier {
         return ThemeData(
           primaryColor: Color(0xFF541370), // #ff94c1
           scaffoldBackgroundColor: Color(0xFF3A0A50), // #be6079
-          backgroundColor: Color(0xFF812d36), // #812d36
+
           cardColor: Color(0xFF752329), // #752329
           buttonTheme: ButtonThemeData(
             buttonColor: Color(0xFF69191c), // #69191c
@@ -70,7 +70,7 @@ class ThemeManager extends ChangeNotifier {
             color: Color(0xFF5e0d0f), // #5e0d0f
           ),
           dividerColor: Color(0xFF520001), // #520001
-          errorColor: Color(0xFF8d3743), // #8d3743
+
           highlightColor: Color(0xFFc34918), // #c34918
           hoverColor: Color(0xFFba4416), // #ba4416
           indicatorColor: Color(0xFFb23f14), // #b23f14
@@ -93,13 +93,13 @@ class ThemeManager extends ChangeNotifier {
         return ThemeData(
           primaryColor: Color(0xFFFF4500), // Deep Orange
           scaffoldBackgroundColor: Color(0xFF000000), // Black
-          backgroundColor: Color(0xFF000080), // Navy Blue
+
           cardColor: Color(0xFF000080), // Navy Blue
           buttonTheme: ButtonThemeData(
             buttonColor: Color(0xFF000080),
           ),
           dividerColor: Color(0xFF7FFFD4), // Aquamarine
-          errorColor: Color(0xFFFF0000), // Red
+
           highlightColor: Color(0xFFFFD700), // Gold
           hoverColor: Color(0xFF000080), // Navy Blue
           indicatorColor: Color(0xFFFFD700), // Gold
@@ -118,13 +118,13 @@ class ThemeManager extends ChangeNotifier {
         return ThemeData(
           primaryColor: Color(0xFFDC143C), // Crimson Red
           scaffoldBackgroundColor: Color(0xFF000000), // Black
-          backgroundColor: Color(0xFF000080), // Navy Blue
+
           cardColor: Color(0xFF000080), // Navy Blue
           buttonTheme: ButtonThemeData(
             buttonColor: Color(0xFF000080),
           ),
           dividerColor: Color(0xFF7FFFD4), // Aquamarine
-          errorColor: Color(0xFFFF0000), // Red
+
           highlightColor: Color(0xFFFFD700), // Gold
           hoverColor: Color(0xFF000080), // Navy Blue
           indicatorColor: Color(0xFFFFD700), // Gold
