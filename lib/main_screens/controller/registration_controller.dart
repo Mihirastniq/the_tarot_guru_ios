@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:the_tarot_guru/intro.dart';
 import 'package:the_tarot_guru/main_screens/Register/otp_verify.dart';
-import 'package:the_tarot_guru/main_screens/Register/registernew.dart';
 
 class RegistrationController {
   TextEditingController first_name = TextEditingController();
@@ -35,7 +35,7 @@ class RegistrationController {
         password.text.isNotEmpty &&
         confirm_password.text.isNotEmpty) {
       try {
-        final String uri = "https://thetarotguru.com/tarotapi/userregistration.php";
+        final String uri = "https://thetarotguru.com/tarotapi/apple/userregistration.php";
         final Map<String, String> requestBody = {
           "fname": first_name.text,
           "lname": last_name.text,
@@ -65,7 +65,7 @@ class RegistrationController {
           );
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RegisterNew()),
+            MaterialPageRoute(builder: (context) => WelcomeTwo()),
           );
         }
       } catch (e) {

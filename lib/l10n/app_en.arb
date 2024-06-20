@@ -407,7 +407,7 @@
   "@confirmpassword": {
     "description": "Label for input field asking the user to confirm their password"
   },
-  "singin": "Login in",
+  "singin": "Register",
   "@singin": {
     "description": "Button label for signing in to the app"
   },

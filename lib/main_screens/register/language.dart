@@ -46,7 +46,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
       await _languageChangeController.changelanguage(locale);
       widget.response['language'] = selectedLanguageKey;
       try {
-        String uri = "https://thetarotguru.com/tarotapi/userverifaction.php";
+        String uri = "https://thetarotguru.com/tarotapi/apple/userverifaction.php";
         var requestBody = jsonEncode(widget.response);
         var res = await http.post(Uri.parse(uri), body: requestBody);
         var response = jsonDecode(res.body);
@@ -55,7 +55,6 @@ class _LanguageSelectionState extends State<LanguageSelection> {
           prefs.setString('firstName', response['firstName']);
           prefs.setString('lastName', response['lastName']);
           prefs.setString('email', response['email']);
-          // prefs.setInt('appPin', int.parse(response['appPin']));
           prefs.setInt('userid', int.parse(response['userid']));
           prefs.setString('lang', selectedLanguageKey??'en');
           prefs.setString('created_at', response['created_at']['created_at']);

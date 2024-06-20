@@ -19,7 +19,7 @@ class LoginController {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (Username.text != "" || password.text != "") {
       try {
-        String uri = "https://thetarotguru.com/tarotapi/userlogin.php";
+        String uri = "https://thetarotguru.com/tarotapi/apple/userlogin.php";
         var requestBody = {
           "username": Username.text,
           "password": password.text,
@@ -39,7 +39,7 @@ class LoginController {
           prefs.setString('lastName', response['lastName']);
           prefs.setString('email', response['email']);
           prefs.setInt('phone', int.parse(response['phone']));
-          prefs.setInt('appPin', int.parse(response['appPin']));
+          // prefs.setInt('appPin', int.parse(response['appPin']));
           prefs.setBool('enablePin', false);
           prefs.setInt('userid', int.parse(response['userid']));
           prefs.setString('created_at', response['created_at']);
