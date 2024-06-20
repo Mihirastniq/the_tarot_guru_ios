@@ -209,25 +209,7 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
                   size: 30,
                   color: Colors.white,
                 )),
-                IconButton(onPressed: () {
-                  if(SubscriptionStatus == 1) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PreSubscribeUSer(),
-                      ),
-                    );
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SubscribeApp(),
-                      ),
-                    );
-                  }
-                }, icon: Icon(
-                  Icons.money,
-                  size: 30,
-                  color: Colors.white,
-                ))
+                
               ],
               title: Text(
                 '${AppLocalizations.of(context)!.apptitle}',
