@@ -25,7 +25,7 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
   String firstName = '';
   String lastName = '';
   String createdAt = '';
-  int SubscriptionStatus = 0;
+  int SubscriptionStatus = 1;
   int freebyadmin = 0;
   int freewarning = 0;
   int trialperiod = 0;
@@ -76,10 +76,10 @@ class _AppSelectState extends State<AppSelect> with SingleTickerProviderStateMix
         var subscriptionDetails = responseData['subscription_details'] ?? {};
 
         setState(() {
-          SubscriptionStatus = int.tryParse(subscriptionDetails['subscription_status'] ?? '0') ?? 0;
-          freebyadmin = int.tryParse(subscriptionDetails['free_by_admin'] ?? '0') ?? 0;
-          freewarning = int.tryParse(subscriptionDetails['warning'] ?? '0') ?? 0;
-          trialperiod = int.tryParse(subscriptionDetails['trial_warning']) ?? 0;
+          SubscriptionStatus = 1;
+          freebyadmin = 0;
+          freewarning = 0;
+          trialperiod = 0;
           accountStatus = int.tryParse(userDetails['account_status']) ?? 0;
           prefs.setInt('subscription_status', SubscriptionStatus);
           prefs.setInt('free_by_admin', freebyadmin);

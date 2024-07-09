@@ -4,25 +4,18 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:the_tarot_guru/home.dart';
 import 'package:the_tarot_guru/main_screens/controller/language_controller/language_change_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:the_tarot_guru/main_screens/warnings/please_wait_popup.dart';
 
 class LanguageSelection extends StatefulWidget {
-  final Map<String, dynamic> response;
-
-  LanguageSelection({required this.response});
 
   @override
   _LanguageSelectionState createState() => _LanguageSelectionState();
 }
 
 class _LanguageSelectionState extends State<LanguageSelection> {
-  // String _selectedLanguage = 'en';
-  String LOGINKEY = "isLogin";
-  bool? isLogin = false;
   late LanguageChangeController _languageChangeController;
 
   @override
@@ -42,59 +35,11 @@ class _LanguageSelectionState extends State<LanguageSelection> {
   Future<void> updaterecord() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (selectedLanguageKey!.isNotEmpty) {
+      _showPleaseWaitDialog();
       Locale locale = Locale(selectedLanguageKey!);
       await _languageChangeController.changelanguage(locale);
-      widget.response['language'] = selectedLanguageKey;
-      try {
-        String uri = "https://thetarotguru.com/tarotapi/apple/userverifaction.php";
-        var requestBody = jsonEncode(widget.response);
-        var res = await http.post(Uri.parse(uri), body: requestBody);
-        var response = jsonDecode(res.body);
-        if (response["status"] == 'success') {
-          prefs.setBool(LOGINKEY, true);
-          prefs.setString('firstName', response['firstName']);
-          prefs.setString('lastName', response['lastName']);
-          prefs.setString('email', response['email']);
-          prefs.setInt('userid', int.parse(response['userid']));
-          prefs.setString('lang', selectedLanguageKey??'en');
-          prefs.setString('created_at', response['created_at']['created_at']);
-          prefs.setInt('subscription_status', response['subscription_status']);
-          prefs.setInt('free_by_admin', response['free_by_admin']);
-          prefs.setInt('warning', response['warning']);
-          prefs.setInt('trial_warning', int.parse(response['trial_warning']));
-          prefs.setBool('enablePin', false);
-          _navigateToAppSelect();
-        } else {
-          Fluttertoast.showToast(
-            msg: "Try again after some time",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 15,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-        }
-        Fluttertoast.showToast(
-          msg: "Verification Successful",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 15,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      } catch (e) {
-        Fluttertoast.showToast(
-          msg: "Try again after some time",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 15,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      }
+
+      _navigateToAppSelect();
     } else {
       Fluttertoast.showToast(
         msg: "Select your Language",
@@ -106,6 +51,20 @@ class _LanguageSelectionState extends State<LanguageSelection> {
         fontSize: 16.0,
       );
     }
+  }
+
+  Future<void> _showPleaseWaitDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return PleaseWaitDialog();
+      },
+    );
+  }
+
+  void _hidePleaseWaitDialog() {
+    Navigator.of(context).pop();
   }
 
   void _navigateToAppSelect() {
@@ -170,93 +129,100 @@ class _LanguageSelectionState extends State<LanguageSelection> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                  ),
-                  Column(
-                    children: [
-                      logo(100, 100),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                    ],
-                  ),
-
-                  Text(
-                    'Select your Language',
-                    style: GoogleFonts.inter(
-                      fontSize: 20,
-                      color: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                    Column(
                       children: [
-                        for (var language in defaultLanguages)
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedLanguageKey = language.keys.first;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: selectedLanguageKey == language.keys.first ? Color(0xFF272B34) : null,
-                                  borderRadius: BorderRadius.circular(10)
-                              ),
-                              child: RadioListTile<String>(
-                                activeColor: Colors.white,
-                                value: language.keys.first,
-                                groupValue: selectedLanguageKey,
-                                onChanged: (String? value) {
-                                  setState(() {
-                                    selectedLanguageKey = value;
-                                  });
-                                },
-                                title: Text(
-                                  language.values.first,
-                                  style: TextStyle(
-                                    color: selectedLanguageKey == language.keys.first ? Colors.white : Colors.white,
+                        logo(100, 100),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                      ],
+                    ),
+
+                    Text(
+                      'Select your Language',
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (var language in defaultLanguages)
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedLanguageKey = language.keys.first;
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: selectedLanguageKey == language.keys.first ? Color(0xFF272B34) : null,
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: RadioListTile<String>(
+                                  activeColor: Colors.white,
+                                  value: language.keys.first,
+                                  groupValue: selectedLanguageKey,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      selectedLanguageKey = value;
+                                    });
+                                  },
+                                  title: Text(
+                                    language.values.first,
+                                    style: TextStyle(
+                                      color: selectedLanguageKey == language.keys.first ? Colors.white : Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: const Color(0xFFFFFFFF),
-                      ),
-                      child: Text(
-                          '${AppLocalizations.of(context)!.singin}'
+                          SizedBox(height: 20),
+                        ],
                       ),
                     ),
-                    onTap: () {
-                      if (selectedLanguageKey != null && selectedLanguageKey!.isNotEmpty) {
-                        updaterecord();
-                        print(selectedLanguageKey);
-                      } else {
-                        print('Please select a language');
-                      }
-                    },
-                  )
-                ],
-              )
+                    GestureDetector(
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: const Color(0xFFFFFFFF),
+                        ),
+                        child: Text(
+                            ' ${AppLocalizations.of(context)!.singin}'
+                        ),
+                      ),
+                      onTap: () {
+                        if (selectedLanguageKey != null && selectedLanguageKey!.isNotEmpty) {
+                          updaterecord();
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Please Select Your Language",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 15,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }
+                      },
+                    )
+                  ],
+                )
             ),
           ],
         ),

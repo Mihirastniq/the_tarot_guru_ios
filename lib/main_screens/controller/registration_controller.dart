@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:the_tarot_guru/intro.dart';
 import 'package:the_tarot_guru/main_screens/Register/otp_verify.dart';
+import 'package:the_tarot_guru/main_screens/register/register.dart';
 
 class RegistrationController {
   TextEditingController first_name = TextEditingController();
@@ -46,13 +46,23 @@ class RegistrationController {
           "gender": gender.text,
           "password": password.text,
           "confirm_password": confirm_password.text,
-          "country":country.text
+          "country":country.text,
         };
         final http.Response res = await http.post(Uri.parse(uri), body: requestBody);
 
         final dynamic response = jsonDecode(res.body);
+        print('Response is : ${res.body}');
         if (response["status"] == 'success') {
           _navigateToOTPVerifyPage(response, context);
+          Fluttertoast.showToast(
+            msg: response["message"],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 15,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
         } else {
           Fluttertoast.showToast(
             msg: response["message"],
@@ -65,7 +75,7 @@ class RegistrationController {
           );
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => WelcomeTwo()),
+            MaterialPageRoute(builder: (context) => RegisterNew()),
           );
         }
       } catch (e) {

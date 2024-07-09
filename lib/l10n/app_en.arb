@@ -407,7 +407,7 @@
   "@confirmpassword": {
     "description": "Label for input field asking the user to confirm their password"
   },
-  "singin": "Register",
+  "singin": "Login in",
   "@singin": {
     "description": "Button label for signing in to the app"
   },
@@ -734,5 +734,21 @@
   "selectfontsizelabel": "Select Font Size",
   "@selectfontsizelabel" : {
     "description": "Help and Support text"
+  },
+  "sprecialpredictionlabel": "Special Prediction",
+  "@sprecialpredictionlabel" : {
+    "description": "Special Prediction"
+  },
+  "learninglabel": "Start Learning",
+  "@learninglabel" : {
+    "description": "Start Learning"
+  },
+  "oshodetailformtitle": "Let's Start something",
+  "@oshodetailformtitle" : {
+    "description": "Let's Start something"
+  },
+  "oshodetailformsubtitle": "Please give basic details",
+  "@oshodetailformsubtitle" : {
+    "description": "Please give basic details"
   }
 }

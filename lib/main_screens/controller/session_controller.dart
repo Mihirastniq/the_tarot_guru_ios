@@ -43,10 +43,10 @@ class LoginController {
           prefs.setBool('enablePin', false);
           prefs.setInt('userid', int.parse(response['userid']));
           prefs.setString('created_at', response['created_at']);
-          prefs.setInt('subscription_status', int.parse(response['subscription_status']));
-          prefs.setInt('free_by_admin', int.parse(response['free_by_admin']));
-          prefs.setInt('warning', int.parse(response['warning']));
-          prefs.setInt('trial_warning', int.parse(response['trial_warning']));
+          prefs.setInt('subscription_status', 1);
+          prefs.setInt('free_by_admin', 0);
+          prefs.setInt('warning', 0);
+          prefs.setInt('trial_warning', 0);
 
           Fluttertoast.showToast(
             msg: "login Successs",

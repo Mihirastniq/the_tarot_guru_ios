@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:the_tarot_guru/main_screens/controller/registration_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:the_tarot_guru/main_screens/login/loginnew.dart';
+import 'package:the_tarot_guru/main_screens/login/login.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 class RegisterNew extends StatefulWidget {
